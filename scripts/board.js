@@ -21,6 +21,7 @@ source.addEventListener("message", function getTasks(event) {
         if(task.TaskAttributes.Status == list){
           const newTask = document.createElement("li");
           newTask.textContent = task.TaskName;
+          newTask.id = task._id
           newTaskList.appendChild(newTask); 
           makeDeleteButton(task, newTask);
           makeEditButton(task, newTask);
@@ -116,10 +117,11 @@ function makeEditButton(task, newTask) {
           EndDate: form.endDate.value,
           Status: form.status.value,
         },
+        id: newTask.id
       };
       try {
-        const response = await fetch("http://localhost:3000/Tasks/${task}", {
-            method: "PUT",
+        const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
