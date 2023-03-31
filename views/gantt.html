@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Getting Started with Chart JS with www.chartjs3.com</title>
+    <link rel="stylesheet" href="/gantt.css">
+    <link rel="stylesheet" href="/navbar.css">
+  </head>
+  <header>
+        <div class="Navbar">
+            <div class="logo"> <a href="#">Penis Management</a></div>
+            <ul class="links">
+                <li><a href="/board">Board</a></li>
+                <li><a href="/gantt">GANTT</a></li>
+            </ul>
+            <a href="#" class="action_btn">Get Started</a>
+            <div class="toggle_btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+
+        <div class="dropdown_menu">
+            <li><a href="/board">Board</a></li>
+            <li><a href="/gantt">GANTT</a></li>
+            <li><a href="#" class="action_btn">Get Started</a></li>
+        </div>
+    </header>
+        <script>
+            const toggleBtn = document.querySelector('.toggle_btn')
+            const toggleBtnIcon = document.querySelector('.toggle_btn i')
+            const dropdown_menu = document.querySelector('.dropdown_menu')
+
+            toggleBtn.onclick = function() {
+                dropdown_menu.classList.toggle('open')
+                const isOpen = DropdownMenu.classList.contains('open')
+                
+                toggleBtnIcon.classList = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars'
+            }
+        </script>
+    <div class="chartCard">
+      <div class="chartBox">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="/gantt.js"></script>
+  </body>
+</html>

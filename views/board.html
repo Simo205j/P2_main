@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/board.css">
+  <link rel="stylesheet" href="/navbar.css">
+</head>
+<body>
+  <header>
+    <div class="Navbar">
+        <div class="logo"> <a href="#">Penis Management</a></div>
+        <ul class="links">
+            <li><a href="/board">Board</a></li>
+            <li><a href="/gantt">GANTT</a></li>
+        </ul>
+        <a href="#" class="action_btn">Get Started</a>
+        <div class="toggle_btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+
+    <div class="dropdown_menu">
+        <li><a href="/board">Board</a></li>
+        <li><a href="/gantt">GANTT</a></li>
+        <li><a href="#" class="action_btn">Get Started</a></li>
+    </div>
+</header>
+    <script>
+        const toggleBtn = document.querySelector('.toggle_btn')
+        const toggleBtnIcon = document.querySelector('.toggle_btn i')
+        const dropdown_menu = document.querySelector('.dropdown_menu')
+
+        toggleBtn.onclick = function() {
+            dropdown_menu.classList.toggle('open')
+            const isOpen = DropdownMenu.classList.contains('open')
+            
+            toggleBtnIcon.classList = isOpen
+            ? 'fa-solid fa-xmark'
+            : 'fa-solid fa-bars'
+        }
+    </script>
+  <div>
+    <form id="taskForm">
+      <label for="taskName">Task Name:</label>
+      <input required type="text" id="taskName" name="taskName"><br>
+
+      <label for="description">Description:</label>
+      <input type="text" id="description" name="description"><br>
+
+      <label for="assignee">Assignee:</label>
+      <input type="text" id="assignee" name="assignee" required><br>
+
+      <label for="priority">Priority:</label>
+      <select id="priority" name="priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select><br>
+
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" name="startDate" required><br>
+
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate" required><br>
+
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="To do">To Do</option>
+        <option value="Doing">In Progress</option>
+        <option value="Done">Done</option>
+      </select>
+      <input type="submit" value="Add Task">
+    </form>
+    <div id="List-Container">
+    </div>
+  </div>
+
+  <script src="/board.js"></script>
+</body>
+</html>
