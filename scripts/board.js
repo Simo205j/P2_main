@@ -23,6 +23,7 @@ source.addEventListener("message", function getTasks(event) {
           newTask.textContent = task.TaskName;
           newTaskList.appendChild(newTask); 
           makeDeleteButton(task, newTask);
+          makeEditButton(task, newTask);
         }
       });
       newListsContainer.appendChild(newTaskList);
@@ -33,30 +34,6 @@ source.addEventListener("message", function getTasks(event) {
   }
   listsTypeContainer.appendChild(newListsContainer);
 });
-
-function makeDeleteButton(task, newTask){
-    const deleteButton = document.createElement("button");
-    deleteButton.value = "Delete Task";
-    deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", async (event) => {
-      event.preventDefault();
-      const response = await fetch("http://localhost:3000/api/Task/", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"                                  
-        },
-        body: JSON.stringify(task)
-      });
-      try{
-        const data = await response.json();
-        console.log(data.status, data);
-      }
-      catch (error) {
-        console.error(error);
-      }
-    });
-    newTask.appendChild(deleteButton);
-}
 
 taskForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -85,3 +62,76 @@ taskForm.addEventListener("submit", async (event) => {
       console.error(error);
     }
 });
+
+function makeDeleteButton(task, newTask){
+  const deleteButton = document.createElement("button");
+  deleteButton.value = "Delete Task";
+  deleteButton.textContent = "Delete";
+  deleteButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const response = await fetch("http://localhost:3000/api/Task/", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"                                  
+      },
+      body: JSON.stringify(task)
+    });
+    try{
+      const data = await response.json();
+      console.log(data.status, data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  });
+  newTask.appendChild(deleteButton);
+}
+function makeEditButton(task, newTask) {
+  const editButton = document.createElement("button");
+  editButton.value = "Edit Task";
+  editButton.textContent = "Edit";
+
+  editButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const dialog = document.getElementById("editTaskModal");
+    dialog.showModal();
+    const form = dialog.querySelector("form");
+    form.taskName.value = task.TaskName;
+    form.description.value = task.TaskAttributes.Description;
+    form.assignee.value = task.TaskAttributes.Assignee;
+    form.priority.value = task.TaskAttributes.Priority;
+    form.startDate.value = task.TaskAttributes.StartDate;
+    form.endDate.value = task.TaskAttributes.EndDate;
+    form.status.value = task.TaskAttributes.Status;
+
+    const saveButton = dialog.querySelector("#saveEditButton");
+    saveButton.addEventListener("click", async () => {
+      const updatedData = {
+        TaskName: form.taskName.value,
+        TaskAttributes: {
+          Description: form.description.value,
+          Assignee: form.assignee.value,
+          Priority: form.priority.value,
+          StartDate: form.startDate.value,
+          EndDate: form.endDate.value,
+          Status: form.status.value,
+        },
+      };
+      try {
+        const response = await fetch("http://localhost:3000/Tasks/${task}", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedData),
+          }
+        );
+        const responseData = await response.json();
+        console.log(responseData.status, responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  });
+  newTask.appendChild(editButton);
+}
