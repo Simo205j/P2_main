@@ -11,13 +11,13 @@
   }
   .chartCard {
     width: 100vw;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 100px);
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .chartBox {
-    width: 80%;
+    width: 90%;
     padding: 20px;
     border-radius: 20px;
     border: solid 3px rgba(54, 162, 235, 1);

@@ -16,6 +16,9 @@ router.get('/board', (req, res) => {
 router.get('/gantt', (req, res) => {
   res.sendFile(__dirname + '/views/gantt.html')
 })
+router.get('/backlog', (req, res) => {
+  res.sendFile(__dirname + '/views/backlog.html')
+})
 
 app.use('/', router)
 app.use(cors());

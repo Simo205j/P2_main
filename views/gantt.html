@@ -8,24 +8,25 @@
     <link rel="stylesheet" href="/navbar.css">
   </head>
   <header>
-        <div class="Navbar">
-            <div class="logo"> <a href="#">Penis Management</a></div>
-            <ul class="links">
-                <li><a href="/board">Board</a></li>
-                <li><a href="/gantt">GANTT</a></li>
-            </ul>
-            <a href="#" class="action_btn">Get Started</a>
-            <div class="toggle_btn">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </div>
-
-        <div class="dropdown_menu">
+    <div class="Navbar">
+        <div class="logo"> <a href="#">Penis Management</a></div>
+        <ul class="links">
             <li><a href="/board">Board</a></li>
             <li><a href="/gantt">GANTT</a></li>
-            <li><a href="#" class="action_btn">Get Started</a></li>
+            <li><a href="/backlog">Backlog</a></li>
+        </ul>
+        <a href="#" class="action_btn">Get Started</a>
+        <div class="toggle_btn">
+            <i class="fa-solid fa-bars"></i>
         </div>
-    </header>
+    </div>
+    <div class="dropdown_menu">
+        <li><a href="/board">Board</a></li>
+        <li><a href="/gantt">GANTT</a></li>
+        <li><a href="/backlog">Backlog</a></li>
+        <li><a href="#" class="action_btn">Get Started</a></li>
+    </div>
+</header>
         <script>
             const toggleBtn = document.querySelector('.toggle_btn')
             const toggleBtnIcon = document.querySelector('.toggle_btn i')
