@@ -2,19 +2,31 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="backlog.css">
+    <link rel="stylesheet" href="/navbar.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <header>
-    <nav>
-        <ul>
+    <div class="Navbar">
+        <div class="logo"> <a href="#">Penis Management</a></div>
+        <ul class="links">
             <li><a href="/board">Board</a></li>
             <li><a href="/gantt">GANTT</a></li>
             <li><a href="/backlog">Backlog</a></li>
         </ul>
-    </nav>
+        <a href="#" class="action_btn">Get Started</a>
+        <div class="toggle_btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <div class="dropdown_menu">
+        <li><a href="/board">Board</a></li>
+        <li><a href="/gantt">GANTT</a></li>
+        <li><a href="/backlog">Backlog</a></li>
+        <li><a href="#" class="action_btn">Get Started</a></li>
+    </div>
 </header>
 <div id="backlog"></div>
 <body>
