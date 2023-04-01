@@ -43,39 +43,42 @@
             : 'fa-solid fa-bars'
         }
     </script>
-  <div>
-    <form id="taskForm">
-      <label for="taskName">Task Name:</label>
-      <input required type="text" id="taskName" name="taskName"><br>
+  <div id="Container">
+    <div id="form">
+      <form id="taskForm">
+        <label for="taskName">Task Name:</label>
+        <input required type="text" id="taskName" name="taskName"><br>
 
-      <label for="description">Description:</label>
-      <input type="text" id="description" name="description"><br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description"><br>
 
-      <label for="assignee">Assignee:</label>
-      <input type="text" id="assignee" name="assignee" required><br>
+        <label for="assignee">Assignee:</label>
+        <input type="text" id="assignee" name="assignee" required><br>
 
-      <label for="priority">Priority:</label>
-      <select id="priority" name="priority">
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select><br>
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select><br>
 
-      <label for="startDate">Start Date:</label>
-      <input type="date" id="startDate" name="startDate" required><br>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required><br>
 
-      <label for="endDate">End Date:</label>
-      <input type="date" id="endDate" name="endDate" required><br>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required><br>
 
-      <label for="status">Status:</label>
-      <select id="status" name="status">
-        <option value="To do">To Do</option>
-        <option value="Doing">In Progress</option>
-        <option value="Done">Done</option>
-      </select>
-      <input type="submit" value="Add Task">
-    </form>
-    <div id="List-Container">
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+          <option value="To do">To Do</option>
+          <option value="Doing">In Progress</option>
+          <option value="Done">Done</option>
+        </select><br>
+        <input type="submit" value="Add Task">
+      </form>
+    </div>
+    <div id="lists">
+
     </div>
   </div>
   

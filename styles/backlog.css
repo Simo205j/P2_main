@@ -1,6 +1,7 @@
 * {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 #backlog {
   width: 100%;
   margin: 0 auto;
@@ -29,7 +30,7 @@ nav li {
 nav a {
   display: block;
   padding: 10px;
-}  
+}
 
 table {
   border-collapse: collapse;
@@ -37,19 +38,22 @@ table {
   width: 50%;
   height: 50%;
 }
+
 th,
 td {
   border: 1px solid black;
-  padding: 0.5em 2rem;
+  padding: 0.5em 1rem;
   text-align: center;
   font-size: 2rem;
   white-space: nowrap;
   color: whitesmoke;
 }
+
 #backlog > div {
   background-color: rgba(0, 0, 0, 0.15);
-  padding: 40px; /* add padding to create space between the table and the background */
+  padding: 40px;
   border-radius: 30px;
+  margin-top: 5rem
 }
 
 tr:hover{

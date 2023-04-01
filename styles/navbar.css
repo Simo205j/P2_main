@@ -20,7 +20,7 @@ li{
 a{
     text-decoration: none;
     color: #fff;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 a:hover{
@@ -43,7 +43,7 @@ header{
 }
 
 .Navbar .logo a{
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bolds;
 }
 
@@ -54,7 +54,7 @@ header{
 
 .Navbar .toggle_btn{
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
     display: none;
 }

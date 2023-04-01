@@ -2,7 +2,7 @@ LISTS = ["To do", "Doing", "Done"]
 
 
 const source = new EventSource("http://localhost:3000/events");
-const listsTypeContainer = document.getElementById("List-Container")
+const listsTypeContainer = document.getElementById("lists")
 
 source.addEventListener("message", function getTasks(event) {
   const tasks = JSON.parse(event.data);
