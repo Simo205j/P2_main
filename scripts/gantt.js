@@ -58,6 +58,7 @@ source.addEventListener("message", function(event) {
       y: task.TaskName,
       assigne: task.TaskAttributes.Assignee,
       status: task.TaskAttributes.Status,
+      label: task.TaskAttributes.Description // Add the label property
     };
     barColorsTask.push(barColors[task.TaskAttributes.Status])
     borderColorsTask.push(borderColors[task.TaskAttributes.Status])
@@ -82,6 +83,7 @@ function updateChart(data, barColorsTask, borderColorsTask) {
 
 document.addEventListener('DOMContentLoaded', function() {
   const data = {
+    labels: [],
     datasets: [{
       label: 'Project Overview',
       data: penis,
@@ -182,6 +184,13 @@ const todayLine = {
       },
       //THESE PLUGINS ARE FROM CHART.JS CONFIGURATION
       plugins: {
+        tooltip: {
+          callbacks: {
+            label: ((tooltipItem, data) => {
+              return tooltipItem.raw.label + ", Assignee: " + tooltipItem.raw.assigne
+            })
+          }
+        },
         legend: {
           display: false
         }
