@@ -1,7 +1,56 @@
 const source = new EventSource("http://localhost:3000/events");
+const nextMonth = document.getElementById("nextMonth");
+const prevMonth = document.getElementById("prevMonth");
+const mlSecondsInMonth = 2629743833;
+let minCurrentDate = new Date(Math.floor(Date.now() - mlSecondsInMonth/3));
+let maxCurrentDate = new Date(Math.floor(Date.now() + mlSecondsInMonth));
+
+const barColors = {
+  "Done": "rgba(11, 230, 41, 0.2)", 
+  "Doing": "rgba(237, 139, 12, 0.2)", 
+  "To do": "rgba(233, 18, 18, 0.2)"
+};
+const borderColors = {
+  "Done": "rgba(11, 230, 41, 0.8)", 
+  "Doing": "rgba(237, 139, 12, 0.8)", 
+  "To do": "rgba(233, 18, 18, 0.8)"
+};
 let penis = [];
 
+nextMonth.addEventListener("click", () => {
+  const chart = Chart.getChart("myChart");
+  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
+  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
+  updateTimeChart(chart, newMin, newMax);
+});
+
+prevMonth.addEventListener("click", () => {
+  const chart = Chart.getChart("myChart");
+  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
+  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
+  updateTimeChart(chart, newMin, newMax);
+});
+
+function formatDate(date) {
+  const year = date.getFullYear().toString().padStart(4, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return year+ "-" + month + "-" + day;
+}
+
+function updateTimeChart(chart, newMin, newMax) {
+  console.log(newMin, newMax);
+  chart.config.options.scales.x.min = new Date(newMin);
+  chart.config.options.scales.x.max = new Date(newMax);
+  console.log(chart.config.options.scales.x.min, chart.config.options.scales.x.max)
+  chart.update();
+}
+
+
+
 source.addEventListener("message", function(event) {
+  const barColorsTask = []
+  const borderColorsTask = []
   const data = JSON.parse(event.data);
   data.forEach((task) => {
     let taskData = {
@@ -10,23 +59,26 @@ source.addEventListener("message", function(event) {
       assigne: task.TaskAttributes.Assignee,
       status: task.TaskAttributes.Status,
     };
+    barColorsTask.push(barColors[task.TaskAttributes.Status])
+    borderColorsTask.push(borderColors[task.TaskAttributes.Status])
     penis.push(taskData);
   });
-
   // Update chart with the new data
-  updateChart(penis);
+  updateChart(penis, barColorsTask, borderColorsTask);
 });
 
-function updateChart(data) {
+
+function updateChart(data, barColorsTask, borderColorsTask) {
   // Get chart instance
   const chart = Chart.getChart("myChart");
-  console.log(chart)
-
+  chart.config.options.scales.x.min = minCurrentDate
+  chart.config.options.scales.x.max = maxCurrentDate
   // Update chart data and redraw
   chart.data.datasets[0].data = data;
+  chart.data.datasets[0].backgroundColor = barColorsTask;
+  chart.data.datasets[0].borderColor = borderColorsTask;
   chart.update();
 }
-
 
 document.addEventListener('DOMContentLoaded', function() {
   const data = {
@@ -34,22 +86,14 @@ document.addEventListener('DOMContentLoaded', function() {
       label: 'Project Overview',
       data: penis,
       backgroundColor: [
-        'rgba(255, 26, 104, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(0, 0, 0, 0.2)'
+        "rgba(11, 230, 41, 0.2)",
+        "rgba(237, 139, 12, 0.2)",
+        "rgba(233, 18, 18, 0.2)"
       ],
       borderColor: [
-        'rgba(255, 26, 104, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(0, 0, 0, 1)'
+        "rgba(11, 230, 41, 0.8)",
+        "rgba(237, 139, 12, 0.8)",
+        "rgba(233, 18, 18, 0.8)"
       ],
       borderWidth: 1,
       borderSkipped: false,
@@ -59,7 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   //------------PLUGINS-------------//
   //MAKES DOTTED LINE FOR CURRENT DATE
-console.log(data.datasets[0].data)
 const todayLine = {
   id : "todayline",
   beforeDatasetsDraw(chart, args, pluginOptions) {
@@ -133,8 +176,8 @@ const todayLine = {
           time: {
             unit: "day"
           },
-          min: "2023-03-30",
-          max: "2023-05-01"
+          min: minCurrentDate,
+          max: maxCurrentDate
         }
       },
       //THESE PLUGINS ARE FROM CHART.JS CONFIGURATION

@@ -38,6 +38,12 @@ table {
   width: 50%;
   height: 50%;
 }
+ting {
+
+  color: rgba(11, 230, 41, 0.2);
+  color: rgba(237, 139, 12, 0.2);
+  color: rgba(233, 18, 18, 0.2);
+}
 
 th,
 td {
