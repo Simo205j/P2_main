@@ -19,15 +19,15 @@ let penis = [];
 
 nextMonth.addEventListener("click", () => {
   const chart = Chart.getChart("myChart");
-  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
-  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
+  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
+  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
   updateTimeChart(chart, newMin, newMax);
 });
 
 prevMonth.addEventListener("click", () => {
   const chart = Chart.getChart("myChart");
-  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
-  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
+  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
+  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
   updateTimeChart(chart, newMin, newMax);
 });
 
