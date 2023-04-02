@@ -87,13 +87,34 @@ function sendEventsToAll() {
 
 setInterval(sendEventsToAll, 1000); // sends events to all clients every 10 seconds
 
+app.patch("/Tasks/UpdateStatus", (req, res) => {
+  console.log("GOT PATCH request to update task status")
+  const data = req.body;
+  console.log(data)
+
+  //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
+  taskDataBase.update({_id: data.id}, {$set: {"TaskAttributes.Status": data.Status}}, {}, (err, numUpdated) => {  
+    if(err) 
+    {
+      res.status(500).send({ error: err });
+    }
+    else
+    {
+      res.status(200).json({
+        status: "PATCHED TASK",
+        task: data
+      });
+    }
+  });
+});
+
 app.patch("/Tasks/Edit", (req, res) => {
   console.log("GOT PATCH request to update task")
   const data = req.body;
   console.log(data)
 
   //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
-  taskDataBase.update({_id: data.id}, {$set: { TaskName: data.TaskName, TaskAttributes: data.TaskAttributes,} },{}, (err, updatedTask) => {
+  taskDataBase.update({_id: data.id}, {$set: { TaskName: data.TaskName, TaskAttributes: data.TaskAttributes} },{}, (err, updatedTask) => {
     if(err) 
     {
       res.status(500).send({ error: err });

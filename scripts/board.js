@@ -15,13 +15,16 @@ source.addEventListener("message", function getTasks(event) {
       listType.id = list;
       const newTaskList = document.createElement("ol");
       newTaskList.id = "TaskList";
+      newTaskList.name = list
       newTaskList.textContent = list;
 
       tasks.forEach((task) => {
         if(task.TaskAttributes.Status == list){
           const newTask = document.createElement("li");
           newTask.textContent = task.TaskName;
+          newTask.name = task.TaskName
           newTask.id = task._id
+          newTask.setAttribute("draggable", true);
           newTaskList.appendChild(newTask); 
           makeDeleteButton(task, newTask);
           makeEditButton(task, newTask);
@@ -34,7 +37,53 @@ source.addEventListener("message", function getTasks(event) {
       previousContainer.parentNode.removeChild(previousContainer);
   }
   listsTypeContainer.appendChild(newListsContainer);
+  makeDraggable();
 });
+
+function makeDraggable(){
+  const draggableElements = document.querySelectorAll('[draggable=true]');
+  const containers = document.querySelectorAll("#TaskList")
+  console.log(draggableElements, containers)
+  draggableElements.forEach((element) => {
+    element.addEventListener("dragstart", () => {
+      element.classList.add("dragging")
+    })
+    element.addEventListener("dragend", () => {
+      element.classList.remove("dragging")
+    })
+  })
+  containers.forEach((container) => {
+    container.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    })
+  
+    container.addEventListener("drop", async (event) => {
+      event.preventDefault();
+      const draggable = document.querySelector(".dragging")
+      if (event.target === container) {
+        container.appendChild(draggable)
+        const updatedData = {
+          id: draggable.id,
+          Status: container.name
+        }
+        try {
+          const response = await fetch("http://localhost:3000/Tasks/UpdateStatus", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedData)
+          });
+          const responseData = await response.json();
+          console.log(responseData.status, responseData);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    })
+  })
+}
+  
 
 taskForm.addEventListener("submit", async (event) => {
     event.preventDefault();
