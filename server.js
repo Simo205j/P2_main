@@ -13,6 +13,9 @@ taskDataBase.loadDatabase();
 const logbookDataBase = new DataStore({ filename: "./Databases/logbookDataBase.db", autoload: true });
 logbookDataBase.loadDatabase();
 
+const assigneeDataBase = new DataStore({ filename: "./Databases/assigneeDataBase.db", autoload: true });
+assigneeDataBase.loadDatabase();
+
 const app = express();
 
 router.get('/', (req, res) => {
@@ -210,7 +213,7 @@ app.get("/api/Logbook/Get", (req, res) => {
 app.post("/Logbook/UpdatePost", (req, res) => {
   logbookEntry = req.body; 
   console.log(req.body)
-  console.log("Got request to POST new logbook:" + logbookEntry.date);
+  console.log("Got request to POST new logbook:" + logbookEntry._id);
   logbookDataBase.update(
     { _id: logbookEntry._id }, // query to find the document
     { $push: { paragraphs: logbookEntry.paragraphs, headers: logbookEntry.headers } }, // update operation to insert new element
@@ -242,13 +245,13 @@ app.post('/Logbook/SendLogbook', (req, res) => {
   });
 })
 
-app.patch("/Logbook/UpdateStatus", (req, res) => {
-  console.log("GOT PATCH request to update task")
-  const data = req.body;
-  console.log(data)
 
+app.patch("/Logbook/UpdateStatus", (req, res) => {
+  const data = req.body;
+  console.log("GOT PATCH request to update logbook", data._id)
+  console.log("LINE 248: ", data.status)
   //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
-  logbookDataBase.update({_id: data.id}, {$set: { TaskName: data.TaskName, TaskAttributes: data.TaskAttributes} },{}, (err, updatedTask) => {
+  logbookDataBase.update({_id: data._id}, {$set: { status: data.status} },{}, (err, updatedTask) => {
     if(err) 
     {
       res.status(500).send({ error: err });
@@ -256,8 +259,8 @@ app.patch("/Logbook/UpdateStatus", (req, res) => {
     else
     {
       res.status(200).json({
-        status: "PATCHED TASK",
-        task: data
+        status: "PATCHED Logbook",
+        data: data
       });
     }
   });
@@ -310,3 +313,74 @@ function sendEventsToAlle() {
 }
 
 setInterval(sendEventsToAlle, 1000); // sends events to all clients every 10 seconds
+
+
+
+
+
+
+app.get('/events/Assignee', eventsHandlerAssignee);
+
+function eventsHandlerAssignee(request, response) {
+  const headers = {
+    'Content-Type': 'text/event-stream',
+    'Connection': 'keep-alive',
+    'Cache-Control': 'no-cache'
+  };
+  response.writeHead(200, headers);
+
+  const clientId = Date.now();
+
+  const newClient = {
+    id: clientId,
+    response
+  };
+  clients.push(newClient);
+  console.log("New client: " + clientId);
+
+  // Immediately send the current task data to the new client
+  assigneeDataBase.find({}, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      response.write(`data: ${JSON.stringify(data)}\n\n`);
+    }
+  });
+  
+  request.on('close', () => {
+    console.log(`${clientId} Connection closed`);
+    clients = clients.filter(client => client.id !== clientId);
+  });
+}
+let lastSentDataAssignee = null;
+function sendAssigneeToAll() {
+  assigneeDataBase.find({}, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else if (JSON.stringify(data) !== JSON.stringify(lastSentDataAssignee)) {
+      console.log(data);
+      clients.forEach(client => client.response.write(`data: ${JSON.stringify(data)}\n\n`));
+      lastSentDataAssignee = data;
+    }
+  });
+}
+
+setInterval(sendAssigneeToAll, 1000); // sends events to all clients every 10 seconds
+
+
+
+app.post("/SendAssignee", (req, res) => {
+  console.log("Got POST submit Assignee request", req.body);
+  const data = req.body;
+  assigneeDataBase.insert(data, (err, newAssignee) => {
+    if (err) {
+      res.status(500).send({ error: err });
+    } 
+    else {
+      res.status(200).json({
+        AssigneeName: newAssignee.assigneeName,
+      });
+    }
+  });
+})
+

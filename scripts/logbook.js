@@ -5,6 +5,7 @@ const source = new EventSource("http://localhost:3000/events/Logbooks");
 
 source.addEventListener("message", function getTasks(event) {
   const data = JSON.parse(event.data);
+  console.log(data)
   makeLogbookList(data)
 })
 
@@ -12,7 +13,8 @@ submitLogbook.addEventListener("click", async (event) => {
   const data = {
     date: new Date().toISOString().substr(0, 10),
     paragraphs: [],
-    headers: []
+    headers: [],
+    status: false
   };
   
   console.log(data)
@@ -50,25 +52,88 @@ function makeLogbookList(data){
   })
   prevData = [...prevData, ...newData];
 }
-
 function makeHeadersAndParagraphs(container, logbookEntry){
-  const hAndpDiv = document.createElement("div")
+  const hAndpDiv = document.createElement("div");
+  hAndpDiv.className = "hAndpDiv"
 
-  let pArray = []
-  let hArray = []
-  logbookEntry.headers.forEach((headers, index) => {
-    const header = document.createElement("h3")
-    header.textContent = headers
-    hArray.push(headers)
-  })
+  logbookEntry.headers.forEach((header, index) => {
+    const hAndpContainer = document.createElement("div");
+    hAndpContainer.className = "hAndpContainer";
 
-  logbookEntry.paragraphs.forEach((paragraphs, index) => {
-    const paragraph = document.createElement("p")
-    paragraph.textContent = paragraphs
-    pArray.push(paragraph)
-  })
-  console.log(pArray, hArray)
+    const checkbox = document.createElement("input")
+    
+    checkbox.type = "checkbox";
+    checkbox.className = "checkbox";    
+    checkbox.addEventListener("click", async () => {
+      const data = {
+        status: checkbox.checked,
+        _id: logbookEntry._id
+      }
+      const response = await fetch("http://localhost:3000/Logbook/UpdateStatus", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"                                  
+        },
+        body: JSON.stringify(data)
+        });
+        try{
+          const data = await response.json();
+          console.log(data.status, data);          
+        }
+        catch (error) {
+          console.error(error);
+        }  
+      })
+    checkbox.checked = logbookEntry.status
+    hAndpContainer.appendChild(checkbox);
+
+    const h = document.createElement("h3");
+    h.textContent = header;
+    hAndpContainer.appendChild(h);
+
+    const p = document.createElement("p");
+    p.textContent = logbookEntry.paragraphs[index];
+    hAndpContainer.appendChild(p);
+
+    hAndpDiv.appendChild(hAndpContainer);
+  });
+
+  container.appendChild(hAndpDiv);
 }
+
+/*
+const savewertarwButton = dialog.querySelector("#saveEditButton");
+saveButton.addEventListener("click", async () => {
+  console.log("save button clicked")
+  const updatedData = {
+    TaskName: form.taskName.value,
+    TaskAttributes: {
+      StartDate: form.startDate.value,
+      Status: form.status.value,
+    },
+    id: newTask.id
+  };
+  try {
+    const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      }
+    );
+    const responseData = await response.json();
+    console.log(responseData.status, responseData);
+  } catch (error) {
+    console.error(error);
+  }
+});
+});
+newTask.appendChild(editButton);
+}*/
+
+
+
 function makeDeleteButton(logbooks, logbookEntry, container){
     const deleteButton = document.createElement("button");
     deleteButton.value = "Delete Logbook";
@@ -97,12 +162,15 @@ function makeDeleteButton(logbooks, logbookEntry, container){
 function makeLogbookOpen(container, logbookEntry, containerName){
   let form = document.createElement("form");
   form.id = logbookEntry._id;
+  let formClose = document.createElement("input");
   let formHeaderLabel = document.createElement("label");
   let formHeader = document.createElement("input");
   let formDescriptionLabel = document.createElement("label");
   let formDescription = document.createElement("input");
   let submitButton = document.createElement("button");
   
+  formClose.type = "button"
+  formClose.value = "X"
   formHeaderLabel.textContent = "Header: ";
   formHeader.name = "header";
   formHeader.value = "";
@@ -120,7 +188,8 @@ function makeLogbookOpen(container, logbookEntry, containerName){
     const updatedData = {
       paragraphs: formDescription.value,
       headers: formHeader.value,
-      _id: logbookEntry._id
+      _id: logbookEntry._id,
+      status: false
     }
     console.log(updatedData)
     try {

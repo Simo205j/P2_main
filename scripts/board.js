@@ -1,8 +1,30 @@
 LISTS = ["To do", "Doing", "Done"]
 
-
+const assigneesSource = new EventSource("http://localhost:3000/events/Assignee");
 const source = new EventSource("http://localhost:3000/events");
 const listsTypeContainer = document.getElementById("lists")
+const form = document.getElementById("taskForm")
+assigneeForm = document.getElementById("assigneeForm")
+assigneeFormButton = document.getElementById("assigneeButton")
+
+assigneesSource.addEventListener("message", function getAssigness(event) {
+  const assignees = JSON.parse(event.data);
+  const insertAfterThis = document.getElementById("description")
+  console.log(insertAfterThis)
+
+  const selectAssigneeLabel = document.createElement("label")
+  const selectAssignee = document.createElement("select")
+
+  selectAssigneeLabel.text
+
+  selectAssignee.value = "Assignees"
+  assignees.forEach((assign) => {
+    const option = document.createElement("option")
+    option.value = assign.assigneeName
+    selectAssignee.appendChild(option)
+  })
+  console.log(selectAssignee)
+})
 
 source.addEventListener("message", function getTasks(event) {
   const tasks = JSON.parse(event.data);
@@ -17,7 +39,7 @@ source.addEventListener("message", function getTasks(event) {
       newTaskList.id = "TaskList";
       newTaskList.name = list
       newTaskList.textContent = list;
-
+    
       tasks.forEach((task) => {
         if(task.TaskAttributes.Status == list){
           const newTask = document.createElement("li");
@@ -43,7 +65,6 @@ source.addEventListener("message", function getTasks(event) {
 function makeDraggable(){
   const draggableElements = document.querySelectorAll('[draggable=true]');
   const containers = document.querySelectorAll("#TaskList")
-  console.log(draggableElements, containers)
   draggableElements.forEach((element) => {
     element.addEventListener("dragstart", () => {
       element.classList.add("dragging")
@@ -186,3 +207,24 @@ function makeEditButton(task, newTask) {
   });
   newTask.appendChild(editButton);
 }
+
+
+assigneeFormButton.addEventListener("click", async (event) => {
+  event.preventDefault();
+  const data = {
+    assigneeName: assigneeForm.value
+  };
+  try {
+    const response = await fetch("http://localhost:3000/SendAssignee", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    const assigneeresponseData = await response.json();
+    console.log(assigneeresponseData.status, assigneeresponseData);
+  } catch (error) {
+    console.error(error);
+  }
+});

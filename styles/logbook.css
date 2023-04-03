@@ -1,14 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+  }
 h1 {
     text-align: center;
     color: white;
-    margin: 3rem    ;
+    margin: 3rem;
 }
+
 #logbooks {
     display: flex;
     flex-direction: column;
     margin: 5rem;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 30px;
+    border-radius: 30px;
 }
 
 #logbooks > div {
@@ -18,7 +26,9 @@ h1 {
     background-color: rgba(0, 0, 0, 0.5);
     border: 2px solid white;
     margin: 5px;
+    border-radius: 10px;
 }
+
 #logbooks > p {
     padding: 15px;
     text-align: center;
@@ -27,46 +37,93 @@ h1 {
     border: 2px solid white;
     margin: 5px;
 }
-     
+
 #container {
     display: flex;
     justify-content: center;
-  }
-
+}
+#newLogbook {
+    border-radius: 10px;
+}
 form {
     display: flex;
     flex-direction: row;
-    align-self: center;
-    margin-top: 20px;
-  }
-  
-  label {
+    justify-content: center;
+    margin: 20px 20px;
+}
+
+label {
     margin: 0px 20px;
-  }
-  
-  input[type="text"] {
+}
+
+input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 2px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
-  
-  button[type="submit"] {
-    background-color: #4CAF50;
+}
+
+button[type="submit"] {
+    background-color: #458ca0;
     color: white;
     padding: 5px 5px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
-  #error-message {
+}
+
+button[type="submit"]:hover {
+    background-color: #458ca0;
+}
+
+#error-message {
     color: red;
     margin-top: 10px;
-  }
-  
+}
+
+.hAndpDiv {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hAndpContainer {
+    width: 100%;
+    display: flex;
+    padding: 5px 0px;
+    align-items: center;
+    justify-content: flex-start;
+    border: 0.5px solid rgba(255, 255, 255, 0.8);
+}
+.hAndpContainer:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.hAndpContainer:first-child{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.hAndpContainer:last-child{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.hAndpContainer h3, p{
+    padding: 10px;
+}
+
+.hAndpContainer h3 {
+    flex: 0 0 25%;
+    
+}
+.hAndpContainer input[type="checkbox"] {
+    margin-left: 10px;
+    zoom: 1.5;
+    border-right: 2px solid #ccc;
+    flex: 0 0 5%;
+    
+}
+.hAndpContainer p {
+    flex: 1;
+    margin-right: 60px;
+    border-left: 2px solid #ccc;
+}
+
