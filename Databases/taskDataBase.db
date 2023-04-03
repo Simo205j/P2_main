@@ -1,9 +1,6 @@
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"Wo6CpDFBaBBvEnIH"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"7A0NkWByOvxgA8I5"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"qYCuG1uL8SizwJou"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"CikMRSrBWHQp3jyd"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"4lLxbmMPASfN8jYY"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"ukWf39BCd1OZdyvk"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"medium","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"Wo6CpDFBaBBvEnIH"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"Medium","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"Wo6CpDFBaBBvEnIH"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"Low","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"qYCuG1uL8SizwJou"}
+{"TaskName":"Hejsa","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"To do"},"_id":"4lLxbmMPASfN8jYY"}
+{"TaskName":"Din","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"Doing"},"_id":"CikMRSrBWHQp3jyd"}
+{"TaskName":"Kusse","TaskAttributes":{"Description":"Fisse","Assignee":"Pik","Priority":"Low","StartDate":"2023-04-06","EndDate":"2023-04-15","Status":"To do"},"_id":"WwyUEGZIFTY1YBJf"}
+{"TaskName":"Kusse","TaskAttributes":{"Description":"Fisse","Assignee":"Pik","Priority":"Low","StartDate":"2023-04-06","EndDate":"2023-04-15","Status":"Doing"},"_id":"f3MhmYCwmjGcC0cT"}
+{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"Doing"},"_id":"ukWf39BCd1OZdyvk"}
+{"TaskName":"Mor","TaskAttributes":{"Description":"Fisse","Assignee":"Pik","Priority":"Low","StartDate":"2023-04-06","EndDate":"2023-04-15","Status":"Doing"},"_id":"yV3rhOxlCbAlUr6F"}

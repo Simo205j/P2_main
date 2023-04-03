@@ -53,13 +53,20 @@ td {
   font-size: 2rem;
   white-space: nowrap;
   color: whitesmoke;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+th {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 #backlog > div {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.5);
   padding: 40px;
   border-radius: 30px;
   margin-top: 5rem
+}
+tr:nth-child(odd){
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 tr:hover{

@@ -39,10 +39,8 @@ function formatDate(date) {
 }
 
 function updateTimeChart(chart, newMin, newMax) {
-  console.log(newMin, newMax);
   chart.config.options.scales.x.min = new Date(newMin);
   chart.config.options.scales.x.max = new Date(newMax);
-  console.log(chart.config.options.scales.x.min, chart.config.options.scales.x.max)
   chart.update();
 }
 
@@ -109,7 +107,9 @@ const todayLine = {
   id : "todayline",
   beforeDatasetsDraw(chart, args, pluginOptions) {
     const {ctx, data, chartArea: { top, bottom, left, right}, scales: {x, y} } = chart;
-
+    minCurrentDate = chart.config.options.scales.x.min 
+    maxCurrentDate = chart.config.options.scales.x.max 
+    if (minCurrentDate < Date.now() && Date.now() < maxCurrentDate)
     ctx.save()
     //TELLS NODE.JS THAT WE WANT TO START DRWING
     ctx.beginPath()
@@ -141,20 +141,7 @@ const todayLine = {
   }
 }
   //CREATES DISPLAYED NAMES SEEN ON THE LEFT SIDE OF THE CHART
-  const assignedTasks = {
-    id: "assignedTasks",
-    afterDatasetsDraw(chart, args, pluginOptions) {
-      const {ctx, data, chartArea: { top, bottom, left, right}, scales: {x, y} } = chart;
-      ctx.save()
-      ctx.font = "bolder 20px sans-serif"
-      ctx.fillstyle = "black";
-      ctx.textBaseline = "middle";
-      data.datasets[0].data.forEach((penis, index) => {
-        ctx.fillText(penis.assigne, 10, y.getPixelForValue(index));
-      });
-      ctx.restore();
-    }
-  }
+
   // CONFIGURATION FOR LAYOUT OF CHART
   const config = {
     type: 'bar',
@@ -198,7 +185,7 @@ const todayLine = {
     },
     //THESE PLUGINS LETS US MANIPULATE/DRAW ADDITIONAL INFORMATION TO THE CHART 
     //SEE PREVIOUSLY DECLARED PLUGINS IN THIS FILE
-    plugins: [todayLine, assignedTasks, status]
+    plugins: [todayLine, status]
   };
   //RENDER CHART 
   const myChart = new Chart(
