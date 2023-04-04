@@ -26,15 +26,16 @@ assigneeFormButton.addEventListener("click", async (event) => {
   let lastAssigneeMessage = null;
   
     assigneesSource.addEventListener("message", function getAssignees(event) {
-      if (event.target === assigneesSource) {
+      const assigneebox = document.getElementById("assignee")
+      if (event.target === assigneesSource && !assigneebox) {
         const assignees = JSON.parse(event.data);
       if (assignees === lastAssigneeMessage) {
         return;
       }
-      if (document.getElementById("assignee")) {
+     /* if (document.getElementById("assignee")) {
         document.getElementById("assignee").remove();
       }
-      
+      */
       const insertAfterThis = document.querySelector("label[for='assignee']");
   
       const selectAssigneeLabel = document.createElement("label");
@@ -44,6 +45,7 @@ assigneeFormButton.addEventListener("click", async (event) => {
           checkAttribute = assign.hasOwnProperty('assigneeName')
           console.log(assign.TaskName)
           console.log(checkAttribute)
+          console.log(assign.assigneeName)
           if (checkAttribute){
             const option = document.createElement("option");
             option.textContent = assign.assigneeName;
