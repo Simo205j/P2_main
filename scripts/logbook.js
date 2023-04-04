@@ -61,7 +61,8 @@ function makeHeadersAndParagraphs(container, logbookEntry){
     hAndpContainer.className = "hAndpContainer";
 
     const checkbox = document.createElement("input")
-    
+    //const editHAndPBtn = document.createElement("button")
+
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";    
     checkbox.addEventListener("click", async () => {
@@ -86,6 +87,31 @@ function makeHeadersAndParagraphs(container, logbookEntry){
       })
     checkbox.checked = logbookEntry.status
     hAndpContainer.appendChild(checkbox);
+   /* editHAndPBtn.value = "Edit Logbook";
+    editHAndPBtn.textContent = "Edit"; 
+    editHAndPBtn.addEventListener("click", async () => {
+      const data = {
+        header: logbookEntry.header.value,
+        paragraphs: logbookEntry.header.value
+      }
+      const response = await fetch("http://localhost:3000/Logbook/UpdateStatus", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"                                  
+        },
+        body: JSON.stringify(data)
+        });
+        try{
+          const data = await response.json();
+          console.log(data.status, data);          
+        }
+        catch (error) {
+          console.error(error);
+        } 
+
+    })
+    hAndpContainer.appendChild(editHAndPBtn)*/
+
 
     const h = document.createElement("h3");
     h.textContent = header;
