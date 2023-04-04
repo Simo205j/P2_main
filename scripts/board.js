@@ -4,28 +4,13 @@ const assigneesSource = new EventSource("http://localhost:3000/events/Assignee")
 const source = new EventSource("http://localhost:3000/events");
 const listsTypeContainer = document.getElementById("lists")
 const form = document.getElementById("taskForm")
-assigneeForm = document.getElementById("assigneeForm")
-assigneeFormButton = document.getElementById("assigneeButton")
+const assigneeForm = document.getElementById("assigneeForm")
+const assigneeFormButton = document.getElementById("assigneeButton")
 
-assigneesSource.addEventListener("message", function getAssigness(event) {
-  const assignees = JSON.parse(event.data);
-  const insertAfterThis = document.getElementById("description")
-  console.log(insertAfterThis)
 
-  const selectAssigneeLabel = document.createElement("label")
-  const selectAssignee = document.createElement("select")
 
-  selectAssigneeLabel.text
 
-  selectAssignee.value = "Assignees"
-  assignees.forEach((assign) => {
-    const option = document.createElement("option")
-    option.value = assign.assigneeName
-    selectAssignee.appendChild(option)
-  })
-  console.log(selectAssignee)
-})
-
+let lastTaskMessage = null;
 source.addEventListener("message", function getTasks(event) {
   const tasks = JSON.parse(event.data);
   console.log(tasks)
@@ -60,7 +45,9 @@ source.addEventListener("message", function getTasks(event) {
   }
   listsTypeContainer.appendChild(newListsContainer);
   makeDraggable();
+  lastTaskMessage = tasks;
 });
+
 
 function makeDraggable(){
   const draggableElements = document.querySelectorAll('[draggable=true]');
@@ -228,3 +215,49 @@ assigneeFormButton.addEventListener("click", async (event) => {
     console.error(error);
   }
 });
+let lastAssigneeMessage = null;
+  assigneesSource.addEventListener("message", function getAssignees(event) {
+    if (event.target == assigneesSource) {
+      const assignees = JSON.parse(event.data);
+    if (assignees === lastAssigneeMessage) {
+      return;
+    }
+    if (document.getElementById("assignee")) {
+      document.getElementById("assignee").remove();
+    }
+    
+    const insertAfterThis = document.querySelector("label[for='assignee']");
+
+    const selectAssigneeLabel = document.createElement("label");
+    const selectAssignee = document.createElement("select");
+
+    assignees.forEach((assign) => {
+        checkAttribute = assign.hasOwnProperty('assigneeName')
+        console.log(checkAttribute)
+        if (checkAttribute){
+          const option = document.createElement("option");
+          option.textContent = assign.assigneeName;
+          option.value = assign.assigneeName;
+          console.log(option)
+          selectAssignee.appendChild(option)   
+        }
+        else {
+          selectAssignee.remove()
+          selectAssigneeLabel.remove()
+          return;
+        } 
+    });
+
+    selectAssigneeLabel.textContent = "Assignee";
+    selectAssignee.id = "assignee";
+    selectAssignee.required = true;
+    selectAssignee.name = "assignee";
+
+    insertAfterThis.insertAdjacentElement("afterend", selectAssignee);
+    lastAssigneeMessage = assignees;
+    }
+  else {
+
+    return
+  }
+})
