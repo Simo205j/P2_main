@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const DataStore = require("nedb");
+const bodyParser = require('body-parser');
 
 const taskDataBase = new DataStore({ filename: "./Databases/taskDataBase.db", autoload: true });
 taskDataBase.loadDatabase();
 
 let clients = [];
 
+router.use(bodyParser.json());
 router.get('/events', eventsHandler);
 
 function eventsHandler(request, response) {

@@ -31,7 +31,7 @@ source.addEventListener("message", function getTasks(event) {
 
           
           newTaskList.appendChild(newTask); 
-        /*   makeParagraph(newTask) */
+          makeParagraph(newTask, task) 
           makeDeleteButton(task, newTask);
           makeEditButton(task, newTask);
         }
@@ -119,16 +119,31 @@ taskForm.addEventListener("submit", async (event) => {
       console.error(error);
     }
 });
-/* function makeParagraph(newTask){
+function makeParagraph(newTask, task){
+  const lineBreak = document.createElement("br")
   const newTaskDescription = document.createElement("p")
   newTaskDescription.textContent = task.TaskAttributes.Description    
-  newTask.appendChild(newTaskDescription)   
+
+  newTask.addEventListener("click", () => {
+    newTaskDescription.classList.toggle("show-description");
+  });
+  newTask.appendChild(lineBreak) 
+  newTask.appendChild(newTaskDescription)  
 }
- */
+
 function makeDeleteButton(task, newTask){
   const deleteButton = document.createElement("button");
   deleteButton.value = "Delete Task";
   deleteButton.textContent = "Delete";
+  deleteButton.style.visibility = "hidden";
+
+  newTask.addEventListener("mouseover", () => {
+    deleteButton.style.visibility = "visible";
+  });
+  newTask.addEventListener("mouseout", () => {
+    deleteButton.style.visibility = "hidden";
+  });
+
   deleteButton.addEventListener("click", async (event) => {
     event.preventDefault();
     const response = await fetch("http://localhost:3000/Tasks/Delete", {
@@ -152,6 +167,14 @@ function makeEditButton(task, newTask) {
   const editButton = document.createElement("button");
   editButton.value = "Edit Task";
   editButton.textContent = "Edit";
+
+  editButton.style.visibility = "hidden";
+  newTask.addEventListener("mouseover", () => {
+    editButton.style.visibility = "visible";
+  });
+  newTask.addEventListener("mouseout", () => {
+    editButton.style.visibility = "hidden";
+  });
 
   editButton.addEventListener("click", async (event) => {
     event.preventDefault();

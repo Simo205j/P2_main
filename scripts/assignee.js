@@ -41,14 +41,10 @@ assigneeFormButton.addEventListener("click", async (event) => {
       
       assignees.forEach((assign) => {
           checkAttribute = assign.hasOwnProperty('assigneeName')
-          console.log(assign.TaskName)
-          console.log(checkAttribute)
-          console.log(assign.assigneeName)
           if (checkAttribute){
             const option = document.createElement("option");
             option.textContent = assign.assigneeName;
-            option.value = assign.assigneeName;
-            console.log(option)
+            option.value = assign.assigneeName
             selectAssignee.appendChild(option)   
           }
           else {

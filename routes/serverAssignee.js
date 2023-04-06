@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const DataStore = require("nedb");
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
 
 const assigneeDataBase = new DataStore({ filename: "./Databases/assigneeDataBase.db", autoload: true });
 assigneeDataBase.loadDatabase();
