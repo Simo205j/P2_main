@@ -14,6 +14,7 @@ submitLogbook.addEventListener("click", async (event) => {
     date: new Date().toISOString().substr(0, 10),
     paragraphs: [],
     headers: [],
+    checkboxStatus: [],
     status: false
   };
   
