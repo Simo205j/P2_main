@@ -1,11 +1,6 @@
-{"TaskName":"Hejsa","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"Done"},"_id":"4lLxbmMPASfN8jYY"}
-{"TaskName":"Din","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"Done"},"_id":"CikMRSrBWHQp3jyd"}
-{"TaskName":"Kusse","TaskAttributes":{"Description":"Fisse","Assignee":"Pik","Priority":"Low","StartDate":"2023-04-06","EndDate":"2023-04-15","Status":"To-do"},"_id":"WwyUEGZIFTY1YBJf"}
-{"TaskName":"Hello","TaskAttributes":{"Description":"Me","Assignee":"testsea","Priority":"Low","StartDate":"2023-04-07","EndDate":"2023-04-18","Status":"Doing"},"_id":"XZF5R62wcH9iRQ0F"}
-{"TaskName":"taw","TaskAttributes":{"Description":"ejaaa","Assignee":"testsea","Priority":"Low","StartDate":"2023-04-04","EndDate":"2023-04-05","Status":"Overdue"},"_id":"jMxejOjL82MBPXR9"}
-{"TaskName":"TESTERIGEN HEJ HEJ","TaskAttributes":{"Description":"PIK","Assignee":"Fisse Kusse","Priority":"Low","StartDate":"2023-04-22","EndDate":"2023-04-16","Status":"Doing"},"_id":"oUa5lUN3kMr7lKpz"}
-{"TaskName":"Fisse","TaskAttributes":{"Description":"Kusse","Assignee":"Lort","Priority":"High","StartDate":"2023-04-21","EndDate":"2023-04-15","Status":"Done"},"_id":"ukWf39BCd1OZdyvk"}
-{"TaskName":"Mor","TaskAttributes":{"Description":"Fisse","Assignee":"Pik","Priority":"Low","StartDate":"2023-04-06","EndDate":"2023-04-15","Status":"Doing"},"_id":"yV3rhOxlCbAlUr6F"}
-{"TaskName":"Hello","TaskAttributes":{"Description":"Me","Assignee":"testsea","Priority":"Low","StartDate":"2023-04-07","EndDate":"2023-04-18","Status":"Overdue"},"_id":"XZF5R62wcH9iRQ0F"}
-{"TaskName":"TESTERIGEN HEJ HEJ","TaskAttributes":{"Description":"PIK","Assignee":"Fisse Kusse","Priority":"Low","StartDate":"2023-04-22","EndDate":"2023-04-16","Status":"Doing"},"_id":"oUa5lUN3kMr7lKpz"}
-{"$$deleted":true,"_id":"oUa5lUN3kMr7lKpz"}
+{"TaskName":"Design","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"Doing"},"_id":"D7B6bI2l4uLfurJW"}
+{"TaskName":"Implementation ","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-07","EndDate":"2023-04-06","Status":"To-do"},"_id":"D88yxwSwXPVpfsud"}
+{"TaskName":"Initialising problem statement","TaskAttributes":{"Description":"Make sections: High/Low performance teams, Interviews and analysis of Existing Solution","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-07","EndDate":"2023-04-13","Status":"To-do"},"_id":"EDF5rDpqXPBV6Ui6"}
+{"TaskName":"Initialising problem statement","TaskAttributes":{"Description":"Make sections: High/Low performance teams, Interviews and analysis of Existing Solution","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-07","EndDate":"2023-04-13","Status":"Done"},"_id":"LEjwSsYkz5QO8tCm"}
+{"TaskName":"Problem Definition","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"Doing"},"_id":"V7r3lKrn1v3rfVGj"}
+{"TaskName":"Requirements","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"To-do"},"_id":"mBFAwsn33auDmMm3"}
