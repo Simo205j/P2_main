@@ -1,7 +1,7 @@
-LISTS = ["To do", "Doing", "Done"]
+LISTS = ["To-do", "Doing", "Overdue", "Done"]
 
 
-const source = new EventSource("http://localhost:3000/events");
+const source = new EventSource("http://localhost:3000/events/Tasks");
 const listsTypeContainer = document.getElementById("lists")
 const form = document.getElementById("taskForm")
 
@@ -27,7 +27,11 @@ source.addEventListener("message", function getTasks(event) {
           newTask.name = task.TaskName
           newTask.id = task._id
           newTask.setAttribute("draggable", true);
+          newTask.className = "draggable"
+
+          
           newTaskList.appendChild(newTask); 
+        /*   makeParagraph(newTask) */
           makeDeleteButton(task, newTask);
           makeEditButton(task, newTask);
         }
@@ -115,14 +119,19 @@ taskForm.addEventListener("submit", async (event) => {
       console.error(error);
     }
 });
-
+/* function makeParagraph(newTask){
+  const newTaskDescription = document.createElement("p")
+  newTaskDescription.textContent = task.TaskAttributes.Description    
+  newTask.appendChild(newTaskDescription)   
+}
+ */
 function makeDeleteButton(task, newTask){
   const deleteButton = document.createElement("button");
   deleteButton.value = "Delete Task";
   deleteButton.textContent = "Delete";
   deleteButton.addEventListener("click", async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:3000/api/Task/", {
+    const response = await fetch("http://localhost:3000/Tasks/Delete", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"                                  

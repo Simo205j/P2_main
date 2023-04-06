@@ -38,38 +38,42 @@ table {
   width: 50%;
   height: 50%;
 }
-ting {
-
-  color: rgba(11, 230, 41, 0.2);
-  color: rgba(237, 139, 12, 0.2);
-  color: rgba(233, 18, 18, 0.2);
+.To-do {
+  background-color: rgba(75, 133, 225, 0.6);
+}
+.Doing {
+  background-color: rgba(246, 174, 7, 0.6);
+}
+.Overdue {
+  background-color: rgba(215, 45, 45, 0.8);
 }
 
+.Done {
+  background-color: rgba(11, 230, 41, 0.6);
+}
+
+
+th{
+  background-color: rgba(110, 110, 110, 0.5); 
+}
 th,
 td {
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 0.5em 1rem;
   text-align: center;
   font-size: 2rem;
   white-space: nowrap;
   color: whitesmoke;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-th {
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
 #backlog > div {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.2); 
   padding: 40px;
   border-radius: 30px;
   margin-top: 5rem
 }
-tr:nth-child(odd){
-  background-color: rgba(0, 0, 0, 0.3);
-}
 
 tr:hover{
-  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 80%;
 } 
 

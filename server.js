@@ -50,7 +50,7 @@ app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}/board`);
 });
 
-app.get('/events', eventsHandler);
+app.get('/events/Tasks', eventsHandler);
 
 function eventsHandler(request, response) {
   const headers = {
@@ -101,6 +101,7 @@ function sendEventsToAll() {
 
 setInterval(sendEventsToAll, 1000); // sends events to all clients every 10 seconds
 
+//UPDATES STATUS ON DRAG AND DROP
 app.patch("/Tasks/UpdateStatus", (req, res) => {
   console.log("GOT PATCH request to update task status")
   const data = req.body;
@@ -122,6 +123,7 @@ app.patch("/Tasks/UpdateStatus", (req, res) => {
   });
 });
 
+//EDIT BUTTON PATCH SEARCHES FOR ID AND UPDATES NAME AND ATTRIBUTES
 app.patch("/Tasks/Edit", (req, res) => {
   console.log("GOT PATCH request to update task")
   const data = req.body;
@@ -157,22 +159,7 @@ app.post('/Tasks/SendTask', (req, res) => {
   });
 })
 
-app.post('/Tasks/SendLogbook', (req, res) => {
-  console.log("Got POST submitLogbook request", req.body);
-  const data = req.body;
-  logbookDataBase.insert(data, (err, newLogbook) => {
-    if (err) {
-      res.status(500).send({ error: err });
-    } 
-    else {
-      res.status(200).json({
-        LogbookName: newLogbook.LogbookName,
-      });
-    }
-  });
-})
-
-app.delete("/api/Task", (req, res) => {
+app.delete("/Tasks/Delete", (req, res) => {
   console.log("Got request to delete task:" + req.body.TaskName);
   taskDataBase.remove({TaskName: req.body.TaskName, _id: req.body._id}, {}, function (err, numRemoved) {
     if (err) {
@@ -196,18 +183,6 @@ app.delete("/Logbook/Delete", (req, res) => {
   }
 });
 
-});
-
-app.get("/api/Logbook/Get", (req, res) => {
-  console.log("Got request to get logbook data:");
-  logbookDataBase.find({}, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(data);
-      res.send(data)
-    }
-  });
 });
 
 app.post("/Logbook/UpdatePost", (req, res) => {
