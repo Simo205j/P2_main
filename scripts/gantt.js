@@ -1,4 +1,4 @@
-const source = new EventSource("http://localhost:3000/events/Tasks");
+const source = new EventSource("http://localhost:3000/Tasks/events");
 const nextMonth = document.getElementById("nextMonth");
 const prevMonth = document.getElementById("prevMonth");
 const mlSecondsInMonth = 2629743833;

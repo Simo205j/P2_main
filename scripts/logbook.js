@@ -1,7 +1,7 @@
 const submitLogbook = document.getElementById("newLogbook")
 const logbookDiv = document.getElementById("logbooks")
 
-const source = new EventSource("http://localhost:3000/events/Logbooks");
+const source = new EventSource("http://localhost:3000/Logbook/events");
 
 source.addEventListener("message", function getTasks(event) {
   const data = JSON.parse(event.data);
@@ -100,39 +100,6 @@ function makeHeadersAndParagraphs(container, logbookEntry){
 
   container.appendChild(hAndpDiv);
 }
-
-/*
-const savewertarwButton = dialog.querySelector("#saveEditButton");
-saveButton.addEventListener("click", async () => {
-  console.log("save button clicked")
-  const updatedData = {
-    TaskName: form.taskName.value,
-    TaskAttributes: {
-      StartDate: form.startDate.value,
-      Status: form.status.value,
-    },
-    id: newTask.id
-  };
-  try {
-    const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      }
-    );
-    const responseData = await response.json();
-    console.log(responseData.status, responseData);
-  } catch (error) {
-    console.error(error);
-  }
-});
-});
-newTask.appendChild(editButton);
-}*/
-
-
 
 function makeDeleteButton(logbooks, logbookEntry, container){
     const deleteButton = document.createElement("button");
