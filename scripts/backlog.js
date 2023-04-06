@@ -1,23 +1,29 @@
-const source = new EventSource("http://localhost:3000/events");
+LISTS = ["To do", "Doing", "Overdue", "Done"]
+const source = new EventSource("http://localhost:3000/Tasks/events");
 const backlogTable = document.getElementById("backlog")
 console.log(backlogTable)
+
+const priority = {
+  "Low" : 1,
+  "Medium" : 2,
+  "High" : 3
+};
 
 source.addEventListener("message", function(event) 
 {
   const tasks = JSON.parse(event.data);
 
-  tasks.sort((a, b) => 
-  {
-    const endDateDiff = new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
-    if (endDateDiff !== 0) 
-    {
-      return endDateDiff; 
-    } 
-    else 
-    {
-      return b.TaskAttributes.Priority - a.TaskAttributes.Priority;
+  tasks.sort((a, b) => {
+    const endDateDiff = new Date(a.TaskAttributes.EndDate).getTime() - new Date(b.TaskAttributes.EndDate).getTime();
+    if (endDateDiff !== 0) {
+      return endDateDiff;
+    } else {
+      const priorityB = priority[a.TaskAttributes.Priority];
+      const priorityA = priority[b.TaskAttributes.Priority];
+      return priorityA - priorityB;
     }
   });
+  
   console.log(tasks)
   createTasks(tasks);
 });
@@ -51,29 +57,32 @@ function createTasks(tasks) {
 
   // Create table rows
   tasks.forEach((task, index) => {
-    const row = document.createElement("tr");
-    const taskindex = document.createElement("td");
-    taskindex.textContent = index+1;
-    const taskName = document.createElement("td");
-    taskName.textContent = task.TaskName;
-    const assignee = document.createElement("td");
-    assignee.textContent = task.TaskAttributes.Assignee;
-    const startDate = document.createElement("td");
-  startDate.textContent = task.TaskAttributes.StartDate;
-    const endDate = document.createElement("td");
-    endDate.textContent = task.TaskAttributes.EndDate;
-    const status = document.createElement("td");
-    status.textContent = task.TaskAttributes.Status;
-    const priority = document.createElement("td");
-    priority.textContent = task.TaskAttributes.Priority;
-    row.appendChild(taskindex);
-    row.appendChild(taskName);
-    row.appendChild(assignee);
-    row.appendChild(startDate);
-    row.appendChild(endDate);
-    row.appendChild(status);
-    row.appendChild(priority);
-    table.appendChild(row);
+    if (task.TaskAttributes.Status !== "Done"){
+      const row = document.createElement("tr");
+      const taskindex = document.createElement("td");
+      taskindex.textContent = index+1;
+      const taskName = document.createElement("td");
+      taskName.textContent = task.TaskName;
+      const assignee = document.createElement("td");
+      assignee.textContent = task.TaskAttributes.Assignee;
+      const startDate = document.createElement("td");
+      startDate.textContent = task.TaskAttributes.StartDate;
+      const endDate = document.createElement("td");
+      endDate.textContent = task.TaskAttributes.EndDate;
+      const status = document.createElement("td");
+      status.textContent = task.TaskAttributes.Status;
+      const priority = document.createElement("td");
+      priority.textContent = task.TaskAttributes.Priority;
+      row.className = task.TaskAttributes.Status
+      row.appendChild(taskindex);
+      row.appendChild(taskName);
+      row.appendChild(assignee);
+      row.appendChild(startDate);
+      row.appendChild(endDate);
+      row.appendChild(status);
+      row.appendChild(priority);
+      table.appendChild(row);
+    }
   });
 
   const divContainer = document.createElement("div")

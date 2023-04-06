@@ -1,19 +1,28 @@
-const source = new EventSource("http://localhost:3000/events");
+const source = new EventSource("http://localhost:3000/Tasks/events");
 const nextMonth = document.getElementById("nextMonth");
 const prevMonth = document.getElementById("prevMonth");
 const mlSecondsInMonth = 2629743833;
 let minCurrentDate = new Date(Math.floor(Date.now() - mlSecondsInMonth/3));
 let maxCurrentDate = new Date(Math.floor(Date.now() + mlSecondsInMonth));
 
+const status = {
+  "Done" : 1,
+  "To-do" : 2,
+  "Doing" : 3,
+  "Overdue" : 4
+};
+
 const barColors = {
-  "Done": "rgba(11, 230, 41, 0.2)", 
-  "Doing": "rgba(237, 139, 12, 0.2)", 
-  "To do": "rgba(233, 18, 18, 0.2)"
+  "Done": "rgba(11, 230, 41, 0.6)", 
+  "Doing": "rgba(246, 174, 7, 0.6)", 
+  "Overdue" : "rgba(215, 45, 45, 0.8)",
+  "To-do": "rgba(75, 133, 225, 0.6)"
 };
 const borderColors = {
   "Done": "rgba(11, 230, 41, 0.8)", 
-  "Doing": "rgba(237, 139, 12, 0.8)", 
-  "To do": "rgba(233, 18, 18, 0.8)"
+  "Doing": "rgba(246, 174, 7, 0.8)", 
+  "Overdue" : "rgba(215, 45, 45, 1)",
+  "To-do": "rgba(75, 133, 225, 0.8)"
 };
 let penis = [];
 
@@ -50,6 +59,17 @@ source.addEventListener("message", function(event) {
   const barColorsTask = []
   const borderColorsTask = []
   const data = JSON.parse(event.data);
+
+  data.sort((a, b) => {
+    const startDateDiff = new Date(a.TaskAttributes.StartDate).getTime() - new Date(b.TaskAttributes.StartDate).getTime();
+    if (startDateDiff !== 0) {
+      return startDateDiff;
+    } else {
+      const statusB = status[a.TaskAttributes.Status];
+      const statusA = status[b.TaskAttributes.Status];
+      return statusA - statusB;
+    }
+  });
   data.forEach((task) => {
     let taskData = {
       x: [task.TaskAttributes.StartDate, task.TaskAttributes.EndDate],
