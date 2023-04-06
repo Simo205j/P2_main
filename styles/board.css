@@ -8,12 +8,17 @@
   border: 1px solid black;
   color: white;
 }
-
 form {
   display: flex;
   flex-wrap: wrap;
   gap: 30px 0px;
   
+}
+.task-details p {
+  display: inline-block;
+  margin: 0px; /* Reset margin to 0 */
+  padding: 10px; /* Add padding between paragraphs */
+  white-space: nowrap;
 }
 
 
@@ -132,7 +137,6 @@ input, select {
 }
 
 #lists {
-  overflow: hidden;
   flex-direction: column;
   color: white;
   margin-top: 3rem;
@@ -146,6 +150,8 @@ input, select {
 #TaskList {
   flex: 1;
   margin: 0 10px;
+  max-height: 80vh; 
+  overflow-y: auto;
 
 }
 #lists ol {
@@ -167,12 +173,25 @@ input, select {
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
-  background-color: rgba(31, 31, 31, 0.6);
   font-weight: normal;
 }
 #lists li:hover {
-  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 80%;
 }
 li button {
   margin-left: 10px;
+}
+
+.To-do > li{
+  background-color: rgba(75, 133, 225, 0.6);
+}
+.Doing > li{
+  background-color: rgba(246, 174, 7, 0.6);
+}
+.Overdue > li{
+  background-color: rgba(215, 45, 45, 0.8);
+}
+
+.Done > li{
+  background-color: rgba(11, 230, 41, 0.6);
 }

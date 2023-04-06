@@ -12,35 +12,39 @@ source.addEventListener("message", function getTasks(event) {
   const newListsContainer = document.createElement("div");
   newListsContainer.id = "ListsContainer";
 
-  LISTS.forEach((list) => {
-      const listType = document.createElement("div");
-      listType.id = list;
-      const newTaskList = document.createElement("ol");
-      newTaskList.id = "TaskList";
-      newTaskList.name = list
-      newTaskList.textContent = list;
+  LISTS.forEach((list, index) => {
+    const currentDate = new Date();  
+    const listType = document.createElement("div");
+    const newTaskList = document.createElement("ol");
+    listType.id = list;
+    newTaskList.id = "TaskList";
+    newTaskList.name = list
+    newTaskList.textContent = list;
+    newTaskList.className = LISTS[index]
     
-      tasks.forEach((task) => {
-        if(task.TaskAttributes.Status == list){
-          const newTask = document.createElement("li");
-          newTask.textContent = task.TaskName;
-          newTask.name = task.TaskName
-          newTask.id = task._id
-          newTask.setAttribute("draggable", true);
-          newTask.className = "draggable"
+    tasks.forEach((task) => {
+      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate)) {
+        task.TaskAttributes.Status = LISTS[2]
+      }
+      if(task.TaskAttributes.Status == list){
+        const newTask = document.createElement("li");
+        newTask.textContent = "Task name: " + task.TaskName;
+        newTask.name = task.TaskName
+        newTask.id = task._id
+        newTask.setAttribute("draggable", true);
+        newTask.className = "draggable"
 
-          
-          newTaskList.appendChild(newTask); 
-          makeParagraph(newTask, task) 
-          makeDeleteButton(task, newTask);
-          makeEditButton(task, newTask);
-        }
-      });
-      newListsContainer.appendChild(newTaskList);
+        newTaskList.appendChild(newTask); 
+        makeDescription(newTask, task)
+        makeDeleteButton(task, newTask);
+        makeEditButton(task, newTask);
+      }
+    });
+    newListsContainer.appendChild(newTaskList);
   });
   const previousContainer = document.getElementById("ListsContainer");
   if (previousContainer) {
-      previousContainer.parentNode.removeChild(previousContainer);
+    previousContainer.parentNode.removeChild(previousContainer);
   }
   listsTypeContainer.appendChild(newListsContainer);
   makeDraggable();
@@ -119,16 +123,45 @@ taskForm.addEventListener("submit", async (event) => {
       console.error(error);
     }
 });
-function makeParagraph(newTask, task){
-  const lineBreak = document.createElement("br")
+function makeDescription(newTask, task){
+
+
+  
+  const descriptionDiv = document.createElement("div")
   const newTaskDescription = document.createElement("p")
-  newTaskDescription.textContent = task.TaskAttributes.Description    
+  const assignee = document.createElement("p")
+  const status = document.createElement("p")
+  const priority = document.createElement("p")   
+  const startDate = document.createElement("p")  
+  const endDate = document.createElement("p")
+
+  descriptionDiv.className = "task-details"
+  descriptionDiv.style.display = "none"
 
   newTask.addEventListener("click", () => {
-    newTaskDescription.classList.toggle("show-description");
-  });
-  newTask.appendChild(lineBreak) 
-  newTask.appendChild(newTaskDescription)  
+    if (descriptionDiv.style.display === "none"){
+      descriptionDiv.style.display = "block"
+    }
+    else 
+    {
+      descriptionDiv.style.display = "none"
+    }
+  })
+
+
+  newTaskDescription.textContent = task.TaskAttributes.Description 
+  assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee
+  status.textContent = "Status: " + task.TaskAttributes.Status
+  priority.textContent = "Priority: " + task.TaskAttributes.Priority
+  startDate.textContent = "Status: " + task.TaskAttributes.StartDate
+  endDate.textContent = "Priority: " + task.TaskAttributes.EndDate
+
+  descriptionDiv.appendChild(assignee)
+  descriptionDiv.appendChild(status)
+  descriptionDiv.appendChild(priority)
+  descriptionDiv.appendChild(startDate)  
+  descriptionDiv.appendChild(endDate)
+  newTask.appendChild(descriptionDiv)
 }
 
 function makeDeleteButton(task, newTask){
@@ -146,6 +179,7 @@ function makeDeleteButton(task, newTask){
 
   deleteButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    newTask.remove()
     const response = await fetch("http://localhost:3000/Tasks/Delete", {
       method: "DELETE",
       headers: {
@@ -167,6 +201,7 @@ function makeEditButton(task, newTask) {
   const editButton = document.createElement("button");
   editButton.value = "Edit Task";
   editButton.textContent = "Edit";
+  editButton.classList.add("edit-button"); // Add a CSS class for styling
 
   editButton.style.visibility = "hidden";
   newTask.addEventListener("mouseover", () => {
@@ -187,7 +222,7 @@ function makeEditButton(task, newTask) {
     form.priority.value = task.TaskAttributes.Priority;
     form.startDate.value = task.TaskAttributes.StartDate;
     form.endDate.value = task.TaskAttributes.EndDate;
-    form.status.value = task.TaskAttributes.Status;
+    form.status.value = task.TaskAttributes.Status || ""; // Set empty string if status is undefined
 
     const saveButton = dialog.querySelector("#saveEditButton");
     saveButton.addEventListener("click", async () => {
@@ -205,13 +240,12 @@ function makeEditButton(task, newTask) {
       };
       try {
         const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedData),
-          }
-        );
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        });
         const responseData = await response.json();
         console.log(responseData.status, responseData);
       } catch (error) {
@@ -221,5 +255,3 @@ function makeEditButton(task, newTask) {
   });
   newTask.appendChild(editButton);
 }
-
-

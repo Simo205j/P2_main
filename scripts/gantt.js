@@ -70,17 +70,24 @@ source.addEventListener("message", function(event) {
       return statusA - statusB;
     }
   });
+  console.log(data)
+
   data.forEach((task) => {
-    let taskData = {
-      x: [task.TaskAttributes.StartDate, task.TaskAttributes.EndDate],
-      y: task.TaskName,
-      assigne: task.TaskAttributes.Assignee,
-      status: task.TaskAttributes.Status,
-      label: task.TaskAttributes.Description // Add the label property
-    };
-    barColorsTask.push(barColors[task.TaskAttributes.Status])
-    borderColorsTask.push(borderColors[task.TaskAttributes.Status])
-    penis.push(taskData);
+    if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
+      task.TaskAttributes.Status = "Overdue"
+    }
+    if (task.TaskAttributes.Status != "Done" && task.TaskAttributes.Status != "" && task.TaskAttributes.hasOwnProperty('Status')){
+      let taskData = {
+        x: [task.TaskAttributes.StartDate, task.TaskAttributes.EndDate],
+        y: task.TaskName,
+        assigne: task.TaskAttributes.Assignee,
+        status: task.TaskAttributes.Status,
+        label: task.TaskAttributes.Description // Add the label property
+      };
+      barColorsTask.push(barColors[task.TaskAttributes.Status])
+      borderColorsTask.push(borderColors[task.TaskAttributes.Status])
+      penis.push(taskData);
+    }
   });
   // Update chart with the new data
   updateChart(penis, barColorsTask, borderColorsTask);
