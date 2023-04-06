@@ -50,10 +50,9 @@ table {
 .Done {
   background-color: rgba(11, 230, 41, 0.6);
 }
-
-
 th{
   background-color: rgba(110, 110, 110, 0.5); 
+  color: blue;
 }
 th,
 td {
