@@ -7,10 +7,10 @@ const app = express();
 
 const taskRoutes = require('./routes/serverTasks');
 const logbookRoutes = require('./routes/serverLogbook');
-//const assigneeRoutes = require('./routes/serverAssignee');
+const assigneeRoutes = require('./routes/serverAssignee');
 app.use('/Tasks', taskRoutes);
 app.use('/Logbook', logbookRoutes);
-//app.use('/Assignee', assigneeRoutes);
+app.use('/Assignee', assigneeRoutes);
 
 app.use(cors());
 app.use(bodyParser.json());

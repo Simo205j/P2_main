@@ -1,8 +1,6 @@
-const assigneesSource = new EventSource("http://localhost:3000/events/Assignee");
+const assigneesSource = new EventSource("http://localhost:3000/Assignee/events");
 const assigneeForm = document.getElementById("assigneeForm")
 const assigneeFormButton = document.getElementById("assigneeButton")
-
-
 
 assigneeFormButton.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -10,7 +8,7 @@ assigneeFormButton.addEventListener("click", async (event) => {
       assigneeName: assigneeForm.value
     };
     try {
-      const response = await fetch("http://localhost:3000/SendAssignee", {
+      const response = await fetch("http://localhost:3000/Assignee/SendAssignee", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

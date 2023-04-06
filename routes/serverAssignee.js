@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const DataStore = require("nedb");
 
-const assigneeDataBase = new DataStore({ filename: "./Databases/logbookDataBase.db", autoload: true });
+const assigneeDataBase = new DataStore({ filename: "./Databases/assigneeDataBase.db", autoload: true });
 assigneeDataBase.loadDatabase();
 
 let clients = [];
