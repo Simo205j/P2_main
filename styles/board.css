@@ -39,7 +39,8 @@ select {
 }
 
 
-input[type="button"]{
+input[type="button"],
+input[type="submit"]{
   margin-bottom: 10px;
   background-color: rgba(75, 133, 225, 1);
   color: #fff;
@@ -118,11 +119,12 @@ input, select {
   list-style-type: none;
   border: 1px solid black;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: bolder;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 1rem;
   border-radius: 20px;
+  margin-bottom: 1rem;
 }
 #lists li {
   border-radius: 10px;
@@ -137,6 +139,9 @@ input, select {
 }
 #lists li:hover {
   opacity: 80%;
+}
+#lists li:first-child{
+  margin-top: 1rem;
 }
 li button {
   margin-left: 10px;
