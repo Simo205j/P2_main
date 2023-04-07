@@ -222,16 +222,9 @@ function makeEditButton(task, newTask) {
   editButton.textContent = "Edit";
   editButton.classList.add("edit-button"); // Add a CSS class for styling
 
-  editButton.style.visibility = "hidden";
-  newTask.addEventListener("mouseover", () => {
-    editButton.style.visibility = "visible";
-  });
-  newTask.addEventListener("mouseout", () => {
-    editButton.style.visibility = "hidden";
-  });
-
   editButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    console.log("Penis")
     const dialog = document.getElementById("editTaskModal");
     dialog.showModal();
     const form = dialog.querySelector("form");
@@ -245,6 +238,7 @@ function makeEditButton(task, newTask) {
 
     const saveButton = dialog.querySelector("#saveEditButton");
     saveButton.addEventListener("click", async () => {
+      console.log("Penis")
       const updatedData = {
         TaskName: form.taskName.value,
         TaskAttributes: {
@@ -271,6 +265,13 @@ function makeEditButton(task, newTask) {
         console.error(error);
       }
     });
+  });
+  editButton.style.visibility = "hidden";
+  newTask.addEventListener("mouseover", () => {
+    editButton.style.visibility = "visible";
+  });
+  newTask.addEventListener("mouseout", () => {
+    editButton.style.visibility = "hidden";
   });
   newTask.appendChild(editButton);
 }
