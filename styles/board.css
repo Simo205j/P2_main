@@ -147,6 +147,65 @@ li button {
   margin-left: 10px;
 }
 
+/* CSS for the dialog container */
+#editTaskModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent black overlay */
+  z-index: 9999; /* Set a high z-index to ensure it appears above other elements */
+}
+
+/* CSS for the dialog form */
+#editTaskForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #ffffff;
+  width: 400px;
+  max-width: 90%;
+  margin: 10% auto;
+  border-radius: 5px;
+}
+
+/* CSS for the form elements */
+#editTaskForm h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#editTaskForm label {
+  margin-bottom: 10px;
+}
+
+#editTaskForm input,
+#editTaskForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#editTaskForm button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#editTaskForm button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
 .To-do > li{
   background-color: rgba(75, 133, 225, 0.6);
 }
