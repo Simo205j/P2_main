@@ -4,6 +4,12 @@ LISTS = ["To-do", "Doing", "Overdue", "Done"]
 const source = new EventSource("http://localhost:3000/Tasks/events");
 const listsTypeContainer = document.getElementById("lists")
 const form = document.getElementById("taskForm")
+const expandFormButton = document.getElementById("expandFormButton")
+
+expandFormButton.addEventListener("click", () => {
+  form.classList.toggle("show")
+})
+
 
 let lastTaskMessage = null;
 source.addEventListener("message", function getTasks(event) {
