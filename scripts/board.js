@@ -7,8 +7,13 @@ const form = document.getElementById("taskForm")
 const expandFormButton = document.getElementById("expandFormButton")
 
 expandFormButton.addEventListener("click", () => {
-  form.classList.toggle("show")
-})
+  form.classList.toggle("show");
+  if (expandFormButton.value === "Close form") {
+    expandFormButton.value = "Create task";
+  } else {
+    expandFormButton.value = "Close form";
+  }
+});
 
 
 let lastTaskMessage = null;
@@ -198,6 +203,7 @@ function makeDeleteButton(task, newTask){
 
   deleteButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    event.stopPropagation();
     newTask.remove()
     const response = await fetch("http://localhost:3000/Tasks/Delete", {
       method: "DELETE",
@@ -223,9 +229,11 @@ function makeEditButton(task, newTask) {
   editButton.classList.add("edit-button"); // Add a CSS class for styling
 
   editButton.addEventListener("click", async (event) => {
+    event.stopPropagation();
     event.preventDefault();
     console.log("Penis")
     const dialog = document.getElementById("editTaskModal");
+    console.log(dialog)
     dialog.showModal();
     const form = dialog.querySelector("form");
     form.taskName.value = task.TaskName;
