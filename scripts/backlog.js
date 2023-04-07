@@ -1,5 +1,7 @@
 LISTS = ["To do", "Doing", "Overdue", "Done"]
 const source = new EventSource("http://localhost:3000/Tasks/events");
+
+
 const backlogTable = document.getElementById("backlog")
 console.log(backlogTable)
 

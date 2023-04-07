@@ -10,39 +10,14 @@
     </head>
     <header>
       <div class="Navbar">
-        <div class="logo"> <a href="#">Penis Management</a></div>
-        <ul class="links">
-            <li><a href="/board">Board</a></li>
-            <li><a href="/gantt">GANTT</a></li>
-            <li><a href="/backlog">Backlog</a></li>
-            <li><a href="/logbook">Logbook</a></li>
-        </ul>
-        <a href="#" class="action_btn">Get Started</a>
-        <div class="toggle_btn">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-      </div>
-      <div class="dropdown_menu">
-        <li><a href="/board">Board</a></li>
-        <li><a href="/gantt">GANTT</a></li>
-        <li><a href="/backlog">Backlog</a></li>
-        <li><a href="#" class="action_btn">Get Started</a></li>
+          <ul class="links">
+              <li><a href="/board">Board</a></li>
+              <li><a href="/gantt">GANTT</a></li>
+              <li><a href="/backlog">Backlog</a></li>
+              <li><a href="/logbook">Logbook</a></li>
+          </ul>
       </div>
     </header>
-      <script>
-        const toggleBtn = document.querySelector('.toggle_btn')
-        const toggleBtnIcon = document.querySelector('.toggle_btn i')
-        const dropdown_menu = document.querySelector('.dropdown_menu')
-
-        toggleBtn.onclick = function() {
-            dropdown_menu.classList.toggle('open')
-            const isOpen = DropdownMenu.classList.contains('open')
-            
-            toggleBtnIcon.classList = isOpen
-            ? 'fa-solid fa-xmark'
-            : 'fa-solid fa-bars'
-        }
-      </script>
       <div class="chartCard">
         <div class="chartBox">
           <canvas id="myChart">

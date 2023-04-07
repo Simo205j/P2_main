@@ -42,14 +42,12 @@ header{
     justify-content: space-between;
 }
 
-.Navbar .logo a{
-    font-size: 2rem;
-    font-weight: bolds;
-}
 
 .Navbar .links{
     display: flex;
     gap: 2rem;
+    justify-content: center;
+    flex-grow: 1; /* Add this property to make the links expand and center within the navbar */
 }
 
 .Navbar .toggle_btn{

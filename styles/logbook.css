@@ -66,7 +66,7 @@ input[type="text"] {
     box-sizing: border-box;
 }
 
-button[type="submit"] {
+button {
     background-color: #458ca0;
     color: white;
     padding: 5px 5px;
@@ -75,7 +75,7 @@ button[type="submit"] {
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
+button:hover {
     background-color: #458ca0;
 }
 
@@ -128,4 +128,9 @@ button[type="submit"]:hover {
     margin-right: 60px;
     border-left: 2px solid #ccc;
 }
-
+.display-none {
+    display: none;
+}
+.display {
+    display: inline;
+}

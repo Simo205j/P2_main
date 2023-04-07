@@ -36,7 +36,7 @@ router.delete("/Delete", (req, res) => {
     console.log("Got request to POST new logbook:" + logbookEntry._id);
     logbookDataBase.update(
       { _id: logbookEntry._id }, // query to find the document
-      { $push: { paragraphs: logbookEntry.paragraphs, headers: logbookEntry.headers } }, // update operation to insert new element
+      { $push: { paragraphs: logbookEntry.paragraphs, headers: logbookEntry.headers , assignee: logbookEntry.assignee} }, // update operation to insert new element
       {}, // options (empty in this case)
       function (err, numReplaced, upsert) {
         if (err) {

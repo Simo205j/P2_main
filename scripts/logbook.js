@@ -2,6 +2,12 @@ const submitLogbook = document.getElementById("newLogbook")
 const logbookDiv = document.getElementById("logbooks")
 
 const source = new EventSource("http://localhost:3000/Logbook/events");
+const assigneesSource = new EventSource("http://localhost:3000/Assignee/events");
+
+assigneesSource.addEventListener("message", async function getAssigne(event) {
+  const assignee = await JSON.parse(event.data);
+  return assignee
+})
 
 source.addEventListener("message", function getTasks(event) {
   const data = JSON.parse(event.data);
@@ -14,8 +20,7 @@ submitLogbook.addEventListener("click", async (event) => {
     date: new Date().toISOString().substr(0, 10),
     paragraphs: [],
     headers: [],
-    checkboxStatus: [],
-    status: false
+    status: []
   };
   
   console.log(data)
@@ -42,22 +47,45 @@ function makeLogbookList(data){
   newData.forEach((logbookEntry, index) => {
     const container = document.createElement("div")
     const containerName = document.createElement("p")
+    const logbookHeaderAndParagraphs = document.createElement("div")
+    const closeButton = document.createElement("button")
+    closeButton.textContent = "Close"
+
+    logbookHeaderAndParagraphs.className = "display-none"
+    closeButton.className = "display-none"
+
+    closeButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      logbookHeaderAndParagraphs.classList.remove("display");
+      logbookHeaderAndParagraphs.classList.add("display-none");
+      closeButton.classList.remove("display");
+      closeButton.classList.add("display-none");
+    });
+
+    container.addEventListener("click", () => {
+      logbookHeaderAndParagraphs.className = "display"
+      closeButton.className = "display"
+    })
+    
     container.id = index + prevData.length
     containerName.textContent = "Logbook: " + logbookEntry.date
     containerName.id = index + prevData.length
+    logbookHeaderAndParagraphs.appendChild(closeButton)
     makeDeleteButton(containerName, logbookEntry, container)
     container.appendChild(containerName)
-    makeLogbookOpen(container, logbookEntry, containerName)
-    makeHeadersAndParagraphs(container, logbookEntry)
+    makeLogbookOpen(container, logbookEntry, containerName, logbookHeaderAndParagraphs)
+    makeHeadersAndParagraphs(container, logbookEntry, logbookHeaderAndParagraphs, index)
     logbookDiv.appendChild(container)
   })
   prevData = [...prevData, ...newData];
 }
-function makeHeadersAndParagraphs(container, logbookEntry){
+function makeHeadersAndParagraphs(container, logbookEntry, logbookHeaderAndParagraphs, index){
   const hAndpDiv = document.createElement("div");
+  
   hAndpDiv.className = "hAndpDiv"
+  hAndpDiv.id = "Checkbox " + index
 
-  logbookEntry.headers.forEach((header, index) => {
+  logbookEntry.headers.forEach((header, index2) => {
     const hAndpContainer = document.createElement("div");
     hAndpContainer.className = "hAndpContainer";
 
@@ -67,8 +95,14 @@ function makeHeadersAndParagraphs(container, logbookEntry){
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";    
     checkbox.addEventListener("click", async () => {
+      const checkboxes = document.getElementById("Checkbox " + index); // Get the parent div element containing the checkbox
+      const checkboxesArray = Array.from(checkboxes.querySelectorAll("input[type='checkbox']")); // Get all checkbox elements within the parent div
+    
+      const checkboxStatusArray = checkboxesArray.map((checkbox) => {
+        return checkbox.checked; // Retrieve the checked status of each checkbox (true or false)
+      });
       const data = {
-        status: checkbox.checked,
+        status: checkboxStatusArray,
         _id: logbookEntry._id
       }
       const response = await fetch("http://localhost:3000/Logbook/UpdateStatus", {
@@ -85,8 +119,9 @@ function makeHeadersAndParagraphs(container, logbookEntry){
         catch (error) {
           console.error(error);
         }  
-      })
-    checkbox.checked = logbookEntry.status
+    });
+    
+    checkbox.checked = logbookEntry.status[index2]
     hAndpContainer.appendChild(checkbox);
    /* editHAndPBtn.value = "Edit Logbook";
     editHAndPBtn.textContent = "Edit"; 
@@ -119,13 +154,18 @@ function makeHeadersAndParagraphs(container, logbookEntry){
     hAndpContainer.appendChild(h);
 
     const p = document.createElement("p");
-    p.textContent = logbookEntry.paragraphs[index];
+    p.textContent = logbookEntry.paragraphs[index2];
     hAndpContainer.appendChild(p);
+
+    const assignee = document.createElement("p");
+    assignee.textContent = "Assignee: " + logbookEntry.assignee[index2]
+    hAndpContainer.appendChild(assignee);
 
     hAndpDiv.appendChild(hAndpContainer);
   });
 
-  container.appendChild(hAndpDiv);
+  logbookHeaderAndParagraphs.appendChild(hAndpDiv)
+  container.appendChild(logbookHeaderAndParagraphs);
 }
 
 function makeDeleteButton(logbooks, logbookEntry, container){
@@ -152,8 +192,7 @@ function makeDeleteButton(logbooks, logbookEntry, container){
     });
     logbooks.appendChild(deleteButton);
 }
-
-function makeLogbookOpen(container, logbookEntry, containerName){
+function makeLogbookOpen(container, logbookEntry, containerName, logbookHeaderAndParagraphs){
   let form = document.createElement("form");
   form.id = logbookEntry._id;
   let formClose = document.createElement("input");
@@ -162,6 +201,9 @@ function makeLogbookOpen(container, logbookEntry, containerName){
   let formDescriptionLabel = document.createElement("label");
   let formDescription = document.createElement("input");
   let submitButton = document.createElement("button");
+  let formAssigneeLabel = document.createElement("label"); // New label element for assignee
+  let formAssignee = document.createElement("select"); // Changed from input to select element for assignee
+  let AssigneeButton = document.createElement("button");
   
   formClose.type = "button"
   formClose.value = "X"
@@ -176,14 +218,30 @@ function makeLogbookOpen(container, logbookEntry, containerName){
   submitButton.type = "submit";
   submitButton.textContent = "Save";
 
-  
+  formAssigneeLabel.textContent = "Assignee: "; // Set label text for assignee
+  formAssignee.name = "assignee"; // Set name for assignee select
+  formAssignee.value = ""; // Set initial value for assignee select
+
+  assigneesSource.addEventListener("message", async function getAssignees(event) {
+    const assignees = await JSON.parse(event.data);
+
+    // Create and append new options for assignee select
+    assignees.forEach((assignee) => {
+      let option = document.createElement("option");
+      option.value = assignee.assigneeName;
+      option.text = assignee.assigneeName;
+      formAssignee.add(option);
+    });
+  });
+
   submitButton.addEventListener("click", async (event) => {
     event.preventDefault();
     const updatedData = {
       paragraphs: formDescription.value,
       headers: formHeader.value,
       _id: logbookEntry._id,
-      status: false
+      status: false,
+      assignee: formAssignee.value // Add selected assignee value to updatedData
     }
     console.log(updatedData)
     try {
@@ -200,13 +258,15 @@ function makeLogbookOpen(container, logbookEntry, containerName){
     catch (error) {
       console.error(error);
     }
-  })
+  });
 
   form.appendChild(formHeaderLabel);
   form.appendChild(formHeader);
   form.appendChild(formDescriptionLabel);
   form.appendChild(formDescription);
+  form.appendChild(formAssigneeLabel); // Append assignee label to form
+  form.appendChild(formAssignee); // Append assignee select to form
   form.appendChild(submitButton);
-  container.appendChild(form)
-
+  logbookHeaderAndParagraphs.appendChild(form)
+  container.appendChild(logbookHeaderAndParagraphs)
 }

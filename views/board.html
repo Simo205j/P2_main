@@ -11,46 +11,17 @@
 <body>
   <header>
     <div class="Navbar">
-        <div class="logo"> <a href="#">Penis Management</a></div>
         <ul class="links">
             <li><a href="/board">Board</a></li>
             <li><a href="/gantt">GANTT</a></li>
             <li><a href="/backlog">Backlog</a></li>
             <li><a href="/logbook">Logbook</a></li>
         </ul>
-        <a href="#" class="action_btn">Get Started</a>
-        <div class="toggle_btn">
-            <i class="fa-solid fa-bars"></i>
-        </div>
     </div>
-    <div class="dropdown_menu">
-        <li><a href="/board">Board</a></li>
-        <li><a href="/gantt">GANTT</a></li>
-        <li><a href="/backlog">Backlog</a></li>
-        <li><a href="#" class="action_btn">Get Started</a></li>
-    </div>
-</header>
-    <script>
-        const toggleBtn = document.querySelector('.toggle_btn')
-        const toggleBtnIcon = document.querySelector('.toggle_btn i')
-        const dropdown_menu = document.querySelector('.dropdown_menu')
-
-        toggleBtn.onclick = function() {
-            dropdown_menu.classList.toggle('open')
-            const isOpen = DropdownMenu.classList.contains('open')
-            
-            toggleBtnIcon.classList = isOpen
-            ? 'fa-solid fa-xmark'
-            : 'fa-solid fa-bars'
-        }
-    </script>
+  </header>
   <div id="Container">
-    <div id="Assignees">
-      <label id="assigneLabel" for="">Add Assignee</label>
-      <input type="text" name="" id="assigneeForm">
-      <input type="button" id="assigneeButton" value="+">
-    </div>
     <div id="form">
+      <input type="button" name="ExpandForm" id="expandFormButton" value="Create Task">
       <form id="taskForm">
         <label for="taskName">Task Name:</label>
         <input required type="text" id="taskName" name="taskName"><br>
@@ -80,8 +51,13 @@
           <option value="Overdue">Over Due</option>
           <option value="Done">Done</option>
         </select><br>
-        <input type="submit" value="Add Task">
+        <input type="button" value="Add Task">
       </form>
+      <div id="Assignees">
+        <label id="assigneLabel" for="">Add Assignee</label>
+        <input type="text" name="" id="assigneeForm">
+        <input type="button" id="assigneeButton" value="+">
+      </div>
     </div>
     <div id="lists">
 
