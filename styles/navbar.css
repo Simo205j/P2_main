@@ -20,9 +20,8 @@ li{
 a{
     text-decoration: none;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
-
 a:hover{
     color: orange;
 }

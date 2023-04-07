@@ -68,6 +68,7 @@ function makeLogbookList(data){
     })
     
     container.id = index + prevData.length
+    container.className = "LogbookEntryContainer"
     containerName.textContent = "Logbook: " + logbookEntry.date
     containerName.id = index + prevData.length
     logbookHeaderAndParagraphs.appendChild(closeButton)
@@ -94,7 +95,14 @@ function makeHeadersAndParagraphs(container, logbookEntry, logbookHeaderAndParag
 
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";    
-    checkbox.addEventListener("click", async () => {
+    checkbox.addEventListener("click", async (event) => {
+      if(event.target.checked){
+        hAndpContainer.id = "Done"
+      }
+      else{
+        hAndpContainer.removeAttribute("id")
+      }
+      
       const checkboxes = document.getElementById("Checkbox " + index); // Get the parent div element containing the checkbox
       const checkboxesArray = Array.from(checkboxes.querySelectorAll("input[type='checkbox']")); // Get all checkbox elements within the parent div
     
@@ -122,6 +130,9 @@ function makeHeadersAndParagraphs(container, logbookEntry, logbookHeaderAndParag
     });
     
     checkbox.checked = logbookEntry.status[index2]
+    if (checkbox.checked === true){
+      hAndpContainer.id = "Done"
+    }
     hAndpContainer.appendChild(checkbox);
    /* editHAndPBtn.value = "Edit Logbook";
     editHAndPBtn.textContent = "Edit"; 

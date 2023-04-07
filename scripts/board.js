@@ -14,6 +14,15 @@ expandFormButton.addEventListener("click", () => {
 let lastTaskMessage = null;
 source.addEventListener("message", function getTasks(event) {
   const tasks = JSON.parse(event.data);
+  tasks.sort((a, b) => {
+    if (a.TaskAttributes.Priority === b.TaskAttributes.Priority) {
+      // If priority is same, sort by end date
+      return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
+    } else {
+      // Sort by priority
+      return a.TaskAttributes.Priority - b.TaskAttributes.Priority;
+    }
+  });
   console.log(tasks)
   const newListsContainer = document.createElement("div");
   newListsContainer.id = "ListsContainer";
@@ -37,8 +46,11 @@ source.addEventListener("message", function getTasks(event) {
         newTask.textContent = "Task name: " + task.TaskName;
         newTask.name = task.TaskName
         newTask.id = task._id
-        newTask.setAttribute("draggable", true);
-        newTask.className = "draggable"
+        if((new Date(task.TaskAttributes.EndDate) < currentDate) === false){
+          newTask.setAttribute("draggable", true);
+          newTask.className = "draggable"
+        }
+        
 
         newTaskList.appendChild(newTask); 
         makeDescription(newTask, task)
@@ -77,7 +89,8 @@ function makeDraggable(){
     container.addEventListener("drop", async (event) => {
       event.preventDefault();
       const draggable = document.querySelector(".dragging")
-      if (event.target === container) {
+      console.log(event.target.className)
+      if (event.target === container && event.target.className != "Overdue") {
         container.appendChild(draggable)
         const updatedData = {
           id: draggable.id,
