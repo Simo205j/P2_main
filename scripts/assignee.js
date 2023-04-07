@@ -20,6 +20,7 @@ assigneeFormButton.addEventListener("click", async (event) => {
     } catch (error) {
       console.error(error);
     }
+    location.href = "/Board"
   });
   let lastAssigneeMessage = null;
   
