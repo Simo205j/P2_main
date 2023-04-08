@@ -21,5 +21,15 @@
     width: 80%;
     padding: 20px;
     border-radius: 20px;
-    background: white;
+    background: rgba(255, 255, 255, 0.97);
   }
+ input {
+    background-color: #458ca0;
+    font-size: large;
+    color: white;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0px 15px;
+}
