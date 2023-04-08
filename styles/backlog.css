@@ -54,8 +54,7 @@ tr{
   background-color: rgba(187, 187, 187, 1); 
 }
 th{
-  background-color: rgb(224, 224, 224, 0.8); 
-  color: blue;
+  background-color: rgba(224, 224, 224, 1); 
 }
 th,
 td {
@@ -68,7 +67,7 @@ td {
 }
 
 #backlog > div {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 40px;
   border-radius: 30px;
   margin-top: 5rem;

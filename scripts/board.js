@@ -48,7 +48,9 @@ source.addEventListener("message", function getTasks(event) {
       }
       if(task.TaskAttributes.Status == list){
         const newTask = document.createElement("li");
-        newTask.textContent = "Task name: " + task.TaskName;
+        const newLine = document.createElement("br")
+        newTask.textContent = task.TaskName;
+        newTask.appendChild(newLine)
         newTask.name = task.TaskName
         newTask.id = task._id
         if((new Date(task.TaskAttributes.EndDate) < currentDate) === false){

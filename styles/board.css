@@ -2,7 +2,7 @@
   margin: 0 auto;
   max-width: fit-content;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 25px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   border: 1px solid black;
@@ -102,8 +102,7 @@ input, select {
 
   flex-direction: column;
   color: white;
-  width: 80%;
-  margin: 3rem 10%;
+  margin: 3rem 2%;
 }
 
 
@@ -117,15 +116,15 @@ input, select {
   margin: 0 10px;
   max-height: 80vh; 
   overflow-y: auto;
-
 }
+
 #lists ol {
   list-style-type: none;
   border: 1px solid black;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bolder;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 20px;
   margin-bottom: 1rem;
@@ -136,10 +135,14 @@ input, select {
   list-style-type: none;
   border: 1px solid black;
   padding: 15px 10px;
-  margin: 5px;
-  display: flex;
+  margin: 5px 0px;
+  display: list-item;
   justify-content: space-between;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+#lists li > div{
   font-weight: normal;
 }
 #lists li:hover {
@@ -149,7 +152,17 @@ input, select {
   margin-top: 1rem;
 }
 li button {
-  margin-left: 10px;
+
+  background-color: #458ca0;
+  color: white;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0px 5px;
+  margin-top: 0.5rem;
+  cursor:pointer;
+  font-size: large;
 }
 
 #editTaskModal {
@@ -206,8 +219,6 @@ li button {
 #editTaskForm button[type="submit"]:hover {
   background-color: #0056b3;
 }
-
-
 .To-do > li{
   background-color: rgba(75, 133, 225, 0.6);
 }
