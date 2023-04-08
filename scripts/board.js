@@ -123,32 +123,53 @@ function makeDraggable(){
   
 
 taskForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const data = {
-      TaskName: taskForm.taskName.value,
-      TaskAttributes : {
-          Description: taskForm.description.value,
-          Assignee: taskForm.assignee.value,
-          Priority: taskForm.priority.value,
-          StartDate: taskForm.startDate.value,
-          EndDate: taskForm.endDate.value,
-          Status: taskForm.status.value
-      }
-    };
-    try {
-      const response = await fetch("http://localhost:3000/Tasks/SendTask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
-      const responseData = await response.json();
-      console.log(responseData.status, responseData);
-    } catch (error) {
-      console.error(error);
+  event.preventDefault();
+
+  // Get form input values
+  const taskName = taskForm.taskName.value;
+  const description = taskForm.description.value;
+  const assignee = taskForm.assignee.value;
+  const priority = taskForm.priority.value;
+  const startDate = taskForm.startDate.value;
+  const endDate = taskForm.endDate.value;
+  const status = taskForm.status.value;
+
+  // Check if any of the form fields are empty
+  if (!taskName || !description || !assignee || !priority || !startDate || !endDate || !status) {
+    throw new Error("Please fill in all fields.");
+  }
+
+  // Check if endDate is before startDate
+  if (new Date(endDate) < new Date(startDate)) {
+    throw new Error("End date must be after start date.");
+  }
+
+  const data = {
+    TaskName: taskName,
+    TaskAttributes: {
+      Description: description,
+      Assignee: assignee,
+      Priority: priority,
+      StartDate: startDate,
+      EndDate: endDate,
+      Status: status
     }
+  };
+  try {
+    const response = await fetch("http://localhost:3000/Tasks/SendTask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    const responseData = await response.json();
+    console.log(responseData.status, responseData);
+  } catch (error) {
+    console.error(error);
+  }
 });
+
 function makeDescription(newTask, task){
 
 

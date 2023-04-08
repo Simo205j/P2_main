@@ -168,20 +168,14 @@ li button {
 
 #editTaskModal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent black overlay */
-  z-index: 9999; /* Set a high z-index to ensure it appears above other elements */
+  left: 40%;
+  top: 5%;
 }
 
 #editTaskForm {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  padding: 5px;
   background-color: #ffffff;
   width: 400px;
   max-width: 90%;
@@ -192,6 +186,7 @@ li button {
 /* CSS for the form elements */
 #editTaskForm h1 {
   font-size: 24px;
+  align-self: center;
   margin-bottom: 20px;
 }
 
@@ -232,4 +227,7 @@ li button {
 
 .Done > li{
   background-color: rgba(11, 230, 41, 0.6);
+}
+.error {
+  border: 1px solid red; /* or any other visual cue like background color, text color, etc. */
 }
