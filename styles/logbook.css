@@ -13,20 +13,25 @@ h1 {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.9);
     border-bottom: 3px solid lightgrey;
     padding: 30px;
     border-radius: 30px;
     max-height: 85vh; 
     overflow-y: auto;
+    max-width: 70%;
+    align-self: center;
 }
 #logbooks > div {
     padding: 10px 0px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.9);
     border-bottom: 3px solid lightgrey;
     margin: 5px;
     border-radius: 10px;
+    cursor:pointer;
+    font-size: larger;
+
 }
 #logbooks > div:nth-child(even) {
     background-color: rgba(255, 255, 255, 1);
@@ -38,6 +43,7 @@ h1 {
     background-color: white;
     border: 3px solid lightgrey;
     margin: 5px;
+    cursor:pointer
 }
 
 #container {
@@ -73,6 +79,8 @@ button {
     border-radius: 3px;
     cursor: pointer;
     margin: 0px 15px;
+    cursor:pointer
+    
 }
 button:hover {
     background-color: #458ca0;

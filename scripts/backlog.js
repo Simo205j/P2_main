@@ -60,6 +60,9 @@ function createTasks(tasks) {
   // Create table rows
   tasks.forEach((task, index) => {
     if (task.TaskAttributes.Status !== "Done"){
+    if ((new Date(task.TaskAttributes.EndDate) < new Date())){
+      task.TaskAttributes.Status = "Overdue"
+    }
       const row = document.createElement("tr");
       const taskindex = document.createElement("td");
       taskindex.textContent = index+1;

@@ -15,29 +15,7 @@ source.addEventListener("message", function getTasks(event) {
   makeLogbookList(data)
 })
 
-submitLogbook.addEventListener("click", async (event) => {
-  const data = {
-    date: new Date().toISOString().substr(0, 10),
-    paragraphs: [],
-    headers: [],
-    status: []
-  };
-  
-  console.log(data)
-    try {
-      const response = await fetch("http://localhost:3000/Logbook/SendLogbook", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
-        const responseData = await response.json();
-        console.log(response.status, responseData);
-    } catch (error) {
-      console.error(error);
-    }
-});
+
 
 let prevData = [];
 
@@ -179,6 +157,7 @@ function makeHeadersAndParagraphs(container, logbookEntry, logbookHeaderAndParag
   container.appendChild(logbookHeaderAndParagraphs);
 }
 
+
 function makeDeleteButton(logbooks, logbookEntry, container){
     const deleteButton = document.createElement("button");
     deleteButton.value = "Delete Logbook";
@@ -247,6 +226,7 @@ function makeLogbookOpen(container, logbookEntry, containerName, logbookHeaderAn
 
   submitButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    container
     const updatedData = {
       paragraphs: formDescription.value,
       headers: formHeader.value,

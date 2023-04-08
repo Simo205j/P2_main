@@ -2,16 +2,15 @@
   margin: 0 auto;
   max-width: fit-content;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 25px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  border: 1px solid black;
+  border: 2px solid rgba(211, 210, 210, 0.8);
 }
 
 form {
   display: grid; 
   grid-template-columns: 1fr 1fr; 
-  gap: 10px;
   display: none;
 }
 .show {
@@ -28,10 +27,9 @@ label {
 input[type="text"],
 input[type="date"],
 select {
-  padding: 8px;
+  padding: 10px;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
+  border: 2px solid rgba(211, 210, 210, 0.8);
   grid-column: 2; /* Set the form value to second column */
   grid-row: auto; /* Set the form value to auto row height */
   width: 100%; /* Make the form value take up 100% width of the column */
@@ -97,13 +95,15 @@ input, select {
   display: block;
   width: 250px;
 }
+select {
+  margin-bottom: 1rem;
+}
 
 #lists {
 
   flex-direction: column;
   color: white;
-  width: 80%;
-  margin: 3rem 10%;
+  margin: 3rem 2%;
 }
 
 
@@ -117,15 +117,15 @@ input, select {
   margin: 0 10px;
   max-height: 80vh; 
   overflow-y: auto;
-
 }
+
 #lists ol {
   list-style-type: none;
   border: 1px solid black;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bolder;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 1rem;
   border-radius: 20px;
   margin-bottom: 1rem;
@@ -136,10 +136,14 @@ input, select {
   list-style-type: none;
   border: 1px solid black;
   padding: 15px 10px;
-  margin: 5px;
-  display: flex;
+  margin: 5px 0px;
+  display: list-item;
   justify-content: space-between;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+#lists li > div{
   font-weight: normal;
 }
 #lists li:hover {
@@ -149,25 +153,29 @@ input, select {
   margin-top: 1rem;
 }
 li button {
-  margin-left: 10px;
+
+  background-color: #458ca0;
+  color: white;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0px 5px;
+  margin-top: 0.5rem;
+  cursor:pointer;
+  font-size: large;
 }
 
 #editTaskModal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent black overlay */
-  z-index: 9999; /* Set a high z-index to ensure it appears above other elements */
+  left: 40%;
+  top: 5%;
 }
 
 #editTaskForm {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  padding: 5px;
   background-color: #ffffff;
   width: 400px;
   max-width: 90%;
@@ -178,6 +186,7 @@ li button {
 /* CSS for the form elements */
 #editTaskForm h1 {
   font-size: 24px;
+  align-self: center;
   margin-bottom: 20px;
 }
 
@@ -206,8 +215,6 @@ li button {
 #editTaskForm button[type="submit"]:hover {
   background-color: #0056b3;
 }
-
-
 .To-do > li{
   background-color: rgba(75, 133, 225, 0.6);
 }
@@ -220,4 +227,7 @@ li button {
 
 .Done > li{
   background-color: rgba(11, 230, 41, 0.6);
+}
+.error {
+  border: 1px solid red; /* or any other visual cue like background color, text color, etc. */
 }

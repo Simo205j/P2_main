@@ -187,6 +187,11 @@ const todayLine = {
       scales: {
         //CONFIGURATION FOR WHAT IS BEING DISPLAYED ON THE X AXIS
         x: {
+          ticks: {
+              font: {
+                size: 20 // Update to your desired font size
+              },
+            },
           position: "top",
           type: "time",
           time: {
@@ -194,6 +199,13 @@ const todayLine = {
           },
           min: minCurrentDate,
           max: maxCurrentDate
+        },
+        y: {
+          ticks: {
+              font: {
+                size: 20 // Update to your desired font size
+              },
+            },
         }
       },
       //THESE PLUGINS ARE FROM CHART.JS CONFIGURATION
