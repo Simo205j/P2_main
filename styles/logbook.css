@@ -45,6 +45,10 @@ h1 {
     margin: 5px;
     cursor:pointer
 }
+#logbooks > p:hover {
+    opacity: 70%;
+    border: 3px solid grey
+}
 
 #container {
     display: flex;
@@ -72,7 +76,7 @@ input[type="text"] {
     box-sizing: border-box;
 }
 button {
-    background-color: #458ca0;
+    background-color: rgb(14, 175, 36);
     color: white;
     padding: 5px 5px;
     border: none;
@@ -82,8 +86,14 @@ button {
     cursor:pointer
     
 }
-button:hover {
+p button[value="Delete Logbook"]{
+    background-color: rgba(215, 45, 45, 1);
+}
+button[type="submit"]{
     background-color: #458ca0;
+}
+button:hover {
+    opacity: 80%;
 }
 #error-message {
     color: red;

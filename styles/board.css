@@ -121,7 +121,7 @@ select {
 
 #lists ol {
   list-style-type: none;
-  border: 1px solid black;
+  border: 2px solid rgba(211, 210, 210, 0.6);
   text-align: center;
   font-size: 2rem;
   font-weight: bolder;
@@ -134,7 +134,7 @@ select {
 #lists li {
   border-radius: 10px;
   list-style-type: none;
-  border: 1px solid black;
+  border: 3px solid rgba(211, 210, 210, 0.4);
   padding: 15px 10px;
   margin: 5px 0px;
   display: list-item;
@@ -164,6 +164,10 @@ li button {
   margin-top: 0.5rem;
   cursor:pointer;
   font-size: large;
+}
+
+li button[value="Delete Task"]{
+  background-color: rgba(215, 45, 45, 1);
 }
 
 #editTaskModal {

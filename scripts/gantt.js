@@ -1,6 +1,7 @@
 const source = new EventSource("http://localhost:3000/Tasks/events");
 const nextMonth = document.getElementById("nextMonth");
 const prevMonth = document.getElementById("prevMonth");
+const csvButton = document.getElementById("csv");
 const mlSecondsInMonth = 2629743833;
 let minCurrentDate = new Date(Math.floor(Date.now() - mlSecondsInMonth/3));
 let maxCurrentDate = new Date(Math.floor(Date.now() + mlSecondsInMonth));
@@ -52,13 +53,36 @@ function updateTimeChart(chart, newMin, newMax) {
   chart.config.options.scales.x.max = new Date(newMax);
   chart.update();
 }
+function downloadTasksAsCsv(tasks) {
+  let csv = 'TaskName,StartDate,EndDate,Description\n'; // CSV header
+  tasks.forEach((task) => {
+    let taskName = task.TaskName;
+    let startDate = task.TaskAttributes.startDate;
+    let endDate = task.TaskAttributes.endDate;
+    let description = task.TaskAttributes.Description;
+    csv += `"${taskName}","${startDate}","${endDate}","${description}"\n`; // Add task data as CSV row
+  });
+
+  let blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  let url = URL.createObjectURL(blob);
+
+  let link = document.createElement('a');
+  link.href = url;
+  link.download = 'tasks.csv';
+  link.style.display = 'none'; // Hide the link element
+
+  // Trigger the download
+  link.click();
+
+  // Clean up
+  URL.revokeObjectURL(url);
+}
 
 
-
-source.addEventListener("message", function(event) {
+source.addEventListener("message", async function(event) {
   const barColorsTask = []
   const borderColorsTask = []
-  const data = JSON.parse(event.data);
+  const data = await JSON.parse(event.data);
 
   data.sort((a, b) => {
     const startDateDiff = new Date(a.TaskAttributes.StartDate).getTime() - new Date(b.TaskAttributes.StartDate).getTime();
@@ -70,8 +94,9 @@ source.addEventListener("message", function(event) {
       return statusA - statusB;
     }
   });
+  csvButton.addEventListener("click", () => downloadTasksAsCsv(data))
   console.log(data)
-
+  
   data.forEach((task) => {
     if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
       task.TaskAttributes.Status = "Overdue"
@@ -232,3 +257,24 @@ const todayLine = {
     config
   );
 });
+
+function downloadTasksAsCsv(tasks) {
+  let csv = 'TaskName,TaskAttributes,StartDate,EndDate\n'; // CSV header
+  for (let i = 0; i < tasks.length; i++) {
+    let task = tasks[i];
+    let taskAttributes = JSON.stringify(task.TaskAttributes); // Convert task attributes object to string
+    let startDate = task.TaskAttributes.StartDate;
+    let endDate = task.TaskAttributes.EndDate;
+    csv += `"${task.TaskName}","${taskAttributes}","${startDate}","${endDate}"\n`; // Add task data as CSV row
+  }
+
+  let blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  let url = URL.createObjectURL(blob);
+
+  let link = document.createElement('a');
+  link.href = url;
+  link.download = 'tasks.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}

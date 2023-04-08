@@ -31,26 +31,28 @@ assigneeFormButton.addEventListener("click", async (event) => {
       if (assignees === lastAssigneeMessage) {
         return;
       }
-     /* if (document.getElementById("assignee")) {
-        document.getElementById("assignee").remove();
-      }
-      */
+      const insertAfterThisEdit = document.querySelector("label[for='editAssignee']");
       const insertAfterThis = document.querySelector("label[for='assignee']");
-  
+      const selectAssigneeEdit = document.createElement("select");
       const selectAssigneeLabel = document.createElement("label");
       const selectAssignee = document.createElement("select");
       
       assignees.forEach((assign) => {
           checkAttribute = assign.hasOwnProperty('assigneeName')
           if (checkAttribute){
+            const optionEdit = document.createElement("option");
             const option = document.createElement("option");
+            optionEdit.textContent = assign.assigneeName;
+            optionEdit.value = assign.assigneeName
             option.textContent = assign.assigneeName;
             option.value = assign.assigneeName
-            selectAssignee.appendChild(option)   
+            selectAssignee.appendChild(option) 
+            selectAssigneeEdit.appendChild(optionEdit)   
           }
           else {
             selectAssignee.remove()
             selectAssigneeLabel.remove()
+            selectAssigneeEdit.remove()
             return;
           } 
       });
@@ -59,8 +61,13 @@ assigneeFormButton.addEventListener("click", async (event) => {
       selectAssignee.id = "assignee";
       selectAssignee.required = true;
       selectAssignee.name = "assignee";
+
+      selectAssignee.id = "assignee";
+      selectAssigneeEdit.required = true;
+      selectAssignee.id = "assignee";
   
       insertAfterThis.insertAdjacentElement("afterend", selectAssignee);
+      insertAfterThisEdit.insertAdjacentElement("afterend", selectAssigneeEdit)
       lastAssigneeMessage = assignees;
       }
     else {

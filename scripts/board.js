@@ -10,8 +10,10 @@ expandFormButton.addEventListener("click", () => {
   form.classList.toggle("show");
   if (expandFormButton.value === "Close form") {
     expandFormButton.value = "Create task";
+    expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)"
   } else {
     expandFormButton.value = "Close form";
+    expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)"
   }
 });
 
@@ -254,7 +256,7 @@ function makeEditButton(task, newTask) {
   editButton.addEventListener("click", async (event) => {
     event.stopPropagation();
     event.preventDefault();
-    console.log("Penis")
+
     const dialog = document.getElementById("editTaskModal");
     console.log(dialog)
     dialog.showModal();

@@ -1,7 +1,4 @@
-{"TaskName":"Design sutter","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"To-do"},"_id":"D7B6bI2l4uLfurJW"}
+{"TaskName":"Design sutter","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"Doing"},"_id":"D7B6bI2l4uLfurJW"}
 {"TaskName":"Initialising problem statement","TaskAttributes":{"Description":"Make sections: High/Low performance teams, Interviews and analysis of Existing Solution","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-07","EndDate":"2023-04-13","Status":"Doing"},"_id":"LEjwSsYkz5QO8tCm"}
 {"TaskName":"Requirements","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"Done"},"_id":"mBFAwsn33auDmMm3"}
 {"TaskName":"Implementation","TaskAttributes":{"Description":"What do we have to do?","Assignee":"Simon Skelkjær","Priority":"High","StartDate":"2023-04-01","EndDate":"2023-04-07","Status":"To-do"},"_id":"xFXYYZsKNhk45Lb0"}
-{"TaskName":"Design sutter","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"Done"},"_id":"D7B6bI2l4uLfurJW"}
-{"TaskName":"Design sutter","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"To-do"},"_id":"D7B6bI2l4uLfurJW"}
-{"TaskName":"Requirements","TaskAttributes":{"Description":"","Assignee":"Mertz","Priority":"Low","StartDate":"2023-04-13","EndDate":"2023-04-19","Status":"To-do"},"_id":"mBFAwsn33auDmMm3"}
