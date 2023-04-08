@@ -5,13 +5,12 @@
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 25px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  border: 1px solid black;
+  border: 2px solid rgba(211, 210, 210, 0.8);
 }
 
 form {
   display: grid; 
   grid-template-columns: 1fr 1fr; 
-  gap: 10px;
   display: none;
 }
 .show {
@@ -28,10 +27,9 @@ label {
 input[type="text"],
 input[type="date"],
 select {
-  padding: 8px;
+  padding: 10px;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
+  border: 2px solid rgba(211, 210, 210, 0.8);
   grid-column: 2; /* Set the form value to second column */
   grid-row: auto; /* Set the form value to auto row height */
   width: 100%; /* Make the form value take up 100% width of the column */
@@ -96,6 +94,9 @@ label {
 input, select {
   display: block;
   width: 250px;
+}
+select {
+  margin-bottom: 1rem;
 }
 
 #lists {
