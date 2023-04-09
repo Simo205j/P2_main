@@ -9,6 +9,9 @@ h1 {
     color: white;
     margin: 1rem;
 }
+button{
+    background-color: rgba(215, 45, 45, 1);
+}
 #logbooks {
     margin-top: 2rem;
     display: flex;
@@ -34,7 +37,7 @@ h1 {
 
 }
 #logbooks > div:nth-child(even) {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(245, 245, 245, 0.9);
 }
 #logbooks > p {
     padding: 15px;
@@ -86,9 +89,7 @@ button {
     cursor:pointer
     
 }
-p button[value="Delete Logbook"]{
-    background-color: rgba(215, 45, 45, 1);
-}
+
 button[type="submit"]{
     background-color: #458ca0;
 }
@@ -149,6 +150,10 @@ button:hover {
 }
 #Done {
     background-color: unset;
-    background-color: rgba(93, 250, 25, 0.5);
+    background-color: rgba(11, 230, 41, 0.6);
+    border: 2px solid rgba(12, 199, 37, 0.6);;
 }
   
+button[value="Delete"]{
+    background-color: rgba(215, 45, 45, 1);
+}

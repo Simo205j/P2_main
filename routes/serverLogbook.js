@@ -14,7 +14,6 @@ router.get('/logbook', (req, res) => {
 });
 
 // Additional logbook routes can be defined here
-
 router.delete("/Delete", (req, res) => {
     const data =  req.body._id
     console.log("Deleting logbook with _id:", data);
@@ -29,7 +28,38 @@ router.delete("/Delete", (req, res) => {
   });
   
   });
+
+router.patch("/EditEntry", (req, res) => {
+  const data = req.body;
+  console.log("Deleting logbook entry with _id:", data._id, "at index:", data.index);
+
+  // Load the logbook entry from the database using _id
+  logbookDataBase.findOne({ _id: data._id }, (err, logbookEntry) => {
+    if (err) {
+      console.error("Error finding logbook entry:", err);
+      res.status(500).send({ error: err });
+    } else {
+      // Delete the specified index from paragraphs, status, and headers arrays
+      logbookEntry.paragraphs.splice(data.index, 1);
+      logbookEntry.status.splice(data.index, 1);
+      logbookEntry.headers.splice(data.index, 1);
+
+      // Save the updated logbook entry back to the database
+      logbookDataBase.update({ _id: data._id }, logbookEntry, {}, (err, numReplaced) => {
+        if (err) {
+          console.error("Error updating logbook entry:", err);
+          res.status(500).send({ error: err });
+        } else {
+          console.log("Deleted logbook entry at index:", data.index);
+          res.status(200).json({ status: "success", message: "Logbook entry deleted" });
+        }
+      });
+    }
+  });
+});
   
+
+
   router.post("/UpdatePost", (req, res) => {
     logbookEntry = req.body; 
     console.log(req.body)

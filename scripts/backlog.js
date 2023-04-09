@@ -31,6 +31,7 @@ source.addEventListener("message", function(event)
 });
 function createTasks(tasks) {
   const table = document.createElement("table");
+  table.id = "BacklogTable"
 
   // Create table header
   const headerRow = document.createElement("tr");
@@ -89,8 +90,14 @@ function createTasks(tasks) {
       table.appendChild(row);
     }
   });
-
+  if (document.getElementById("divContainer")){
+    deleteTable = document.getElementById("divContainer")
+    console.log("Penis")
+    deleteTable.remove();
+  }
   const divContainer = document.createElement("div")
+  divContainer.id = "divContainer"
+
   divContainer.appendChild(table);
   backlogTable.appendChild(divContainer);
 }

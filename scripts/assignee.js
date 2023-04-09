@@ -33,6 +33,7 @@ assigneeFormButton.addEventListener("click", async (event) => {
       }
       const insertAfterThisEdit = document.querySelector("label[for='editAssignee']");
       const insertAfterThis = document.querySelector("label[for='assignee']");
+      const selectAssigneeLabelEdit = document.createElement("label");
       const selectAssigneeEdit = document.createElement("select");
       const selectAssigneeLabel = document.createElement("label");
       const selectAssignee = document.createElement("select");
@@ -62,9 +63,9 @@ assigneeFormButton.addEventListener("click", async (event) => {
       selectAssignee.required = true;
       selectAssignee.name = "assignee";
 
-      selectAssignee.id = "assignee";
+      selectAssigneeEdit.id = "editAssignee";
       selectAssigneeEdit.required = true;
-      selectAssignee.id = "assignee";
+      selectAssigneeEdit.id = "editAssignee";
   
       insertAfterThis.insertAdjacentElement("afterend", selectAssignee);
       insertAfterThisEdit.insertAdjacentElement("afterend", selectAssigneeEdit)

@@ -45,7 +45,7 @@ source.addEventListener("message", function getTasks(event) {
     newTaskList.className = LISTS[index]
     
     tasks.forEach((task) => {
-      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate)) {
+      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate) && task.TaskAttributes.Status !== "Done") {
         task.TaskAttributes.Status = LISTS[2]
       }
       if(task.TaskAttributes.Status == list){
@@ -263,7 +263,7 @@ function makeEditButton(task, newTask) {
     const form = dialog.querySelector("form");
     form.taskName.value = task.TaskName;
     form.description.value = task.TaskAttributes.Description;
-    form.assignee.value = task.TaskAttributes.Assignee;
+    form.editAssignee.value = task.TaskAttributes.Assignee
     form.priority.value = task.TaskAttributes.Priority;
     form.startDate.value = task.TaskAttributes.StartDate;
     form.endDate.value = task.TaskAttributes.EndDate;
@@ -276,7 +276,7 @@ function makeEditButton(task, newTask) {
         TaskName: form.taskName.value,
         TaskAttributes: {
           Description: form.description.value,
-          Assignee: form.assignee.value,
+          Assignee: form.editAssignee.value,
           Priority: form.priority.value,
           StartDate: form.startDate.value,
           EndDate: form.endDate.value,
