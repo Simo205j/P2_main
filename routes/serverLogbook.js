@@ -93,12 +93,29 @@ router.patch("/EditEntry", (req, res) => {
       }
     });
   })
-  
-  
+
+  router.patch("/updateDisplayStatus", (req, res) => {
+    const data = req.body;
+    console.log("GOT PATCH request to update logbook entry status", data)
+    //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
+    logbookDataBase.update({_id: data._id}, {$set: { display: data.display} },{}, (err, updatedTask) => {
+      if(err) 
+      {
+        res.status(500).send({ error: err });
+      }
+      else
+      {
+        res.status(200).json({
+          status: "PATCHED Logbook",
+          data: data
+        });
+      }
+    })
+  })
+
   router.patch("/UpdateStatus", (req, res) => {
     const data = req.body;
     console.log("GOT PATCH request to update logbook", data._id)
-    console.log("LINE 248: ", data.status)
     //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
     logbookDataBase.update({_id: data._id}, {$set: { status: data.status} },{}, (err, updatedTask) => {
       if(err) 
