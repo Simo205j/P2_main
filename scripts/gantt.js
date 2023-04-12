@@ -56,8 +56,6 @@ function updateTimeChart(chart, newMin, newMax) {
   chart.config.options.scales.x.max = new Date(newMax);
   chart.update();
 }
-
-
 //GLOBAL VARIABLE TO BE ACCESED IN CHART DATA CONFIG
 let sortedTasks = null;
 //DRAWS TASKS ON CHART BASED ON TASKS IN DATABASE
@@ -80,10 +78,10 @@ source.addEventListener("message", async function(event) {
   });
   //ASSIGNS OVERDUE STATUS IF ENTRY IS OVERDUE AND REMOVES DONE
   data.forEach((task) => {
-    if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
-      task.TaskAttributes.Status = "Overdue";
-    }
     if (task.TaskAttributes.Status != "Done" && task.TaskAttributes.Status != "" && task.TaskAttributes.hasOwnProperty('Status')){
+      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
+        task.TaskAttributes.Status = "Overdue";
+      }
       let taskData = {
         x: [task.TaskAttributes.StartDate, task.TaskAttributes.EndDate],
         y: task.TaskName,
@@ -133,14 +131,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // CHART IS BASED ON AN OBJECT THAT CAN BE DESTRUCTURED
   const config = {
     type: 'bar',
+    //DATA FROM THE DATA OBJECT IS ASSIGNED TO THE CONFIG 
     data,
     options: {
       responsive: true,
       layout: {
           padding: {
             //CREATES WHITE SPACE ON LEFT AND RIGHT SIDE OF CHART
-            left: 100, 
-            right: 100
+            left: 30, 
+            right: 120
           }
       },
       //DETERMINES WHETER THE Y OR X AXIS DISPLAY OUR TASKS
@@ -150,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
         x: {
           ticks: {
               font: {
-                size: 20 // Update to your desired font size
+                // Update to your desired font size
+                size: 20 
               },
             },
           position: "top",
@@ -165,7 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
         y: {
           ticks: {
               font: {
-                size: 20 // Update to your desired font size
+                // Update to your desired font size
+                size: 20 
               },
             },
         }
@@ -193,8 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('myChart'), config
   );
 });
-
-
 //------------PLUGINS-------------//
 //MAKES DOTTED LINE FOR CURRENT DATE
 const todayLine = {
@@ -217,7 +216,6 @@ const todayLine = {
     ctx.moveTo(x.getPixelForValue(new Date()), top);
     ctx.lineTo(x.getPixelForValue(new Date()), bottom)
     ctx.stroke();
-    ctx.setLineDash ([])
   } 
 }
   //CREATES DISPLAYED STATUS ON CHART
@@ -225,6 +223,7 @@ const todayLine = {
     id: "status",
     afterDatasetsDraw(chart) {
       const {ctx, data, chartArea: {right}, scales: {y} } = chart;
+      console.log(chart)
 
       ctx.save()
       ctx.font = "bolder 20px sans-serif"

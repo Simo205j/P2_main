@@ -74,8 +74,8 @@ router.patch("/EditEntry", (req, res) => {
           res.status(500)
         } else {
           console.log('Updated', numReplaced, 'documents');
-          res.status(200)
-        } 
+          res.status(200).json({ paragraphs: logbookEntry.paragraphs, headers: logbookEntry.headers , assignee: logbookEntry.assignee})
+        }
       }
     );
   });

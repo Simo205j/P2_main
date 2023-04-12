@@ -30,6 +30,7 @@ source.addEventListener("message", function(event)
   createTasks(tasks);
 });
 function createTasks(tasks) {
+  let tableIndex = 1
   const table = document.createElement("table");
   table.id = "BacklogTable"
 
@@ -66,7 +67,7 @@ function createTasks(tasks) {
     }
       const row = document.createElement("tr");
       const taskindex = document.createElement("td");
-      taskindex.textContent = index+1;
+      taskindex.textContent = tableIndex
       const taskName = document.createElement("td");
       taskName.textContent = task.TaskName;
       const assignee = document.createElement("td");
@@ -88,6 +89,7 @@ function createTasks(tasks) {
       row.appendChild(status);
       row.appendChild(priority);
       table.appendChild(row);
+      tableIndex++
     }
   });
   if (document.getElementById("divContainer")){

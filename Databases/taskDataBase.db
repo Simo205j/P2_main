@@ -1,1 +1,5 @@
+{"TaskName":"Discussion","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-24","EndDate":"2023-04-28","Status":"Doing"},"_id":"129QxXWjMo4xI0ps"}
 {"TaskName":"Coding","TaskAttributes":{"Description":"What do we have to do?","Assignee":"Andreas Mertz","Priority":"Medium","StartDate":"2023-04-04","EndDate":"2023-04-08","Status":"Doing"},"_id":"7xjVaXTq1Q0ArxBS"}
+{"TaskName":"Init problem statement","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-02-15","EndDate":"2023-02-20","Status":"Done"},"_id":"DLrstLVrCfc8iclR"}
+{"TaskName":"Problem analysis","TaskAttributes":{"Description":"High/Low performance teams, interviews and analysis","Assignee":"Andreas Mertz","Priority":"High","StartDate":"2023-02-24","EndDate":"2023-04-21","Status":"To-do"},"_id":"PuaFmQwWlBQcjLpI"}
+{"TaskName":"Implementation","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-19","EndDate":"2023-04-22","Status":"To-do"},"_id":"rmZF5HnwsmksFz6e"}
