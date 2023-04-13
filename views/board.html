@@ -20,6 +20,7 @@
     </div>
   </header>
   <div id="Container">
+    <div id="lists"></div>
     <div id="form">
       <input type="button" name="ExpandForm" id="expandFormButton" value="Create Task">
       <form id="taskForm">
@@ -59,14 +60,11 @@
         <input type="button" id="assigneeButton" value="+">
       </div>
     </div>
-    <div id="lists">
-
-    </div>
   </div>
   
   <dialog id="editTaskModal">
     <form id="editTaskForm">
-      <h1>Task Details</h1>
+      <h1>Edit Task</h1>
       <label for="editTaskName">Task Name:</label>
       <input required type="text" id="editTaskName" name="taskName"><br>
   
@@ -74,7 +72,7 @@
       <input type="text" id="editDescription" name="description"><br>
   
       <label for="editAssignee">Assignee:</label>
-      <input type="text" id="editAssignee" name="assignee"><br>
+      <br>
   
       <label for="editPriority">Priority:</label>
       <select id="editPriority" name="priority">

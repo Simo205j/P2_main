@@ -9,6 +9,9 @@ h1 {
     color: white;
     margin: 1rem;
 }
+button{
+    background-color: rgba(215, 45, 45, 1);
+}
 #logbooks {
     margin-top: 2rem;
     display: flex;
@@ -34,7 +37,7 @@ h1 {
 
 }
 #logbooks > div:nth-child(even) {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(245, 245, 245, 0.9);
 }
 #logbooks > p {
     padding: 15px;
@@ -44,6 +47,10 @@ h1 {
     border: 3px solid lightgrey;
     margin: 5px;
     cursor:pointer
+}
+#logbooks > p:hover {
+    opacity: 70%;
+    border: 3px solid grey
 }
 
 #container {
@@ -72,7 +79,7 @@ input[type="text"] {
     box-sizing: border-box;
 }
 button {
-    background-color: #458ca0;
+    background-color: rgb(14, 175, 36);
     color: white;
     padding: 5px 5px;
     border: none;
@@ -82,8 +89,12 @@ button {
     cursor:pointer
     
 }
-button:hover {
+
+button[type="submit"]{
     background-color: #458ca0;
+}
+button:hover {
+    opacity: 80%;
 }
 #error-message {
     color: red;
@@ -139,6 +150,10 @@ button:hover {
 }
 #Done {
     background-color: unset;
-    background-color: rgba(93, 250, 25, 0.5);
+    background-color: rgba(11, 230, 41, 0.6);
+    border: 2px solid rgba(12, 199, 37, 0.6);;
 }
   
+button[value="Delete"]{
+    background-color: rgba(215, 45, 45, 1);
+}

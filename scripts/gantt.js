@@ -1,17 +1,21 @@
+//TASKS RECIVED FROM SERVER
 const source = new EventSource("http://localhost:3000/Tasks/events");
+//DOM SELECTORS FOR BUTTONS
 const nextMonth = document.getElementById("nextMonth");
 const prevMonth = document.getElementById("prevMonth");
+//USED TO INCREMENT AND DECREMENT MONTHS ON BUTTONS
 const mlSecondsInMonth = 2629743833;
 let minCurrentDate = new Date(Math.floor(Date.now() - mlSecondsInMonth/3));
 let maxCurrentDate = new Date(Math.floor(Date.now() + mlSecondsInMonth));
 
-const status = {
+//GIVES VALUE BASED ON STATUS TO SORT
+const statusValues = {
   "Done" : 1,
   "To-do" : 2,
   "Doing" : 3,
   "Overdue" : 4
 };
-
+//ADDING BARCOLORS AND BORDERCOLORS DEPENDING ON STATUS
 const barColors = {
   "Done": "rgba(11, 230, 41, 0.6)", 
   "Doing": "rgba(246, 174, 7, 0.6)", 
@@ -24,8 +28,8 @@ const borderColors = {
   "Overdue" : "rgba(215, 45, 45, 1)",
   "To-do": "rgba(75, 133, 225, 0.8)"
 };
-let penis = [];
 
+//NEXT AND PREVIOUS MONTH BUTTONS
 nextMonth.addEventListener("click", () => {
   const chart = Chart.getChart("myChart");
   const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
@@ -39,44 +43,45 @@ prevMonth.addEventListener("click", () => {
   const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
   updateTimeChart(chart, newMin, newMax);
 });
-
+//FORMAT DATE TO YYYY-MM-DD
 function formatDate(date) {
   const year = date.getFullYear().toString().padStart(4, '0');
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
   return year+ "-" + month + "-" + day;
 }
-
+//UPDATES X-AXIS ON PREV AND NEXTMONTH BUTTONS
 function updateTimeChart(chart, newMin, newMax) {
   chart.config.options.scales.x.min = new Date(newMin);
   chart.config.options.scales.x.max = new Date(newMax);
   chart.update();
 }
-
-
-
-source.addEventListener("message", function(event) {
-  const barColorsTask = []
-  const borderColorsTask = []
-  const data = JSON.parse(event.data);
-
+//GLOBAL VARIABLE TO BE ACCESED IN CHART DATA CONFIG
+let sortedTasks = null;
+//DRAWS TASKS ON CHART BASED ON TASKS IN DATABASE
+source.addEventListener("message", async function(event) {
+  const barColorsTask = [];
+  const borderColorsTask = [];
+  const data = await JSON.parse(event.data);
+  sortedTasks = []
+  //SORTS TASKS BASED ON STARTDATE AND STATUS
   data.sort((a, b) => {
     const startDateDiff = new Date(a.TaskAttributes.StartDate).getTime() - new Date(b.TaskAttributes.StartDate).getTime();
     if (startDateDiff !== 0) {
       return startDateDiff;
     } else {
-      const statusB = status[a.TaskAttributes.Status];
-      const statusA = status[b.TaskAttributes.Status];
+      //COMPARES STATUS VALUES 
+      const statusB = statusValues[a.TaskAttributes.Status];
+      const statusA = statusValues[b.TaskAttributes.Status];
       return statusA - statusB;
     }
   });
-  console.log(data)
-
+  //ASSIGNS OVERDUE STATUS IF ENTRY IS OVERDUE AND REMOVES DONE
   data.forEach((task) => {
-    if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
-      task.TaskAttributes.Status = "Overdue"
-    }
     if (task.TaskAttributes.Status != "Done" && task.TaskAttributes.Status != "" && task.TaskAttributes.hasOwnProperty('Status')){
+      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
+        task.TaskAttributes.Status = "Overdue";
+      }
       let taskData = {
         x: [task.TaskAttributes.StartDate, task.TaskAttributes.EndDate],
         y: task.TaskName,
@@ -84,102 +89,57 @@ source.addEventListener("message", function(event) {
         status: task.TaskAttributes.Status,
         label: task.TaskAttributes.Description // Add the label property
       };
-      barColorsTask.push(barColors[task.TaskAttributes.Status])
-      borderColorsTask.push(borderColors[task.TaskAttributes.Status])
-      penis.push(taskData);
+      barColorsTask.push(barColors[task.TaskAttributes.Status]);
+      borderColorsTask.push(borderColors[task.TaskAttributes.Status]);
+      sortedTasks.push(taskData);
     }
   });
+
   // Update chart with the new data
-  updateChart(penis, barColorsTask, borderColorsTask);
+  updateChart(sortedTasks, barColorsTask, borderColorsTask);
 });
 
-
-function updateChart(data, barColorsTask, borderColorsTask) {
-  // Get chart instance
+//REDRAWS CHART BASED ON TASKS ARRAY AND STATUS COLORS
+function updateChart(sortedTasks, barColorsTask, borderColorsTask) {
   const chart = Chart.getChart("myChart");
+  console.log(chart)
   chart.config.options.scales.x.min = minCurrentDate
   chart.config.options.scales.x.max = maxCurrentDate
-  // Update chart data and redraw
-  chart.data.datasets[0].data = data;
+
+  chart.data.datasets[0].data = sortedTasks;
   chart.data.datasets[0].backgroundColor = barColorsTask;
   chart.data.datasets[0].borderColor = borderColorsTask;
+  //CLEARS PREVIOUS DATA
+  chart.clear();
+  //UPDATES CHART WITH NEW DATA
   chart.update();
 }
 
+//CHART DATA AND CONFIG THAT CHART IS INITIALLY BASED ON
 document.addEventListener('DOMContentLoaded', function() {
   const data = {
-    labels: [],
     datasets: [{
       label: 'Project Overview',
-      data: penis,
-      backgroundColor: [
-        "rgba(11, 230, 41, 0.2)",
-        "rgba(237, 139, 12, 0.2)",
-        "rgba(233, 18, 18, 0.2)"
-      ],
-      borderColor: [
-        "rgba(11, 230, 41, 0.8)",
-        "rgba(237, 139, 12, 0.8)",
-        "rgba(233, 18, 18, 0.8)"
-      ],
+      data: sortedTasks,
       borderWidth: 1,
       borderSkipped: false,
       borderRadius: 10,
       barPercentage: 0.95
     }]
   };
-  //------------PLUGINS-------------//
-  //MAKES DOTTED LINE FOR CURRENT DATE
-const todayLine = {
-  id : "todayline",
-  beforeDatasetsDraw(chart, args, pluginOptions) {
-    const {ctx, data, chartArea: { top, bottom, left, right}, scales: {x, y} } = chart;
-    minCurrentDate = chart.config.options.scales.x.min 
-    maxCurrentDate = chart.config.options.scales.x.max 
-    if (minCurrentDate < Date.now() && Date.now() < maxCurrentDate)
-    ctx.save()
-    //TELLS NODE.JS THAT WE WANT TO START DRWING
-    ctx.beginPath()
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(255, 26, 104, 1)"
-    //COLOR, WHITESPACE
-    ctx.setLineDash ([3,6])
-    //COORDINATES FOR START AND STOP DRAWING
-    //GETPIXELFORVALUE IS A FUNCTION IN CHART.JS THAT IS ABLE TO FIND ELEMENTS SPECIFIC PIXELS
-    ctx.moveTo(x.getPixelForValue(new Date()), top);
-    ctx.lineTo(x.getPixelForValue(new Date()), bottom)
-    ctx.stroke();
-    ctx.setLineDash ([])
-  } 
-}
-  const status = {
-    id: "status",
-    afterDatasetsDraw(chart, args, pluginOptions) {
-      const {ctx, data, chartArea: { top, bottom, left, right, width}, scales: {x, y} } = chart;
-
-      ctx.save()
-      ctx.font = "bolder 20px sans-serif"
-      ctx.fillstyle = "black";
-      ctx.textBaseline = "middle";
-      data.datasets[0].data.forEach((datapoint, index) => {
-        ctx.fillText(datapoint.status, right+10, y.getPixelForValue(index));
-    });
-    ctx.restore();
-  }
-}
-  //CREATES DISPLAYED NAMES SEEN ON THE LEFT SIDE OF THE CHART
-
-  // CONFIGURATION FOR LAYOUT OF CHART
+  // CONFIGURATION FOR LAYOUT OF CHART.
+  // CHART IS BASED ON AN OBJECT THAT CAN BE DESTRUCTURED
   const config = {
     type: 'bar',
+    //DATA FROM THE DATA OBJECT IS ASSIGNED TO THE CONFIG 
     data,
     options: {
       responsive: true,
       layout: {
           padding: {
             //CREATES WHITE SPACE ON LEFT AND RIGHT SIDE OF CHART
-            left: 100, 
-            right: 100
+            left: 30, 
+            right: 120
           }
       },
       //DETERMINES WHETER THE Y OR X AXIS DISPLAY OUR TASKS
@@ -189,7 +149,8 @@ const todayLine = {
         x: {
           ticks: {
               font: {
-                size: 20 // Update to your desired font size
+                // Update to your desired font size
+                size: 20 
               },
             },
           position: "top",
@@ -197,13 +158,15 @@ const todayLine = {
           time: {
             unit: "day"
           },
+          //UPDATES BASED ON CURRENT DATE AND BUTTONS
           min: minCurrentDate,
           max: maxCurrentDate
         },
         y: {
           ticks: {
               font: {
-                size: 20 // Update to your desired font size
+                // Update to your desired font size
+                size: 20 
               },
             },
         }
@@ -223,12 +186,52 @@ const todayLine = {
       }
     },
     //THESE PLUGINS LETS US MANIPULATE/DRAW ADDITIONAL INFORMATION TO THE CHART 
-    //SEE PREVIOUSLY DECLARED PLUGINS IN THIS FILE
-    plugins: [todayLine, status]
+    //SEE DECLARED PLUGINS IN THIS FILE
+    plugins: [todayLine, statusOfTask]
   };
   //RENDER CHART 
   const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
+    document.getElementById('myChart'), config
   );
 });
+//------------PLUGINS-------------//
+//MAKES DOTTED LINE FOR CURRENT DATE
+const todayLine = {
+  id : "todayline",
+  //DRAWS AFTER INITIAL CHART HAS BEEN DRAWN
+  afterDatasetsDraw(chart) {
+    const {ctx, chartArea: { top, bottom}, scales: {x} } = chart;
+    minCurrentDate = chart.config.options.scales.x.min 
+    maxCurrentDate = chart.config.options.scales.x.max 
+    if (minCurrentDate < Date.now() && Date.now() < maxCurrentDate)
+    ctx.save()
+    //TELLS NODE.JS THAT WE WANT TO START DRWING
+    ctx.beginPath()
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255, 26, 104, 1)"
+    //COLOR, WHITESPACE
+    ctx.setLineDash ([3,6])
+    //COORDINATES FOR START AND STOP DRAWING
+    //GETPIXELFORVALUE IS A FUNCTION IN CHART.JS THAT IS ABLE TO FIND ELEMENTS SPECIFIC PIXELS
+    ctx.moveTo(x.getPixelForValue(new Date()), top);
+    ctx.lineTo(x.getPixelForValue(new Date()), bottom)
+    ctx.stroke();
+  } 
+}
+  //CREATES DISPLAYED STATUS ON CHART
+  const statusOfTask = {
+    id: "status",
+    afterDatasetsDraw(chart) {
+      const {ctx, data, chartArea: {right}, scales: {y} } = chart;
+      console.log(chart)
+
+      ctx.save()
+      ctx.font = "bolder 20px sans-serif"
+      ctx.fillstyle = "black";
+      ctx.textBaseline = "middle";
+      data.datasets[0].data.forEach((datapoint, index) => {
+        ctx.fillText(datapoint.status, right+10, y.getPixelForValue(index));
+    });
+    ctx.restore();
+  }
+}

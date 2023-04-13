@@ -30,7 +30,9 @@ source.addEventListener("message", function(event)
   createTasks(tasks);
 });
 function createTasks(tasks) {
+  let tableIndex = 1
   const table = document.createElement("table");
+  table.id = "BacklogTable"
 
   // Create table header
   const headerRow = document.createElement("tr");
@@ -65,7 +67,7 @@ function createTasks(tasks) {
     }
       const row = document.createElement("tr");
       const taskindex = document.createElement("td");
-      taskindex.textContent = index+1;
+      taskindex.textContent = tableIndex
       const taskName = document.createElement("td");
       taskName.textContent = task.TaskName;
       const assignee = document.createElement("td");
@@ -87,10 +89,17 @@ function createTasks(tasks) {
       row.appendChild(status);
       row.appendChild(priority);
       table.appendChild(row);
+      tableIndex++
     }
   });
-
+  if (document.getElementById("divContainer")){
+    deleteTable = document.getElementById("divContainer")
+    console.log("Penis")
+    deleteTable.remove();
+  }
   const divContainer = document.createElement("div")
+  divContainer.id = "divContainer"
+
   divContainer.appendChild(table);
   backlogTable.appendChild(divContainer);
 }

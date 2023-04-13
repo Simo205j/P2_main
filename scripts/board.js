@@ -10,8 +10,10 @@ expandFormButton.addEventListener("click", () => {
   form.classList.toggle("show");
   if (expandFormButton.value === "Close form") {
     expandFormButton.value = "Create task";
+    expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)"
   } else {
     expandFormButton.value = "Close form";
+    expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)"
   }
 });
 
@@ -43,7 +45,7 @@ source.addEventListener("message", function getTasks(event) {
     newTaskList.className = LISTS[index]
     
     tasks.forEach((task) => {
-      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate)) {
+      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate) && task.TaskAttributes.Status !== "Done") {
         task.TaskAttributes.Status = LISTS[2]
       }
       if(task.TaskAttributes.Status == list){
@@ -172,8 +174,6 @@ taskForm.addEventListener("submit", async (event) => {
 
 function makeDescription(newTask, task){
 
-
-  
   const descriptionDiv = document.createElement("div")
   const newTaskDescription = document.createElement("p")
   const assignee = document.createElement("p")
@@ -194,7 +194,7 @@ function makeDescription(newTask, task){
       descriptionDiv.style.display = "none"
     }
   })
-
+  
 
   newTaskDescription.textContent = task.TaskAttributes.Description 
   assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee
@@ -215,13 +215,13 @@ function makeDeleteButton(task, newTask){
   const deleteButton = document.createElement("button");
   deleteButton.value = "Delete Task";
   deleteButton.textContent = "Delete";
-  deleteButton.style.visibility = "hidden";
+  deleteButton.style.display = "none"
 
   newTask.addEventListener("mouseover", () => {
-    deleteButton.style.visibility = "visible";
+    deleteButton.style.display = "inline-block";
   });
   newTask.addEventListener("mouseout", () => {
-    deleteButton.style.visibility = "hidden";
+    deleteButton.style.display = "none";
   });
 
   deleteButton.addEventListener("click", async (event) => {
@@ -250,18 +250,26 @@ function makeEditButton(task, newTask) {
   editButton.value = "Edit Task";
   editButton.textContent = "Edit";
   editButton.classList.add("edit-button"); // Add a CSS class for styling
+  editButton.style.display = "none"
+
+  newTask.addEventListener("mouseover", () => {
+    editButton.style.display = "inline-block";
+  });
+  newTask.addEventListener("mouseout", () => {
+    editButton.style.display = "none";
+  });
 
   editButton.addEventListener("click", async (event) => {
     event.stopPropagation();
     event.preventDefault();
-    console.log("Penis")
+
     const dialog = document.getElementById("editTaskModal");
     console.log(dialog)
     dialog.showModal();
     const form = dialog.querySelector("form");
     form.taskName.value = task.TaskName;
     form.description.value = task.TaskAttributes.Description;
-    form.assignee.value = task.TaskAttributes.Assignee;
+    form.editAssignee.value = task.TaskAttributes.Assignee
     form.priority.value = task.TaskAttributes.Priority;
     form.startDate.value = task.TaskAttributes.StartDate;
     form.endDate.value = task.TaskAttributes.EndDate;
@@ -274,7 +282,7 @@ function makeEditButton(task, newTask) {
         TaskName: form.taskName.value,
         TaskAttributes: {
           Description: form.description.value,
-          Assignee: form.assignee.value,
+          Assignee: form.editAssignee.value,
           Priority: form.priority.value,
           StartDate: form.startDate.value,
           EndDate: form.endDate.value,
