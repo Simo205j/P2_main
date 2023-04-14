@@ -1,5 +1,10 @@
 LISTS = ["To-do", "Doing", "Overdue", "Done"]
 
+const priorityValues = {
+  "Low" : 1,
+  "Medium" : 2,
+  "High" : 3,
+};
 
 const source = new EventSource("http://localhost:3000/Tasks/events");
 const listsTypeContainer = document.getElementById("lists")
@@ -27,7 +32,7 @@ source.addEventListener("message", function getTasks(event) {
       return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
     } else {
       // Sort by priority
-      return a.TaskAttributes.Priority - b.TaskAttributes.Priority;
+      return priorityValues[b.TaskAttributes.Priority] - priorityValues[a.TaskAttributes.Priority];
     }
   });
   console.log(tasks)
@@ -200,9 +205,10 @@ function makeDescription(newTask, task){
   assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee
   status.textContent = "Status: " + task.TaskAttributes.Status
   priority.textContent = "Priority: " + task.TaskAttributes.Priority
-  startDate.textContent = "Status: " + task.TaskAttributes.StartDate
-  endDate.textContent = "Priority: " + task.TaskAttributes.EndDate
+  startDate.textContent = "Start Date: " + task.TaskAttributes.StartDate
+  endDate.textContent = "End Date:  " + task.TaskAttributes.EndDate
 
+  descriptionDiv.appendChild(newTaskDescription)
   descriptionDiv.appendChild(assignee)
   descriptionDiv.appendChild(status)
   descriptionDiv.appendChild(priority)
