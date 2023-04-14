@@ -157,6 +157,7 @@ taskForm.addEventListener("submit", async (event) => {
       Status: status
     }
   };
+  
   try {
     const response = await fetch("http://localhost:3000/Tasks/SendTask", {
       method: "POST",
@@ -170,7 +171,9 @@ taskForm.addEventListener("submit", async (event) => {
   } catch (error) {
     console.error(error);
   }
-});
+  });
+
+
 
 function makeDescription(newTask, task){
 
@@ -194,7 +197,6 @@ function makeDescription(newTask, task){
       descriptionDiv.style.display = "none"
     }
   })
-  
 
   newTaskDescription.textContent = task.TaskAttributes.Description 
   assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee
@@ -202,6 +204,8 @@ function makeDescription(newTask, task){
   priority.textContent = "Priority: " + task.TaskAttributes.Priority
   startDate.textContent = "Status: " + task.TaskAttributes.StartDate
   endDate.textContent = "Priority: " + task.TaskAttributes.EndDate
+  
+
 
   descriptionDiv.appendChild(assignee)
   descriptionDiv.appendChild(status)
@@ -215,13 +219,13 @@ function makeDeleteButton(task, newTask){
   const deleteButton = document.createElement("button");
   deleteButton.value = "Delete Task";
   deleteButton.textContent = "Delete";
-  deleteButton.style.display = "none"
+  deleteButton.style.visibility = "hidden";
 
   newTask.addEventListener("mouseover", () => {
-    deleteButton.style.display = "inline-block";
+    deleteButton.style.visibility = "visible";
   });
   newTask.addEventListener("mouseout", () => {
-    deleteButton.style.display = "none";
+    deleteButton.style.visibility = "hidden";
   });
 
   deleteButton.addEventListener("click", async (event) => {
@@ -250,16 +254,9 @@ function makeEditButton(task, newTask) {
   editButton.value = "Edit Task";
   editButton.textContent = "Edit";
   editButton.classList.add("edit-button"); // Add a CSS class for styling
-  editButton.style.display = "none"
-
-  newTask.addEventListener("mouseover", () => {
-    editButton.style.display = "inline-block";
-  });
-  newTask.addEventListener("mouseout", () => {
-    editButton.style.display = "none";
-  });
 
   editButton.addEventListener("click", async (event) => {
+  
     event.stopPropagation();
     event.preventDefault();
 
@@ -278,6 +275,14 @@ function makeEditButton(task, newTask) {
     const saveButton = dialog.querySelector("#saveEditButton");
     saveButton.addEventListener("click", async () => {
       console.log("Penis")
+      if (!taskName || !description || !assignee || !priority || !startDate || !endDate || !status) {
+        throw new Error("Please fill in all fields.");
+      }
+    
+      // Check if endDate is before startDate
+      if (new Date(endDate) < new Date(startDate)) {
+        throw new Error("End date must be after start date.");
+      } 
       const updatedData = {
         TaskName: form.taskName.value,
         TaskAttributes: {
