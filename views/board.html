@@ -100,11 +100,27 @@
       </select><br>
   
       <label for="editStartDate">Start Date:</label>
-      <input type="date" id="editStartDate" name="startDate" ><br>
+      <input type="date" id="editStartDate" name="startDate" value="" max="" ><br>
   
       <label for="editEndDate">End Date:</label>
       <input type="date" id="editEndDate" name="endDate" value="" min=""><br>
   
+      <script>
+        const startDateInput2 = document.getElementById('editStartDate');
+        const endDateInput2 = document.getElementById('editEndDate');
+        
+        startDateInput2.addEventListener('input', () => {
+          endDateInput2.min = startDateInput2.value;
+          if(endDateInput2.value == "")
+          endDateInput2.value = startDateInput2.value;
+        });
+        endDateInput2.addEventListener('input', () => {
+          startDateInput2.max = endDateInput2.value;
+          if(startDateInput2.value == "")
+          startDateInput2.value = endDateInput2.value;
+        });
+      </script>
+
       <label for="editStatus">Status:</label>
       <select id="editStatus" name="status">
         <option value="To-do">To-Do</option>
