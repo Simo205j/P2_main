@@ -20,7 +20,6 @@
     </div>
   </header>
   <div id="Container">
-    <div id="lists"></div>
     <div id="form">
       <input type="button" name="ExpandForm" id="expandFormButton" value="Create Task">
       <form id="taskForm">
@@ -40,10 +39,22 @@
         </select><br>
 
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" required><br>
+        <input type="date" id="startDate" name="startDate" max="" required><br>
 
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate" required><br>
+        <input type="date" id="endDate" name="endDate" min="" required ><br>
+
+        <script>
+          const startDateInput = document.getElementById('startDate');
+          const endDateInput = document.getElementById('endDate');
+          
+          startDateInput.addEventListener('input', () => {
+            endDateInput.min = startDateInput.value;
+          });
+          endDateInput.addEventListener('input', () => {
+            startDateInput.max = endDateInput.value;
+          });
+        </script>
 
         <label for="status">Status:</label>
         <select id="status" name="status">
@@ -59,6 +70,9 @@
         <input type="text" name="" id="assigneeForm">
         <input type="button" id="assigneeButton" value="+">
       </div>
+    </div>
+    <div id="lists">
+
     </div>
   </div>
   
@@ -82,10 +96,10 @@
       </select><br>
   
       <label for="editStartDate">Start Date:</label>
-      <input type="date" id="editStartDate" name="startDate"><br>
+      <input type="date" id="editStartDate" name="startDate" ><br>
   
       <label for="editEndDate">End Date:</label>
-      <input type="date" id="editEndDate" name="endDate"><br>
+      <input type="date" id="editEndDate" name="endDate" value="" min=""><br>
   
       <label for="editStatus">Status:</label>
       <select id="editStatus" name="status">
