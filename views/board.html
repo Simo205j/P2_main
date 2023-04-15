@@ -20,7 +20,9 @@
     </div>
   </header>
   <div id="Container">
-    <div id="lists"></div>
+    <div id="lists">
+
+    </div>
     <div id="form">
       <input type="button" name="ExpandForm" id="expandFormButton" value="Create Task">
       <form id="taskForm">
@@ -40,10 +42,26 @@
         </select><br>
 
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" required><br>
+        <input type="date" id="startDate" name="startDate" max="" value="" required><br>
 
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate" required><br>
+        <input type="date" id="endDate" name="endDate" min="" value="" required ><br>
+
+        <script>
+          const startDateInput = document.getElementById('startDate');
+          const endDateInput = document.getElementById('endDate');
+          
+          startDateInput.addEventListener('input', () => {
+            endDateInput.min = startDateInput.value;
+            if(endDateInput.value == "")
+            endDateInput.value = startDateInput.value;
+          });
+          endDateInput.addEventListener('input', () => {
+            startDateInput.max = endDateInput.value;
+            if(startDateInput.value == "")
+            startDateInput.value = endDateInput.value;
+          });
+        </script>
 
         <label for="status">Status:</label>
         <select id="status" name="status">
@@ -82,11 +100,27 @@
       </select><br>
   
       <label for="editStartDate">Start Date:</label>
-      <input type="date" id="editStartDate" name="startDate"><br>
+      <input type="date" id="editStartDate" name="startDate" value="" max="" ><br>
   
       <label for="editEndDate">End Date:</label>
-      <input type="date" id="editEndDate" name="endDate"><br>
+      <input type="date" id="editEndDate" name="endDate" value="" min=""><br>
   
+      <script>
+        const startDateInput2 = document.getElementById('editStartDate');
+        const endDateInput2 = document.getElementById('editEndDate');
+        
+        startDateInput2.addEventListener('input', () => {
+          endDateInput2.min = startDateInput2.value;
+          if(endDateInput2.value == "")
+          endDateInput2.value = startDateInput2.value;
+        });
+        endDateInput2.addEventListener('input', () => {
+          startDateInput2.max = endDateInput2.value;
+          if(startDateInput2.value == "")
+          startDateInput2.value = endDateInput2.value;
+        });
+      </script>
+
       <label for="editStatus">Status:</label>
       <select id="editStatus" name="status">
         <option value="To-do">To-Do</option>
