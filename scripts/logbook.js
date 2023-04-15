@@ -68,7 +68,7 @@ submitLogbookHAndPEntry.addEventListener("click", (event) => {
   div.appendChild(checkbox)
   div.appendChild(header)
   div.appendChild(paragraph)
-  tempContainer.insertBefore(div,insertBeforeThis)
+  tempContainer.insertBefore(div, insertBeforeThis)
 })
 //ADD NEW LOGBOOKENTRY
 

@@ -60,7 +60,7 @@ source.addEventListener("message", function getTasks(event) {
         newTask.appendChild(newLine)
         newTask.name = task.TaskName
         newTask.id = task._id
-        if((new Date(task.TaskAttributes.EndDate) < currentDate) === false){
+        if((new Date(task.TaskAttributes.EndDate) < currentDate) === false || task.TaskAttributes.Status == "Done"){
           newTask.setAttribute("draggable", true);
           newTask.className = "draggable"
         }
@@ -102,6 +102,7 @@ function makeDraggable(){
   
     container.addEventListener("drop", async (event) => {
       event.preventDefault();
+      event.stopPropagation();
       const draggable = document.querySelector(".dragging")
       console.log(event.target.className)
       if (event.target === container && event.target.className != "Overdue") {
@@ -224,13 +225,13 @@ function makeDeleteButton(task, newTask){
   const deleteButton = document.createElement("button");
   deleteButton.value = "Delete Task";
   deleteButton.textContent = "Delete";
-  deleteButton.style.visibility = "hidden";
+  deleteButton.style.display = "none"
 
   newTask.addEventListener("mouseover", () => {
-    deleteButton.style.visibility = "visible";
+    deleteButton.style.display = "inline-block";
   });
   newTask.addEventListener("mouseout", () => {
-    deleteButton.style.visibility = "hidden";
+    deleteButton.style.display = "none";
   });
 
   deleteButton.addEventListener("click", async (event) => {
@@ -259,7 +260,14 @@ function makeEditButton(task, newTask) {
   editButton.value = "Edit Task";
   editButton.textContent = "Edit";
   editButton.classList.add("edit-button"); // Add a CSS class for styling
+  editButton.style.display = "none"
 
+  newTask.addEventListener("mouseover", () => {
+    editButton.style.display = "inline-block";
+  });
+  newTask.addEventListener("mouseout", () => {
+    editButton.style.display = "none";
+  });
   editButton.addEventListener("click", async (event) => {
   
     event.stopPropagation();

@@ -11,10 +11,8 @@ const priority = {
   "High" : 3
 };
 
-source.addEventListener("message", function(event) 
-{
+source.addEventListener("message", function(event){
   const tasks = JSON.parse(event.data);
-
   tasks.sort((a, b) => {
     const endDateDiff = new Date(a.TaskAttributes.EndDate).getTime() - new Date(b.TaskAttributes.EndDate).getTime();
     if (endDateDiff !== 0) {
@@ -25,8 +23,6 @@ source.addEventListener("message", function(event)
       return priorityA - priorityB;
     }
   });
-  
-  console.log(tasks)
   createTasks(tasks);
 });
 function createTasks(tasks) {
