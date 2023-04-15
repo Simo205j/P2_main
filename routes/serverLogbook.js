@@ -11,6 +11,21 @@ router.get('/logbook', (req, res) => {
   res.sendFile(__dirname + '/views/logbook.html')
 });
 
+
+router.get("/GetLogbookEntry", (req, res) => {
+  const logbookId = req.query.id; // Retrieve logbook entry ID from query parameter
+  console.log("Finding logbook with _id:", logbookId);
+  logbookDataBase.find({_id: logbookId}, {}, function (err, Logbook) {
+    if (err) {
+      console.error("Error getting logbook entry:", err);
+      res.status(500).send({ error: err });
+    } else {
+      console.log("Found logbook:", Logbook);
+      res.status(200).json(Logbook);
+    }
+  });
+});
+
 // Additional logbook routes can be defined here
 
 router.delete("/Delete", (req, res) => {
@@ -22,12 +37,11 @@ router.delete("/Delete", (req, res) => {
       res.status(500).send({ error: err });
     } else {
       console.log("Deleted logbook:", numRemoved);
-      res.status(200).json(data + " Deleted");
+      res.status(200).json(data);
     }
   });
   
   });
-  
   router.post("/UpdatePost", (req, res) => {
     logbookEntry = req.body; 
     console.log(req.body)
@@ -103,7 +117,7 @@ router.delete("/Delete", (req, res) => {
     console.log("New client: " + clientId);
   
     // Immediately send the current task data to the new client
-    logbookDataBase.find({}, (err, data) => {
+    logbookDataBase.find({},{_id: 1, date: 1}, (err, data) => {
       if (err) {
         console.log(err);
       } else {
@@ -130,5 +144,5 @@ router.delete("/Delete", (req, res) => {
   }
   
   setInterval(sendEventsToAlle, 1000); // sends events to all clients every 10 seconds
-
-module.exports = router;
+  
+  module.exports = router;

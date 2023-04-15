@@ -3,22 +3,38 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
-  }
+}
+input[type="button"] {
+    background-color: #458ca0;
+    color: white;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0.5rem 0.5rem;
+    cursor:pointer;
+}
 h1 {
     text-align: center;
     color: white;
     margin: 1rem;
 }
-input[id="newLogbookBtn"]{
-    background-color: rgba(54, 162, 235, 1);
-    border: unset;
-    padding: 5px;
-    border-radius: 7.5px;
-}
-input[value="Delete Logbook"]{
-    background-color: rgba(215, 45, 45, 1);
+
+input[value="Delete Logbook"] {
+    background-color: red;
 }
 .logbookContainer{
+    margin: 5rem 10rem;
+}
+.all {
+    display: flex;
+    flex-direction: row; /* Set flex direction to column */
+    align-items: center; /* Center items horizontally */
+}
+#LogbookEntryHAndP > div:nth-child(even){
+    background: rgba(234, 232, 232, 0.97);
+}
+.Container {
     margin-bottom: 10vh;
     width: fit-content;
     max-width: 40%;
@@ -26,4 +42,47 @@ input[value="Delete Logbook"]{
     padding: 20px;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Added property */
+}
+#LogbookEntryHAndP {
+    display: flex;
+    flex-direction: column; /* Set flex direction to row */
+    background: rgba(234, 232, 232, 0.97);
+  }
+#LogbookEntryHAndP div {
+    display: flex;
+    flex-direction: row; /* Set flex direction to row */
+    padding: 1rem;
+  }
+#hidden {
+    display: none;
+}
+
+#show {
+    display: flex;
+}
+
+#logbookForm label,
+input {
+    display: inline-block;
+}
+#logbookList div{
+    padding: 0.5rem;
+    border: 4px solid rgba(224, 224, 224,0.5); 
+    border-radius: 10px;
+    cursor: pointer;
+}
+.hAndpDiv h3 {
+    margin-bottom: 0.5rem; /* Add margin at the bottom of h3 */
+  }
+  
+.hAndpDiv p {
+margin: 0rem 2rem;
+}
+
+h2{
+    padding: 0.5rem;
 }
