@@ -20,12 +20,24 @@
     </div>
   </header>
   <div class="all">
-    <div class="logbookContainer">
+    <div class="logbookContainer Container">
       <input type="button" name="newLogbook" id="newLogbookBtn" value="New Logbook">
       <div id="logbookList"></div>
     </div>
-   
-    <div class="showLogbookEntry"></div>
+    <div class="showLogbookEntry Container" id="hidden">
+      <div class="formContainer">
+        <form id="logbookForm">
+          <label for="formHeader">Header:</label>
+          <input type="text" name="formHeader" id="formHeader">
+
+          <label for="formParagraph">Paragraph:</label>
+          <input type="text" name="formParagraph" id="formParagraph">
+
+          <input type="Submit" value="Add Entry">
+        </form>
+      </div>
+      <div id="LogbookEntryHAndP"></div>
+    </div>
   </div>
   <script src="logbook.js"></script>
 </body>
