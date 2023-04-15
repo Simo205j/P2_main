@@ -97,14 +97,10 @@ function makeDraggable(){
   })
   containers.forEach((container) => {
     container.addEventListener("dragover", (event) => {
-      event.preventDefault();
     })
-  
     container.addEventListener("drop", async (event) => {
-      event.preventDefault();
       event.stopPropagation();
       const draggable = document.querySelector(".dragging")
-      console.log(event.target.className)
       if (event.target === container && event.target.className != "Overdue") {
         container.appendChild(draggable)
         const updatedData = {

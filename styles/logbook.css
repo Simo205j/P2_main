@@ -120,19 +120,14 @@ h2 {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-
-  
-  #temp > div > input[type="checkbox"],
-  #temp > div > h2 {
+#temp > div > input[type="checkbox"],
+#temp > div > h2 {
     flex-basis: auto;
-  }
-  #temp > div > p {
+}
+#temp > div > p {
     flex-basis: 100%;
     margin-left: 0.77rem;
-    
-  }
-
-
+}
 #temp div textarea{
     border-style: none; 
     border-color: Transparent; 
