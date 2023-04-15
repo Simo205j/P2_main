@@ -87,7 +87,7 @@ source.addEventListener("message", async function(event) {
         y: task.TaskName,
         assigne: task.TaskAttributes.Assignee,
         status: task.TaskAttributes.Status,
-        label: task.TaskAttributes.Description // Add the label property
+        label: task.TaskAttributes.Description
       };
       barColorsTask.push(barColors[task.TaskAttributes.Status]);
       borderColorsTask.push(borderColors[task.TaskAttributes.Status]);

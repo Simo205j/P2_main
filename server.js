@@ -3,18 +3,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 
-const app = express();
 
 const taskRoutes = require('./routes/serverTasks');
 const logbookRoutes = require('./routes/serverLogbook');
 const assigneeRoutes = require('./routes/serverAssignee');
-app.use('/Tasks', taskRoutes);
-app.use('/Logbook', logbookRoutes);
-app.use('/Assignee', assigneeRoutes);
+const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/Tasks', taskRoutes);
+app.use('/Logbook', logbookRoutes);
+app.use('/Assignee', assigneeRoutes);
 app.use(express.static(path.join(__dirname, 'scripts')));
 app.use(express.static(path.join(__dirname, 'styles')));
 
