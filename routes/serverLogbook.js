@@ -61,40 +61,6 @@ router.delete("/Delete", (req, res) => {
     );
   });
 
-  router.patch("/DeleteEntry", (req, res) => {
-    const deleteEntry = req.body;
-    console.log("GOT PATCH request to delete entry logbook", deleteEntry);
-  
-    // Find the logbook entry in the database
-    logbookDataBase.findOne({ _id: deleteEntry._id }, (err, logbookEntry) => {
-      if (err) {
-        res.status(500).send({ error: err });
-      } else {
-        if (!logbookEntry) {
-          // If logbook entry not found, return an error response
-          res.status(404).send({ error: "Logbook entry not found" });
-        } else {
-          // Modify the arrays in the logbook entry locally by removing the element at the specific index
-          logbookEntry.HeaderArray.splice(deleteEntry.index, 1);
-          logbookEntry.ParagraphArray.splice(deleteEntry.index, 1);
-          logbookEntry.CheckboxArray.splice(deleteEntry.index, 1);
-  
-          // Update the logbook entry in the database with the modified arrays
-          logbookDataBase.update({ _id: deleteEntry._id }, logbookEntry, {}, (err, updatedTask) => {
-            if (err) {
-              res.status(500).send({ error: err });
-            } else {
-              res.status(200).json({
-                data: updatedTask
-              });
-            }
-          });
-        }
-      }
-    });
-  });
-  
-
 
 router.patch("/SaveLogbookEntry", (req, res) => {
   const data = req.body;

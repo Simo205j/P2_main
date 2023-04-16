@@ -1,3 +1,8 @@
+const source = new EventSource("http://localhost:3000/Tasks/events");
+const listsTypeContainer = document.getElementById("lists")
+const form = document.getElementById("taskForm")
+const expandFormButton = document.getElementById("expandFormButton")
+
 LISTS = ["To-do", "Doing", "Overdue", "Done"]
 
 const priorityValues = {
@@ -5,12 +10,7 @@ const priorityValues = {
   "Medium" : 2,
   "High" : 3,
 };
-
-const source = new EventSource("http://localhost:3000/Tasks/events");
-const listsTypeContainer = document.getElementById("lists")
-const form = document.getElementById("taskForm")
-const expandFormButton = document.getElementById("expandFormButton")
-
+//CHANGES BUTTON COLOR ON HIDE AND EXPAND
 expandFormButton.addEventListener("click", () => {
   form.classList.toggle("show");
   if (expandFormButton.value === "Close form") {
@@ -35,6 +35,7 @@ source.addEventListener("message", function getTasks(event) {
       return priorityValues[b.TaskAttributes.Priority] - priorityValues[a.TaskAttributes.Priority];
     }
   });
+
   console.log(tasks)
   const newListsContainer = document.createElement("div");
   newListsContainer.id = "ListsContainer";
@@ -50,6 +51,7 @@ source.addEventListener("message", function getTasks(event) {
     newTaskList.className = LISTS[index]
     
     tasks.forEach((task) => {
+      checkTasksStatus(newTask)
       if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate) && task.TaskAttributes.Status !== "Done") {
         task.TaskAttributes.Status = LISTS[2]
       }
@@ -64,8 +66,6 @@ source.addEventListener("message", function getTasks(event) {
           newTask.setAttribute("draggable", true);
           newTask.className = "draggable"
         }
-        
-
         newTaskList.appendChild(newTask); 
         makeDescription(newTask, task)
         makeDeleteButton(task, newTask);
@@ -97,8 +97,10 @@ function makeDraggable(){
   })
   containers.forEach((container) => {
     container.addEventListener("dragover", (event) => {
+      event.preventDefault()
     })
     container.addEventListener("drop", async (event) => {
+      event.preventDefault();
       event.stopPropagation();
       const draggable = document.querySelector(".dragging")
       if (event.target === container && event.target.className != "Overdue") {
@@ -124,11 +126,9 @@ function makeDraggable(){
     })
   })
 }
-  
 
 taskForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-
   // Get form input values
   const taskName = taskForm.taskName.value;
   const description = taskForm.description.value;
@@ -138,12 +138,9 @@ taskForm.addEventListener("submit", async (event) => {
   const endDate = taskForm.endDate.value;
   const status = taskForm.status.value;
 
-  // Check if any of the form fields are empty
   if (!taskName || !description || !assignee || !priority || !startDate || !endDate || !status) {
     throw new Error("Please fill in all fields.");
   }
-
-  // Check if endDate is before startDate
   if (new Date(endDate) < new Date(startDate)) {
     throw new Error("End date must be after start date.");
   }
@@ -265,7 +262,6 @@ function makeEditButton(task, newTask) {
     editButton.style.display = "none";
   });
   editButton.addEventListener("click", async (event) => {
-  
     event.stopPropagation();
     event.preventDefault();
 
