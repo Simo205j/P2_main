@@ -87,18 +87,15 @@ source.addEventListener("message", async function(event) {
         y: task.TaskName,
         assigne: task.TaskAttributes.Assignee,
         status: task.TaskAttributes.Status,
-        label: task.TaskAttributes.Description // Add the label property
+        label: task.TaskAttributes.Description
       };
       barColorsTask.push(barColors[task.TaskAttributes.Status]);
       borderColorsTask.push(borderColors[task.TaskAttributes.Status]);
       sortedTasks.push(taskData);
     }
   });
-
-  // Update chart with the new data
   updateChart(sortedTasks, barColorsTask, borderColorsTask);
 });
-
 //REDRAWS CHART BASED ON TASKS ARRAY AND STATUS COLORS
 function updateChart(sortedTasks, barColorsTask, borderColorsTask) {
   const chart = Chart.getChart("myChart");
@@ -109,12 +106,9 @@ function updateChart(sortedTasks, barColorsTask, borderColorsTask) {
   chart.data.datasets[0].data = sortedTasks;
   chart.data.datasets[0].backgroundColor = barColorsTask;
   chart.data.datasets[0].borderColor = borderColorsTask;
-  //CLEARS PREVIOUS DATA
   chart.clear();
-  //UPDATES CHART WITH NEW DATA
   chart.update();
 }
-
 //CHART DATA AND CONFIG THAT CHART IS INITIALLY BASED ON
 document.addEventListener('DOMContentLoaded', function() {
   const data = {

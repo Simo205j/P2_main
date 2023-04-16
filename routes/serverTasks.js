@@ -62,7 +62,6 @@ router.patch("/UpdateStatus", (req, res) => {
   console.log("GOT PATCH request to update task status")
   const data = req.body;
   console.log(data)
-
   //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
   taskDataBase.update({_id: data.id}, {$set: {"TaskAttributes.Status": data.Status}}, {}, (err, numUpdated) => {  
     if(err) 

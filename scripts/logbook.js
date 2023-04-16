@@ -1,28 +1,26 @@
+const logbookSource = new EventSource("http://localhost:3000/Logbook/events");
+
 const submitLogbook = document.getElementById("newLogbookBtn")
 const logbookListDiv = document.getElementById("logbookList")
+const closeLogbookBtn = document.getElementById("closeLogbookForm")
+const displayLogbookList = document.querySelector('div[class="logbookContainer Container"]')
 const displayLogbookContainerDiv = document.querySelector('div[class="showLogbookEntry Container"]')
 const submitLogbookHAndPEntry = document.querySelector('input[type="Submit"]')
 const logbookEntryHAndPDiv = document.querySelector('div[id="LogbookEntryHAndP"]') 
 const formLogbookEntryHAndP = document.querySelector("form");
 
-const logbookSource = new EventSource("http://localhost:3000/Logbook/events");
-
-
 logbookSource.addEventListener("message", (event) => {
   const logbooks = JSON.parse(event.data);
   console.log(logbooks)
-
   logbooks.sort((a, b) => {
     const startDateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
     if (startDateDiff !== 0) {
       return startDateDiff;
     }
   });
-
   while (logbookListDiv.firstChild) {
     logbookListDiv.removeChild(logbookListDiv.firstChild);
   }
-
   logbooks.forEach((logbookEntry) => {
     makeLogbookList(logbookEntry)
   })
@@ -30,19 +28,19 @@ logbookSource.addEventListener("message", (event) => {
 
 submitLogbook.addEventListener("click", async (event) => {
   try {
-    const response = await fetch("http://localhost:3000/Logbook/SendLogbook", {
+    fetch("http://localhost:3000/Logbook/SendLogbook", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({date: new Date().toISOString().substr(0, 10)})
     });
-      const responseData = await response.json();
-      console.log(response.status, responseData);
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(error);
   }
 });
+
 
 let logbookCheckboxArray = []
 let logbookHeaderArray = []
@@ -53,22 +51,34 @@ submitLogbookHAndPEntry.addEventListener("click", (event) => {
   const tempContainer = document.querySelector('div[id="temp"]')
   const insertBeforeThis = tempContainer.querySelector('input[value="Save logbook"]')
   const div = document.createElement("div")
+  const headerDiv = document.createElement("div")
   const checkbox = document.createElement("input")
   const header = document.createElement("h3")
   const paragraph = document.createElement("p")
+  const tempDeleteBtn = document.createElement("input")
 
+  tempDeleteBtn.value = "Delete"
+  tempDeleteBtn.type = "button"
   checkbox.type = "checkbox"
-  tempBoxEventlistener(checkbox, 0)
+  div.className = "index"
+
+  tempBoxEventlistener(checkbox, div.id)
+  deleteBtnTempContainer(tempDeleteBtn, div)
+
   header.textContent = formLogbookEntryHAndP.formHeader.value
   paragraph.textContent = formLogbookEntryHAndP.formParagraph.value
   
   logbookCheckboxArray.push(checkbox.checked)
   logbookHeaderArray.push("" + formLogbookEntryHAndP.formHeader.value)
   logbookParagraphArray.push("" + formLogbookEntryHAndP.formParagraph.value)
-  div.appendChild(checkbox)
-  div.appendChild(header)
+  headerDiv.appendChild(checkbox)
+  headerDiv.appendChild(header)
+  headerDiv.appendChild(tempDeleteBtn)
+  div.appendChild(headerDiv)
   div.appendChild(paragraph)
-  tempContainer.insertBefore(div,insertBeforeThis)
+
+  tempContainer.insertBefore(div, insertBeforeThis)
+  fixContainerIndexes()
 })
 //ADD NEW LOGBOOKENTRY
 
@@ -90,7 +100,7 @@ function makeLogbookList(logbookEntry){
 function makeDeleteBtnLogbookEntry(logbookEntryContainer){
   const logbookEntryDeleteBtn = document.createElement("input")
   logbookEntryDeleteBtn.type = "button"
-  logbookEntryDeleteBtn.value = "Delete Logbook"
+  logbookEntryDeleteBtn.value = "Delete"
   logbookEntryDeleteBtn.addEventListener("click", async (event) => {
     event.preventDefault()
     event.stopPropagation()
@@ -138,23 +148,34 @@ function makeLogbookEntryClickable(logbookEntryContainer){
       }
       makeLogbookContainerDivContent(data, logbookEntryContainer)
       displayLogbookContainerDiv.id = "show"
+      displayLogbookList.id = "hidden"
+      closeLogbookBtn.addEventListener("click", () => {
+        displayLogbookContainerDiv.id = "hidden"
+        displayLogbookList.id = "show"
+      })
+      console.log(displayLogbookContainerDiv, logbookEntryContainer)
     }
     catch (error) {
       console.error(error);
     }
   })
 }
+function fixContainerIndexes(){
+  const indexDivs = document.querySelectorAll('div[class="index"]')
+  indexDivs.forEach((div, index) => {
+    div.id = index
+  })
+}
 function makeLogbookContainerDivContent(data, logbookEntryContainer){
   if(document.getElementById("temp")){
     lastTemp = document.getElementById("temp")
-    console.log(lastTemp)
     lastTemp.remove()
   }
   const tempDiv = document.createElement("div")
+  tempDiv.className = data[0]._id
   const tempLogbookDate = document.createElement("h2")
 
   tempDiv.id = "temp"
-  console.log(data[0])
   tempLogbookDate.textContent = ""+ data[0].date
 
   tempDiv.appendChild(tempLogbookDate)
@@ -162,23 +183,31 @@ function makeLogbookContainerDivContent(data, logbookEntryContainer){
     if(data[0].hasOwnProperty('HeaderArray')){
       data[0].HeaderArray.forEach((header, index) => {
         const tempContainerDiv = document.createElement("div")
+        const tempHeaderContainer = document.createElement("div")
         const tempCheckbox = document.createElement("input")
         const tempHeader = document.createElement("h3")
+        const tempDeleteBtn = document.createElement("input")
         const tempParagraph = document.createElement("p")
 
+        tempContainerDiv.className = "index"
+        tempContainerDiv.id = index
+        tempDeleteBtn.type = "button"
+        tempDeleteBtn.value = "Delete"
         tempCheckbox.type = "checkbox"
 
-        tempBoxEventlistener(tempCheckbox, index)
+        tempBoxEventlistener(tempCheckbox, tempContainerDiv.id)
+        deleteBtnTempContainer(tempDeleteBtn, tempContainerDiv)
   
         if(data[0].CheckboxArray[index] === true){
           tempCheckbox.checked = true
         }
-        maketing(tempHeader, tempParagraph, data, index)
+        makeEditAble(tempHeader, tempParagraph, data, index)
 
-        tempContainerDiv.appendChild(tempCheckbox)
-        tempContainerDiv.appendChild(tempHeader)
+        tempHeaderContainer.appendChild(tempCheckbox)
+        tempHeaderContainer.appendChild(tempHeader)
+        tempHeaderContainer.appendChild(tempDeleteBtn)
+        tempContainerDiv.appendChild(tempHeaderContainer)
         tempContainerDiv.appendChild(tempParagraph)
-
         tempDiv.appendChild(tempContainerDiv)
     })
 
@@ -186,8 +215,20 @@ function makeLogbookContainerDivContent(data, logbookEntryContainer){
   makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv)
   displayLogbookContainerDiv.appendChild(tempDiv)
 }
+function deleteBtnTempContainer(tempDeleteBtn, container){
+  tempDeleteBtn.addEventListener("click", async (event) => {
+    event.preventDefault()
+    const index = container.id
+    console.log(index)
+    logbookCheckboxArray.splice(index, 1)
+    logbookHeaderArray.splice(index, 1)
+    logbookParagraphArray.splice(index, 1)
+    container.remove();
+    fixContainerIndexes()
+  })
+}
 
-function maketing(tempHeader, tempParagraph, data, index){
+function makeEditAble(tempHeader, tempParagraph, data, index){
   tempHeader.textContent = data[0].HeaderArray[index]
 
   tempHeader.addEventListener("click", () => {
@@ -235,7 +276,6 @@ function maketing(tempHeader, tempParagraph, data, index){
 function tempBoxEventlistener(tempCheckbox, index){
   tempCheckbox.addEventListener("click", (event) => {
     event.stopPropagation()
-    console.log(tempCheckbox.checked)
     logbookCheckboxArray[index] = tempCheckbox.checked 
 
   })
@@ -268,7 +308,6 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv){
     }
     catch (error) {
       console.error(error);
-      console.log(data)
     }
   })
   tempDiv.appendChild(saveEntries)

@@ -20,7 +20,6 @@ assigneeFormButton.addEventListener("click", async (event) => {
     } catch (error) {
       console.error(error);
     }
-    location.href = "/Board"
   });
   let lastAssigneeMessage = null;
   
@@ -57,7 +56,6 @@ assigneeFormButton.addEventListener("click", async (event) => {
             return;
           } 
       });
-  
       selectAssigneeLabel.textContent = "Assignee";
       selectAssignee.id = "assignee";
       selectAssignee.required = true;
@@ -71,8 +69,4 @@ assigneeFormButton.addEventListener("click", async (event) => {
       insertAfterThisEdit.insertAdjacentElement("afterend", selectAssigneeEdit)
       lastAssigneeMessage = assignees;
       }
-    else {
-  
-      return
-    }
   })

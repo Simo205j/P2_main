@@ -1,20 +1,13 @@
 LISTS = ["To do", "Doing", "Overdue", "Done"]
 const source = new EventSource("http://localhost:3000/Tasks/events");
-
-
 const backlogTable = document.getElementById("backlog")
-console.log(backlogTable)
-
 const priority = {
   "Low" : 1,
   "Medium" : 2,
   "High" : 3
 };
-
-source.addEventListener("message", function(event) 
-{
+source.addEventListener("message", function(event){
   const tasks = JSON.parse(event.data);
-
   tasks.sort((a, b) => {
     const endDateDiff = new Date(a.TaskAttributes.EndDate).getTime() - new Date(b.TaskAttributes.EndDate).getTime();
     if (endDateDiff !== 0) {
@@ -25,15 +18,13 @@ source.addEventListener("message", function(event)
       return priorityA - priorityB;
     }
   });
-  
-  console.log(tasks)
   createTasks(tasks);
 });
+
 function createTasks(tasks) {
   let tableIndex = 1
   const table = document.createElement("table");
   table.id = "BacklogTable"
-
   // Create table header
   const headerRow = document.createElement("tr");
   const indexHeader = document.createElement("th");
@@ -58,7 +49,6 @@ function createTasks(tasks) {
   headerRow.appendChild(statusHeader);
   headerRow.appendChild(priorityHeader);
   table.appendChild(headerRow);
-
   // Create table rows
   tasks.forEach((task, index) => {
     if (task.TaskAttributes.Status !== "Done"){
@@ -94,7 +84,6 @@ function createTasks(tasks) {
   });
   if (document.getElementById("divContainer")){
     deleteTable = document.getElementById("divContainer")
-    console.log("Penis")
     deleteTable.remove();
   }
   const divContainer = document.createElement("div")

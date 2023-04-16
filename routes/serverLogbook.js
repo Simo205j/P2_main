@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const DataStore = require("nedb");
 const bodyParser = require('body-parser');
-router.use(bodyParser.json())
+router.use(bodyParser.json());
 
 const logbookDataBase = new DataStore({ filename: "./Databases/logbookDataBase.db", autoload: true });
 logbookDataBase.loadDatabase();
@@ -12,7 +12,6 @@ let clients = [];
 router.get('/logbook', (req, res) => {
   res.sendFile(__dirname + '/views/logbook.html')
 });
-
 
 router.get("/GetLogbookEntry", (req, res) => {
   const logbookId = req.query.id; // Retrieve logbook entry ID from query parameter
@@ -27,9 +26,7 @@ router.get("/GetLogbookEntry", (req, res) => {
     }
   });
 });
-
 // Additional logbook routes can be defined here
-
 router.delete("/Delete", (req, res) => {
     const data =  req.body._id
     console.log("Deleting logbook with _id:", data);
@@ -42,7 +39,7 @@ router.delete("/Delete", (req, res) => {
       res.status(200).json(data);
     }
   });
-  
+
   });
   router.post("/UpdatePost", (req, res) => {
     logbookEntry = req.body; 
@@ -63,6 +60,7 @@ router.delete("/Delete", (req, res) => {
       }
     );
   });
+
 
 router.patch("/SaveLogbookEntry", (req, res) => {
   const data = req.body;
@@ -91,36 +89,12 @@ router.post('/SendLogbook', (req, res) => {
       res.status(500).send({ error: err });
     } 
     else {
-      res.status(200).json({
-        LogbookName: newLogbook.LogbookName,
-      });
+      res.status(200).json({ _id: newLogbook._id });
     }
   });
 })
 
-
-router.patch("/UpdateStatus", (req, res) => {
-  const data = req.body;
-  console.log("GOT PATCH request to update logbook", data._id)
-  console.log("LINE 248: ", data.status)
-  //SEARCH FOR TASK WITH ID,                        REPLACED ATTRIBUES
-  logbookDataBase.update({_id: data._id}, {$set: { status: data.status} },{}, (err, updatedTask) => {
-    if(err) 
-    {
-      res.status(500).send({ error: err });
-    }
-    else
-    {
-      res.status(200).json({
-        status: "PATCHED Logbook",
-        data: data
-      });
-    }
-  });
-});
-
 router.get('/events', eventsHandlerLogbooks);
-
 function eventsHandlerLogbooks(request, response) {
   const headers = {
     'Content-Type': 'text/event-stream',
