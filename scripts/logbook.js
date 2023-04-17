@@ -68,6 +68,8 @@ submitLogbookHAndPEntry.addEventListener("click", (event) => {
   header.textContent = formLogbookEntryHAndP.formHeader.value
   paragraph.textContent = formLogbookEntryHAndP.formParagraph.value
   
+  makeNewEdit(header, paragraph)
+
   logbookCheckboxArray.push(checkbox.checked)
   logbookHeaderArray.push("" + formLogbookEntryHAndP.formHeader.value)
   logbookParagraphArray.push("" + formLogbookEntryHAndP.formParagraph.value)
@@ -82,6 +84,46 @@ submitLogbookHAndPEntry.addEventListener("click", (event) => {
 })
 //ADD NEW LOGBOOKENTRY
 
+function makeNewEdit(Header, Paragraph)
+{
+  Header.addEventListener("click", () => {
+    const HeaderInput = document.createElement("textarea")
+    HeaderInput.value = Header.textContent
+    Header.replaceWith(HeaderInput)
+
+    HeaderInput.addEventListener("keypress", (event) => {
+      if(event.key == "Enter")
+      {
+      Header.textContent = HeaderInput.value
+      tempHeaderInput.replaceWith(tempHeader)
+      }
+    })
+    HeaderInput.addEventListener("dblclick", (event) => {
+      Header.textContent = HeaderInput.value
+      HeaderInput.replaceWith(Header)
+    })
+  })
+
+  Paragraph.addEventListener("click", () => {
+
+    const ParagraphInput = document.createElement("textarea")
+    ParagraphInput.value = Paragraph.textContent
+    Paragraph.replaceWith(ParagraphInput)
+
+
+    ParagraphInput.addEventListener("keypress", (event) => {
+      if(event.key == "Enter")
+      {
+      Paragraph.textContent = ParagraphInput.value
+      ParagraphInput.replaceWith(Paragraph)
+      }
+    })
+    ParagraphInput.addEventListener("dblclick", (event) => {
+      Paragraph.textContent = ParagraphInput.value
+      ParagraphInput.replaceWith(Paragraph)
+    })
+  })
+}
 
 function makeLogbookList(logbookEntry){
   const logbookEntryContainer = document.createElement("div")
