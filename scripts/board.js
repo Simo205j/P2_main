@@ -285,7 +285,7 @@ function makeEditButton(task, newTask) {
     const saveButton = dialog.querySelector("#saveEditButton");
     saveButton.addEventListener("click", async () => {
       console.log("Penis")
-      if (!taskName || !description || !assignee || !priority || !startDate || !endDate || !status) {
+      if (!taskName || !description || !assignee || !priority || !startDate || !endDate) {
         throw new Error("Please fill in all fields.");
       }
     
