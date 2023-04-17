@@ -66,6 +66,9 @@ opacity: 80%;
 .draggable{
   cursor: move;
 }
+i[class="fa-regular fa-lock"]{
+  margin-left: 0.5rem;
+}
 #assigneeButton {
   margin-top: 10px;
   background-color: rgba(49, 201, 69, 0.8);

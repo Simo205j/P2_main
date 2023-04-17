@@ -54,18 +54,28 @@ source.addEventListener("message", function getTasks(event) {
         task.TaskAttributes.Status = LISTS[2]
       }
       if(task.TaskAttributes.Status == list){
+
         const newTask = document.createElement("li");
         const newLine = document.createElement("br")
+
         newTask.textContent = task.TaskName;
-        newTask.appendChild(newLine)
         newTask.name = task.TaskName
         newTask.id = task._id
+
+        console.log(newTaskList.className )
+        if (newTaskList.className == "Overdue"){
+
+          const iconElement = document.createElement("i");
+          iconElement.setAttribute("class", "fa-regular fa-lock");
+          newTask.appendChild(iconElement);
+        }
+
         if((new Date(task.TaskAttributes.EndDate) < currentDate) === false || task.TaskAttributes.Status == "Done"){
           newTask.setAttribute("draggable", true);
           newTask.className = "draggable"
         }
         
-
+        newTask.appendChild(newLine)
         newTaskList.appendChild(newTask); 
         makeDescription(newTask, task)
         makeDeleteButton(task, newTask);
@@ -288,7 +298,6 @@ function makeEditButton(task, newTask) {
       if (!taskName || !description || !assignee || !priority || !startDate || !endDate) {
         throw new Error("Please fill in all fields.");
       }
-    
       // Check if endDate is before startDate
       if (new Date(endDate) < new Date(startDate)) {
         throw new Error("End date must be after start date.");
