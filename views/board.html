@@ -111,13 +111,9 @@
         
         startDateInput2.addEventListener('input', () => {
           endDateInput2.min = startDateInput2.value;
-          if(endDateInput2.value == "")
-          endDateInput2.value = startDateInput2.value;
         });
         endDateInput2.addEventListener('input', () => {
           startDateInput2.max = endDateInput2.value;
-          if(startDateInput2.value == "")
-          startDateInput2.value = endDateInput2.value;
         });
       </script>
 
