@@ -1,4 +1,4 @@
-const  getTasks = require('./board_sorting');
+const  getTasks = require('../Tested functions/Backlog_sorting');
 
 describe('getTasks function', () => {
     it('should sort tasks by end date and priority correctly', () => {

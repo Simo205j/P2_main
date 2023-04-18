@@ -1,13 +1,6 @@
 {"TaskName":"Discussion","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-24","EndDate":"2023-04-28","Status":"To-do"},"_id":"129QxXWjMo4xI0ps"}
-{"TaskName":"Coding","TaskAttributes":{"Description":"What do we have to do?","Assignee":"Andreas Mertz","Priority":"Medium","StartDate":"2023-04-04","EndDate":"2023-04-08","Status":"Doing"},"_id":"7xjVaXTq1Q0ArxBS"}
+{"TaskName":"Coding","TaskAttributes":{"Description":"What do we have to do?","Assignee":"Andreas Mertz","Priority":"Medium","StartDate":"2023-04-04","EndDate":"2023-04-08","Status":"Done"},"_id":"7xjVaXTq1Q0ArxBS"}
 {"TaskName":"Init problem statement","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-02-15","EndDate":"2023-02-20","Status":"To-do"},"_id":"DLrstLVrCfc8iclR"}
-{"TaskName":"Bacon is the best","TaskAttributes":{"Description":"dwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-15","EndDate":"2023-05-16","Status":"Done"},"_id":"F6DXFwkP3HOG2Tad"}
-{"TaskName":"Testtttt","TaskAttributes":{"Description":"HEYOOO","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-14","EndDate":"2023-04-29","Status":"Done"},"_id":"NEKpiLJkzddvn4Ki"}
 {"TaskName":"Tobias ser sej ud","TaskAttributes":{"Description":"Hejsa","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-20","EndDate":"2023-04-23","Status":"To-do"},"_id":"NdvPPJ7OpMeFuuIX"}
 {"TaskName":"Problem analysis","TaskAttributes":{"Description":"High/Low performance teams, interviews and analysis","Assignee":"Andreas Mertz","Priority":"High","StartDate":"2023-02-24","EndDate":"2023-04-21","Status":"Doing"},"_id":"PuaFmQwWlBQcjLpI"}
 {"TaskName":"Implementation","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-19","EndDate":"2023-04-22","Status":"Doing"},"_id":"rmZF5HnwsmksFz6e"}
-{"TaskName":"Coding","TaskAttributes":{"Description":"What do we have to do?","Assignee":"Andreas Mertz","Priority":"Medium","StartDate":"2023-04-04","EndDate":"2023-04-08","Status":"Done"},"_id":"7xjVaXTq1Q0ArxBS"}
-{"TaskName":"Discussion","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-24","EndDate":"2023-04-28","Status":"Doing"},"_id":"129QxXWjMo4xI0ps"}
-{"TaskName":"Discussion","TaskAttributes":{"Description":"Kusse","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-04-24","EndDate":"2023-04-28","Status":"To-do"},"_id":"129QxXWjMo4xI0ps"}
-{"$$deleted":true,"_id":"NEKpiLJkzddvn4Ki"}
-{"$$deleted":true,"_id":"F6DXFwkP3HOG2Tad"}
