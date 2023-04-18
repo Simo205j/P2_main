@@ -217,8 +217,6 @@ const todayLine = {
     id: "status",
     afterDatasetsDraw(chart) {
       const {ctx, data, chartArea: {right}, scales: {y} } = chart;
-      console.log(chart)
-
       ctx.save()
       ctx.font = "bolder 20px sans-serif"
       ctx.fillstyle = "black";

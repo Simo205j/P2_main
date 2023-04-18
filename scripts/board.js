@@ -1,10 +1,6 @@
 LISTS = ["To-do", "Doing", "Overdue", "Done"]
 
-const priorityValues = {
-  "Low" : 1,
-  "Medium" : 2,
-  "High" : 3,
-};
+
 
 const source = new EventSource("http://localhost:3000/Tasks/events");
 const listsTypeContainer = document.getElementById("lists")
@@ -21,18 +17,23 @@ expandFormButton.addEventListener("click", () => {
     expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)"
   }
 });
-
+const priorityValues = {
+  "Low" : 1,
+  "Medium" : 2,
+  "High" : 3,
+};
 
 let lastTaskMessage = null;
 source.addEventListener("message", function getTasks(event) {
   const tasks = JSON.parse(event.data);
   tasks.sort((a, b) => {
-    if (a.TaskAttributes.Priority === b.TaskAttributes.Priority) {
+    if (new Date(a.TaskAttributes.EndDate) == new Date(b.TaskAttributes.EndDate)) {
       // If priority is same, sort by end date
-      return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
-    } else {
-      // Sort by priority
       return priorityValues[b.TaskAttributes.Priority] - priorityValues[a.TaskAttributes.Priority];
+    } 
+    else {
+      return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
+      // Sort by priority
     }
   });
   console.log(tasks)
