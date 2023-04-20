@@ -6,19 +6,12 @@ const priorityValues = {
 
 function getTasks(tasks) {
   tasks.sort((a, b) => {
-    if (
-      new Date(a.TaskAttributes.EndDate) === new Date(b.TaskAttributes.EndDate)
-    ) {
+    if (new Date(a.TaskAttributes.EndDate) === new Date(b.TaskAttributes.EndDate)) {
       // If priority is the same, sort by end date
-      return (
-        priorityValues[b.TaskAttributes.Priority] -
-        priorityValues[a.TaskAttributes.Priority]
-      );
+      return priorityValues[b.TaskAttributes.Priority] - priorityValues[a.TaskAttributes.Priority];
     } else {
       // Sort by end date
-      return (
-        new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate)
-      );
+      return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
     }
   });
 

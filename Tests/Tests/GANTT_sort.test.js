@@ -24,14 +24,9 @@ describe("sortGANTT", () => {
     }
 
     for (let i = 0; i < sortedTasks.length - 1; i++) {
-      if (
-        sortedTasks[i].TaskAttributes.StartDate ===
-        sortedTasks[i + 1].TaskAttributes.StartDate
-      ) {
-        const statusA =
-          customStatusValues[sortedTasks[i].TaskAttributes.Status];
-        const statusB =
-          customStatusValues[sortedTasks[i + 1].TaskAttributes.Status];
+      if (sortedTasks[i].TaskAttributes.StartDate === sortedTasks[i + 1].TaskAttributes.StartDate) {
+        const statusA = customStatusValues[sortedTasks[i].TaskAttributes.Status];
+        const statusB = customStatusValues[sortedTasks[i + 1].TaskAttributes.Status];
         expect(statusA).toBeGreaterThanOrEqual(statusB);
       }
     }

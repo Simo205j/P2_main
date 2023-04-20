@@ -1,6 +1,4 @@
-const assigneesSource = new EventSource(
-  "http://localhost:3000/Assignee/events"
-);
+const assigneesSource = new EventSource("http://localhost:3000/Assignee/events");
 const assigneeForm = document.getElementById("assigneeForm");
 const assigneeFormButton = document.getElementById("assigneeButton");
 
@@ -10,16 +8,13 @@ assigneeFormButton.addEventListener("click", async (event) => {
     assigneeName: assigneeForm.value,
   };
   try {
-    const response = await fetch(
-      "http://localhost:3000/Assignee/SendAssignee",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch("http://localhost:3000/Assignee/SendAssignee", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
     const assigneeresponseData = await response.json();
     console.log(assigneeresponseData.status, assigneeresponseData);
   } catch (error) {
@@ -35,9 +30,7 @@ assigneesSource.addEventListener("message", function getAssignees(event) {
     if (assignees === lastAssigneeMessage) {
       return;
     }
-    const insertAfterThisEdit = document.querySelector(
-      "label[for='editAssignee']"
-    );
+    const insertAfterThisEdit = document.querySelector("label[for='editAssignee']");
     const insertAfterThis = document.querySelector("label[for='assignee']");
     const selectAssigneeLabelEdit = document.createElement("label");
     const selectAssigneeEdit = document.createElement("select");

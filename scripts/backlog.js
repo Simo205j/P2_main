@@ -14,13 +14,9 @@ source.addEventListener("message", function (event) {
 });
 
 function sortTasks(tasks) {
-  const undoneTasks = tasks.filter(
-    (task) => task.TaskAttributes.Status !== "Done"
-  );
+  const undoneTasks = tasks.filter((task) => task.TaskAttributes.Status !== "Done");
   undoneTasks.sort((a, b) => {
-    const endDateDiff =
-      new Date(a.TaskAttributes.EndDate).getTime() -
-      new Date(b.TaskAttributes.EndDate).getTime();
+    const endDateDiff = new Date(a.TaskAttributes.EndDate).getTime() - new Date(b.TaskAttributes.EndDate).getTime();
     if (endDateDiff !== 0) {
       return endDateDiff;
     } else {

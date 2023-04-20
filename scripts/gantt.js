@@ -32,23 +32,15 @@ const borderColors = {
 //NEXT AND PREVIOUS MONTH BUTTONS
 nextMonth.addEventListener("click", () => {
   const chart = Chart.getChart("myChart");
-  const newMin = new Date(
-    Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth)
-  );
-  const newMax = new Date(
-    Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth)
-  );
+  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
+  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
   updateTimeChart(chart, newMin, newMax);
 });
 
 prevMonth.addEventListener("click", () => {
   const chart = Chart.getChart("myChart");
-  const newMin = new Date(
-    Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth)
-  );
-  const newMax = new Date(
-    Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth)
-  );
+  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
+  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
   updateTimeChart(chart, newMin, newMax);
 });
 //FORMAT DATE TO YYYY-MM-DD
@@ -68,8 +60,7 @@ function updateTimeChart(chart, newMin, newMax) {
 source.addEventListener("message", async function (event) {
   const data = await JSON.parse(event.data);
   sortData = sortData(data);
-  const { barColorsTask, borderColorsTask, sortedTasks } =
-    makeTasksFromData(sortData);
+  const { barColorsTask, borderColorsTask, sortedTasks } = makeTasksFromData(sortData);
 
   updateChart(sortedTasks, barColorsTask, borderColorsTask);
 });
@@ -77,8 +68,7 @@ source.addEventListener("message", async function (event) {
 function sortData(data) {
   data.sort((a, b) => {
     const startDateDiff =
-      new Date(a.TaskAttributes.StartDate).getTime() -
-      new Date(b.TaskAttributes.StartDate).getTime();
+      new Date(a.TaskAttributes.StartDate).getTime() - new Date(b.TaskAttributes.StartDate).getTime();
     if (startDateDiff !== 0) {
       return startDateDiff;
     } else {
@@ -101,10 +91,7 @@ function makeTasksFromData(sortData) {
       task.TaskAttributes.Status != "" &&
       task.TaskAttributes.hasOwnProperty("Status")
     ) {
-      if (
-        task.TaskAttributes.Status == "Overdue" ||
-        new Date(task.TaskAttributes.EndDate) < new Date()
-      ) {
+      if (task.TaskAttributes.Status == "Overdue" || new Date(task.TaskAttributes.EndDate) < new Date()) {
         task.TaskAttributes.Status = "Overdue";
       }
       let taskData = {
@@ -200,9 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tooltip: {
           callbacks: {
             label: (tooltipItem, data) => {
-              return (
-                tooltipItem.raw.label + ", Assignee: " + tooltipItem.raw.assigne
-              );
+              return tooltipItem.raw.label + ", Assignee: " + tooltipItem.raw.assigne;
             },
           },
         },

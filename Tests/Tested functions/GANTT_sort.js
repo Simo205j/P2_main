@@ -8,8 +8,7 @@ const customStatusValues = {
 function sortGANTT(data) {
   data.sort((a, b) => {
     const startDateDiff =
-      new Date(a.TaskAttributes.StartDate).getTime() -
-      new Date(b.TaskAttributes.StartDate).getTime();
+      new Date(a.TaskAttributes.StartDate).getTime() - new Date(b.TaskAttributes.StartDate).getTime();
     if (startDateDiff !== 0) {
       return startDateDiff;
     } else {

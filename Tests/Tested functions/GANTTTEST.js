@@ -21,10 +21,7 @@ function makeTasks(data) {
       task.TaskAttributes.Status !== "" &&
       task.TaskAttributes.hasOwnProperty("Status")
     ) {
-      if (
-        task.TaskAttributes.Status === "Overdue" ||
-        new Date(task.TaskAttributes.EndDate) < new Date()
-      ) {
+      if (task.TaskAttributes.Status === "Overdue" || new Date(task.TaskAttributes.EndDate) < new Date()) {
         task.TaskAttributes.Status = "Overdue";
       }
       let taskData = {
