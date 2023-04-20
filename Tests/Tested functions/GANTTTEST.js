@@ -1,14 +1,14 @@
 const barColors = {
-  "Done": "rgba(11, 230, 41, 0.6)", 
-  "Doing": "rgba(246, 174, 7, 0.6)", 
-  "Overdue" : "rgba(215, 45, 45, 0.8)",
-  "To-do": "rgba(75, 133, 225, 0.6)"
+  Done: "rgba(11, 230, 41, 0.6)",
+  Doing: "rgba(246, 174, 7, 0.6)",
+  Overdue: "rgba(215, 45, 45, 0.8)",
+  "To-do": "rgba(75, 133, 225, 0.6)",
 };
 const borderColors = {
-  "Done": "rgba(11, 230, 41, 0.8)", 
-  "Doing": "rgba(246, 174, 7, 0.8)", 
-  "Overdue" : "rgba(215, 45, 45, 1)",
-  "To-do": "rgba(75, 133, 225, 0.8)"
+  Done: "rgba(11, 230, 41, 0.8)",
+  Doing: "rgba(246, 174, 7, 0.8)",
+  Overdue: "rgba(215, 45, 45, 1)",
+  "To-do": "rgba(75, 133, 225, 0.8)",
 };
 
 function makeTasks(data) {
@@ -16,8 +16,15 @@ function makeTasks(data) {
   const borderColorsTask = [];
   const sortedTasks = [];
   data.forEach((task) => {
-    if (task.TaskAttributes.Status !== "Done" && task.TaskAttributes.Status !== "" && task.TaskAttributes.hasOwnProperty('Status')){
-      if (task.TaskAttributes.Status === "Overdue" || (new Date(task.TaskAttributes.EndDate) < new Date())) {
+    if (
+      task.TaskAttributes.Status !== "Done" &&
+      task.TaskAttributes.Status !== "" &&
+      task.TaskAttributes.hasOwnProperty("Status")
+    ) {
+      if (
+        task.TaskAttributes.Status === "Overdue" ||
+        new Date(task.TaskAttributes.EndDate) < new Date()
+      ) {
         task.TaskAttributes.Status = "Overdue";
       }
       let taskData = {
@@ -25,7 +32,7 @@ function makeTasks(data) {
         y: task.TaskName,
         assigne: task.TaskAttributes.Assignee,
         status: task.TaskAttributes.Status,
-        label: task.TaskAttributes.Description
+        label: task.TaskAttributes.Description,
       };
       barColorsTask.push(barColors[task.TaskAttributes.Status]);
       borderColorsTask.push(borderColors[task.TaskAttributes.Status]);
@@ -36,7 +43,7 @@ function makeTasks(data) {
   return {
     barColorsTask,
     borderColorsTask,
-    sortedTasks
+    sortedTasks,
   };
 }
 

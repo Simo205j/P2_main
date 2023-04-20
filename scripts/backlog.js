@@ -1,15 +1,26 @@
-LISTS = ["To do", "Doing", "Overdue", "Done"]
+LISTS = ["To do", "Doing", "Overdue", "Done"];
 const source = new EventSource("http://localhost:3000/Tasks/events");
-const backlogTable = document.getElementById("backlog")
+const backlogTable = document.getElementById("backlog");
 const priority = {
-  "Low" : 1,
-  "Medium" : 2,
-  "High" : 3
+  Low: 1,
+  Medium: 2,
+  High: 3,
 };
-source.addEventListener("message", function(event){
+
+source.addEventListener("message", function (event) {
   const tasks = JSON.parse(event.data);
-  tasks.sort((a, b) => {
-    const endDateDiff = new Date(a.TaskAttributes.EndDate).getTime() - new Date(b.TaskAttributes.EndDate).getTime();
+  const sortedTasks = sortTasks(tasks);
+  createTasks(sortedTasks);
+});
+
+function sortTasks(tasks) {
+  const undoneTasks = tasks.filter(
+    (task) => task.TaskAttributes.Status !== "Done"
+  );
+  undoneTasks.sort((a, b) => {
+    const endDateDiff =
+      new Date(a.TaskAttributes.EndDate).getTime() -
+      new Date(b.TaskAttributes.EndDate).getTime();
     if (endDateDiff !== 0) {
       return endDateDiff;
     } else {
@@ -18,29 +29,53 @@ source.addEventListener("message", function(event){
       return priorityA - priorityB;
     }
   });
-  createTasks(tasks);
-});
+  return undoneTasks;
+}
 
 function createTasks(tasks) {
-  let tableIndex = 1
+  const table = makeTableHeader();
+  let tableIndex = 0;
+
+  tasks.forEach((task, index) => {
+    if (new Date(task.TaskAttributes.EndDate) < new Date()) {
+      task.TaskAttributes.Status = "Overdue";
+    }
+    tableIndex++;
+    makeTableRow(table, tableIndex, task);
+  });
+
+  //REMOVE PREVIOUS TABLE
+  if (document.getElementById("divContainer")) {
+    deleteTable = document.getElementById("divContainer");
+    deleteTable.remove();
+  }
+  const divContainer = document.createElement("div");
+  divContainer.id = "divContainer";
+
+  divContainer.appendChild(table);
+  backlogTable.appendChild(divContainer);
+}
+
+function makeTableHeader() {
   const table = document.createElement("table");
-  table.id = "BacklogTable"
-  // Create table header
   const headerRow = document.createElement("tr");
   const indexHeader = document.createElement("th");
-  indexHeader.textContent = "Index";
   const taskNameHeader = document.createElement("th");
-  taskNameHeader.textContent = "TaskName";
   const assigneeHeader = document.createElement("th");
-  assigneeHeader.textContent = "Assignee";
   const startDateHeader = document.createElement("th");
-  startDateHeader.textContent = "Start Date"
   const endDateHeader = document.createElement("th");
-  endDateHeader.textContent = "End Date";
   const statusHeader = document.createElement("th");
-  statusHeader.textContent = "Status";
   const priorityHeader = document.createElement("th");
+
+  table.id = "BacklogTable";
+  indexHeader.textContent = "Index";
+  taskNameHeader.textContent = "TaskName";
+  assigneeHeader.textContent = "Assignee";
+  startDateHeader.textContent = "Start Date";
+  endDateHeader.textContent = "End Date";
+  statusHeader.textContent = "Status";
   priorityHeader.textContent = "Priority";
+
   headerRow.appendChild(indexHeader);
   headerRow.appendChild(taskNameHeader);
   headerRow.appendChild(assigneeHeader);
@@ -49,46 +84,34 @@ function createTasks(tasks) {
   headerRow.appendChild(statusHeader);
   headerRow.appendChild(priorityHeader);
   table.appendChild(headerRow);
-  // Create table rows
-  tasks.forEach((task, index) => {
-    if (task.TaskAttributes.Status !== "Done"){
-    if ((new Date(task.TaskAttributes.EndDate) < new Date())){
-      task.TaskAttributes.Status = "Overdue"
-    }
-      const row = document.createElement("tr");
-      const taskindex = document.createElement("td");
-      taskindex.textContent = tableIndex
-      const taskName = document.createElement("td");
-      taskName.textContent = task.TaskName;
-      const assignee = document.createElement("td");
-      assignee.textContent = task.TaskAttributes.Assignee;
-      const startDate = document.createElement("td");
-      startDate.textContent = task.TaskAttributes.StartDate;
-      const endDate = document.createElement("td");
-      endDate.textContent = task.TaskAttributes.EndDate;
-      const status = document.createElement("td");
-      status.textContent = task.TaskAttributes.Status;
-      const priority = document.createElement("td");
-      priority.textContent = task.TaskAttributes.Priority;
-      row.className = task.TaskAttributes.Status
-      row.appendChild(taskindex);
-      row.appendChild(taskName);
-      row.appendChild(assignee);
-      row.appendChild(startDate);
-      row.appendChild(endDate);
-      row.appendChild(status);
-      row.appendChild(priority);
-      table.appendChild(row);
-      tableIndex++
-    }
-  });
-  if (document.getElementById("divContainer")){
-    deleteTable = document.getElementById("divContainer")
-    deleteTable.remove();
-  }
-  const divContainer = document.createElement("div")
-  divContainer.id = "divContainer"
+  return table;
+}
 
-  divContainer.appendChild(table);
-  backlogTable.appendChild(divContainer);
+function makeTableRow(table, tableIndex, task) {
+  const row = document.createElement("tr");
+  const taskindex = document.createElement("td");
+  const taskName = document.createElement("td");
+  const assignee = document.createElement("td");
+  const startDate = document.createElement("td");
+  const endDate = document.createElement("td");
+  const status = document.createElement("td");
+  const priority = document.createElement("td");
+
+  taskindex.textContent = tableIndex;
+  taskName.textContent = task.TaskName;
+  assignee.textContent = task.TaskAttributes.Assignee;
+  startDate.textContent = task.TaskAttributes.StartDate;
+  endDate.textContent = task.TaskAttributes.EndDate;
+  status.textContent = task.TaskAttributes.Status;
+  priority.textContent = task.TaskAttributes.Priority;
+  row.className = task.TaskAttributes.Status;
+
+  row.appendChild(taskindex);
+  row.appendChild(taskName);
+  row.appendChild(assignee);
+  row.appendChild(startDate);
+  row.appendChild(endDate);
+  row.appendChild(status);
+  row.appendChild(priority);
+  table.appendChild(row);
 }

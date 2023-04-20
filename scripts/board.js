@@ -1,143 +1,155 @@
-LISTS = ["To-do", "Doing", "Overdue", "Done"]
-
-
+LISTS = ["To-do", "Doing", "Overdue", "Done"];
 
 const source = new EventSource("http://localhost:3000/Tasks/events");
-const listsTypeContainer = document.getElementById("lists")
-const form = document.getElementById("taskForm")
-const expandFormButton = document.getElementById("expandFormButton")
+const listsTypeContainer = document.getElementById("lists");
+const form = document.getElementById("taskForm");
+const expandFormButton = document.getElementById("expandFormButton");
 
 expandFormButton.addEventListener("click", () => {
   form.classList.toggle("show");
   if (expandFormButton.value === "Close form") {
     expandFormButton.value = "Create task";
-    expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)"
+    expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
   } else {
     expandFormButton.value = "Close form";
-    expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)"
+    expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
   }
 });
 const priorityValues = {
-  "Low" : 1,
-  "Medium" : 2,
-  "High" : 3,
+  Low: 1,
+  Medium: 2,
+  High: 3,
 };
 
-let lastTaskMessage = null;
+//HANDLES RECIVING DATA FROM SERVER
 source.addEventListener("message", function getTasks(event) {
-  const tasks = JSON.parse(event.data);
-  tasks.sort((a, b) => {
-    if (new Date(a.TaskAttributes.EndDate) == new Date(b.TaskAttributes.EndDate)) {
-      // If priority is same, sort by end date
-      return priorityValues[b.TaskAttributes.Priority] - priorityValues[a.TaskAttributes.Priority];
-    } 
-    else {
-      return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
-      // Sort by priority
-    }
-  });
-  console.log(tasks)
+  const data = JSON.parse(event.data);
+  const tasks = sortTasks(data);
+
+  //DIV THAT HOUSES ALL TASK RELATED DOM ELEMENTS
   const newListsContainer = document.createElement("div");
   newListsContainer.id = "ListsContainer";
+  createLists(tasks, newListsContainer);
+  console.log(tasks);
 
-  LISTS.forEach((list, index) => {
-    const currentDate = new Date();  
-    const listType = document.createElement("div");
-    const newTaskList = document.createElement("ol");
-    listType.id = list;
-    newTaskList.id = "TaskList";
-    newTaskList.name = list
-    newTaskList.textContent = list;
-    newTaskList.className = LISTS[index]
-    
-    tasks.forEach((task) => {
-      if (task.TaskAttributes.Status == "Overdue" || (new Date(task.TaskAttributes.EndDate) < currentDate) && task.TaskAttributes.Status !== "Done") {
-        task.TaskAttributes.Status = LISTS[2]
-      }
-      if(task.TaskAttributes.Status == list){
-
-        const newTask = document.createElement("li");
-        const newLine = document.createElement("br")
-
-        newTask.textContent = task.TaskName;
-        newTask.name = task.TaskName
-        newTask.id = task._id
-
-        console.log(newTaskList.className )
-        if (newTaskList.className == "Overdue"){
-
-          const iconElement = document.createElement("i");
-          iconElement.setAttribute("class", "fa-regular fa-lock");
-          newTask.appendChild(iconElement);
-        }
-
-        if((new Date(task.TaskAttributes.EndDate) < currentDate) === false || task.TaskAttributes.Status == "Done"){
-          newTask.setAttribute("draggable", true);
-          newTask.className = "draggable"
-        }
-        
-        newTask.appendChild(newLine)
-        newTaskList.appendChild(newTask); 
-        makeDescription(newTask, task)
-        makeDeleteButton(task, newTask);
-        makeEditButton(task, newTask);
-      }
-    });
-    newListsContainer.appendChild(newTaskList);
-  });
+  //REMOVES PREVIOUS CONTAINER UPON RECIEVING NEW DATA
   const previousContainer = document.getElementById("ListsContainer");
   if (previousContainer) {
     previousContainer.parentNode.removeChild(previousContainer);
   }
+  //UPDATES THE DOM WITH NEW CONTAINER
   listsTypeContainer.appendChild(newListsContainer);
   makeDraggable();
-  lastTaskMessage = tasks;
 });
 
+function sortTasks(tasks) {
+  tasks.sort((a, b) => {
+    if (new Date(a.TaskAttributes.EndDate) == new Date(b.TaskAttributes.EndDate)) {
+      return priorityValues[b.TaskAttributes.Priority] - priorityValues[a.TaskAttributes.Priority];
+    } else {
+      return new Date(a.TaskAttributes.EndDate) - new Date(b.TaskAttributes.EndDate);
+    }
+  });
+  return tasks;
+}
+//CREATES DOM LISTS FOR EACH LIST
+function createLists(tasks, newListsContainer) {
+  LISTS.forEach((list, index) => {
+    const listType = document.createElement("div");
+    const newTaskList = document.createElement("ol");
 
-function makeDraggable(){
-  const draggableElements = document.querySelectorAll('[draggable=true]');
-  const containers = document.querySelectorAll("#TaskList")
+    listType.id = list;
+    newTaskList.id = "TaskList";
+    newTaskList.name = list;
+    newTaskList.textContent = list;
+    newTaskList.className = LISTS[index];
+
+    tasks.forEach((task) => {
+      createListTask(task, list, newTaskList);
+    });
+
+    newListsContainer.appendChild(newTaskList);
+  });
+}
+//CREATES DOM TASKS FOR LISTS
+function createListTask(task, list, newTaskList) {
+  if (
+    task.TaskAttributes.Status == "Overdue" ||
+    (new Date(task.TaskAttributes.EndDate) < new Date() && task.TaskAttributes.Status !== "Done")
+  ) {
+    task.TaskAttributes.Status = LISTS[2];
+  }
+  if (task.TaskAttributes.Status == list) {
+    const newTask = document.createElement("li");
+    const newLine = document.createElement("br");
+
+    newTask.textContent = task.TaskName;
+    newTask.name = task.TaskName;
+    newTask.id = task._id;
+
+    if (newTaskList.className == "Overdue") {
+      const iconElement = document.createElement("i");
+      iconElement.setAttribute("class", "fa-regular fa-lock");
+      newTask.appendChild(iconElement);
+    }
+
+    if (new Date(task.TaskAttributes.EndDate) < new Date() === false || task.TaskAttributes.Status == "Done") {
+      newTask.setAttribute("draggable", true);
+      newTask.className = "draggable";
+    }
+    newTask.appendChild(newLine);
+    newTaskList.appendChild(newTask);
+    makeDescription(newTask, task);
+    makeDeleteButton(task, newTask);
+    makeEditButton(task, newTask);
+  }
+}
+function makeDraggable() {
+  const draggableElements = document.querySelectorAll("[draggable=true]");
+  const containers = document.querySelectorAll("#TaskList");
+  //MAKE TASKS WITH DRAGGABLE ATTRIBUTE DRAGGABLE
   draggableElements.forEach((element) => {
     element.addEventListener("dragstart", () => {
-      element.classList.add("dragging")
-    })
+      element.classList.add("dragging");
+    });
     element.addEventListener("dragend", () => {
-      element.classList.remove("dragging")
-    })
-  })
+      element.classList.remove("dragging");
+    });
+  });
+  //MAKE LIST CONTAINERS DROPABLE
   containers.forEach((container) => {
     container.addEventListener("dragover", (event) => {
-      event.preventDefault()
-    })
-    container.addEventListener("drop", async (event) => {
-      event.preventDefault()
-      event.stopPropagation();
-      const draggable = document.querySelector(".dragging")
-      if (event.target === container && event.target.className != "Overdue") {
-        container.appendChild(draggable)
-        const updatedData = {
-          id: draggable.id,
-          Status: container.name
-        }
-        try {
-          const response = await fetch("http://localhost:3000/Tasks/UpdateStatus", {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(updatedData)
-          });
-          const responseData = await response.json();
-          console.log(responseData.status, responseData);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    })
-  })
+      event.preventDefault();
+    });
+    container.addEventListener("drop", (event) => handleDrop(event, container));
+  });
 }
-  
+
+const handleDrop = async (event, container) => {
+  event.preventDefault();
+  event.stopPropagation();
+  const draggable = document.querySelector(".dragging");
+  if (event.target === container && event.target.className !== "Overdue") {
+    container.appendChild(draggable);
+    const updatedData = {
+      id: draggable.id,
+      Status: container.name,
+    };
+    try {
+      const response = await fetch("http://localhost:3000/Tasks/UpdateStatus", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+      const responseData = await response.json();
+      console.log(responseData.status, responseData);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 
 taskForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -169,72 +181,66 @@ taskForm.addEventListener("submit", async (event) => {
       Priority: priority,
       StartDate: startDate,
       EndDate: endDate,
-      Status: status
-    }
+      Status: status,
+    },
   };
-  
+
   try {
     const response = await fetch("http://localhost:3000/Tasks/SendTask", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     const responseData = await response.json();
     console.log(responseData.status, responseData);
   } catch (error) {
     console.error(error);
   }
-  });
+});
 
+function makeDescription(newTask, task) {
+  const descriptionDiv = document.createElement("div");
+  const newTaskDescription = document.createElement("p");
+  const assignee = document.createElement("p");
+  const status = document.createElement("p");
+  const priority = document.createElement("p");
+  const startDate = document.createElement("p");
+  const endDate = document.createElement("p");
 
-
-function makeDescription(newTask, task){
-
-  const descriptionDiv = document.createElement("div")
-  const newTaskDescription = document.createElement("p")
-  const assignee = document.createElement("p")
-  const status = document.createElement("p")
-  const priority = document.createElement("p")   
-  const startDate = document.createElement("p")  
-  const endDate = document.createElement("p")
-
-  descriptionDiv.className = "task-details"
-  descriptionDiv.style.display = "none"
+  descriptionDiv.className = "task-details";
+  descriptionDiv.style.display = "none";
 
   newTask.addEventListener("click", () => {
-    if (descriptionDiv.style.display === "none"){
-      descriptionDiv.style.display = "block"
+    if (descriptionDiv.style.display === "none") {
+      descriptionDiv.style.display = "block";
+    } else {
+      descriptionDiv.style.display = "none";
     }
-    else 
-    {
-      descriptionDiv.style.display = "none"
-    }
-  })
+  });
 
-  newTaskDescription.textContent = task.TaskAttributes.Description 
-  assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee
-  status.textContent = "Status: " + task.TaskAttributes.Status
-  priority.textContent = "Priority: " + task.TaskAttributes.Priority
-  startDate.textContent = "Start Date: " + task.TaskAttributes.StartDate
-  endDate.textContent = "End Date:  " + task.TaskAttributes.EndDate
+  newTaskDescription.textContent = task.TaskAttributes.Description;
+  assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee;
+  status.textContent = "Status: " + task.TaskAttributes.Status;
+  priority.textContent = "Priority: " + task.TaskAttributes.Priority;
+  startDate.textContent = "Start Date: " + task.TaskAttributes.StartDate;
+  endDate.textContent = "End Date:  " + task.TaskAttributes.EndDate;
 
-
-  descriptionDiv.appendChild(newTaskDescription)
-  descriptionDiv.appendChild(assignee)
-  descriptionDiv.appendChild(status)
-  descriptionDiv.appendChild(priority)
-  descriptionDiv.appendChild(startDate)  
-  descriptionDiv.appendChild(endDate)
-  newTask.appendChild(descriptionDiv)
+  descriptionDiv.appendChild(newTaskDescription);
+  descriptionDiv.appendChild(assignee);
+  descriptionDiv.appendChild(status);
+  descriptionDiv.appendChild(priority);
+  descriptionDiv.appendChild(startDate);
+  descriptionDiv.appendChild(endDate);
+  newTask.appendChild(descriptionDiv);
 }
 
-function makeDeleteButton(task, newTask){
+function makeDeleteButton(task, newTask) {
   const deleteButton = document.createElement("button");
   deleteButton.value = "Delete Task";
   deleteButton.textContent = "Delete";
-  deleteButton.style.display = "none"
+  deleteButton.style.display = "none";
 
   newTask.addEventListener("mouseover", () => {
     deleteButton.style.display = "inline-block";
@@ -246,19 +252,18 @@ function makeDeleteButton(task, newTask){
   deleteButton.addEventListener("click", async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    newTask.remove()
+    newTask.remove();
     const response = await fetch("http://localhost:3000/Tasks/Delete", {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json"                                  
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(task)
+      body: JSON.stringify(task),
     });
-    try{
+    try {
       const data = await response.json();
       console.log(data.status, data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   });
@@ -269,7 +274,7 @@ function makeEditButton(task, newTask) {
   editButton.value = "Edit Task";
   editButton.textContent = "Edit";
   editButton.classList.add("edit-button"); // Add a CSS class for styling
-  editButton.style.display = "none"
+  editButton.style.display = "none";
 
   newTask.addEventListener("mouseover", () => {
     editButton.style.display = "inline-block";
@@ -282,12 +287,12 @@ function makeEditButton(task, newTask) {
     event.preventDefault();
 
     const dialog = document.getElementById("editTaskModal");
-    console.log(dialog)
+    console.log(dialog);
     dialog.showModal();
     const form = dialog.querySelector("form");
     form.taskName.value = task.TaskName;
     form.description.value = task.TaskAttributes.Description;
-    form.editAssignee.value = task.TaskAttributes.Assignee
+    form.editAssignee.value = task.TaskAttributes.Assignee;
     form.priority.value = task.TaskAttributes.Priority;
     form.startDate.value = task.TaskAttributes.StartDate;
     form.endDate.value = task.TaskAttributes.EndDate;
@@ -295,14 +300,13 @@ function makeEditButton(task, newTask) {
 
     const saveButton = dialog.querySelector("#saveEditButton");
     saveButton.addEventListener("click", async () => {
-      console.log("Penis")
       if (!taskName || !description || !assignee || !priority || !startDate || !endDate) {
         throw new Error("Please fill in all fields.");
       }
       // Check if endDate is before startDate
       if (new Date(endDate) < new Date(startDate)) {
         throw new Error("End date must be after start date.");
-      } 
+      }
       const updatedData = {
         TaskName: form.taskName.value,
         TaskAttributes: {
@@ -313,7 +317,7 @@ function makeEditButton(task, newTask) {
           EndDate: form.endDate.value,
           Status: form.status.value,
         },
-        id: newTask.id
+        id: newTask.id,
       };
       try {
         const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
