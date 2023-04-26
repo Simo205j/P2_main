@@ -1,4 +1,6 @@
-const { JSDOM } = require("jsdom");
+/** @jest-environment jsdom */
+
+global.EventSource = jest.fn();
 
 // Import the functions to test
 const { makeLogbookList, makeDeleteBtnLogbookEntry, makeNewEdit } = require("../../scripts/logbook");
@@ -15,10 +17,10 @@ describe("Logbook functions", () => {
         </body>
       </html>
     `);
-
     // Set up global variables used in the file
     global.logbookListDiv = dom.window.document.getElementById("logbookList");
-
+    
+    
     // Create a mock logbook entry object to use in the tests
     logbookEntry = {
       _id: "123",
