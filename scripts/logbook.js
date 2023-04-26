@@ -55,7 +55,6 @@ submitLogbookHAndPEntry.addEventListener("click", (event) => {
 function createLogbookEntry(headerText, paragraphText) {
   const div = document.createElement("div");
   div.className = "index";
-
   const headerDiv = document.createElement("div");
   const checkbox = createCheckbox();
   const header = createHeader(headerText);
