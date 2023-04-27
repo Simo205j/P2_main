@@ -5,21 +5,26 @@ const listsTypeContainer = document.getElementById("lists");
 const form = document.getElementById("taskForm");
 const expandFormButton = document.getElementById("expandFormButton");
 
-expandFormButton.addEventListener("click", () => {
-  form.classList.toggle("show");
-  if (expandFormButton.value === "Close form") {
-    expandFormButton.value = "Create task";
-    expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
-  } else {
-    expandFormButton.value = "Close form";
-    expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
-  }
-});
-const priorityValues = {
-  Low: 1,
-  Medium: 2,
-  High: 3,
-};
+document.addEventListener("DOMContentLoaded", () => {
+  const expandFormButton = document.getElementById("expandFormButton");
+
+  expandFormButton.addEventListener("click", () => {
+      form.classList.toggle("show");
+      if (expandFormButton.value === "Close form") {
+        expandFormButton.value = "Create task";
+        expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
+      } else {
+        expandFormButton.value = "Close form";
+        expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
+      }
+    });
+    const priorityValues = {
+      Low: 1,
+      Medium: 2,
+      High: 3,
+    };
+    
+  });
 
 //HANDLES RECIVING DATA FROM SERVER
 source.addEventListener("message", function getTasks(event) {
@@ -52,6 +57,8 @@ function sortTasks(tasks) {
   });
   return tasks;
 }
+module.exports.sortTasks = sortTasks;
+
 //CREATES DOM LISTS FOR EACH LIST
 function createLists(tasks, newListsContainer) {
   LISTS.forEach((list, index) => {
@@ -151,7 +158,10 @@ const handleDrop = async (event, container) => {
   }
 };
 
-taskForm.addEventListener("submit", async (event) => {
+//Code is only executed after the DOM has finished loading
+document.addEventListener("DOMContentLoaded", function() {
+  const taskForm = document.getElementById("taskForm");
+  taskForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   // Get form input values
@@ -198,6 +208,7 @@ taskForm.addEventListener("submit", async (event) => {
   } catch (error) {
     console.error(error);
   }
+});
 });
 
 function makeDescription(newTask, task) {

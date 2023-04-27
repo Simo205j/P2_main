@@ -26,6 +26,7 @@ logbookSource.addEventListener("message", (event) => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
 submitLogbook.addEventListener("click", async (event) => {
   try {
     fetch("http://localhost:3000/Logbook/SendLogbook", {
@@ -39,6 +40,8 @@ submitLogbook.addEventListener("click", async (event) => {
     console.error(error);
   }
 });
+});
+
 submitLogbookHAndPEntry.addEventListener("click", (event) => {
   event.preventDefault();
 
