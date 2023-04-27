@@ -30,19 +30,23 @@ const borderColors = {
   "To-do": "rgba(75, 133, 225, 0.8)",
 };
 //NEXT AND PREVIOUS MONTH BUTTONS
-nextMonth.addEventListener("click", () => {
-  const chart = Chart.getChart("myChart");
-  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
-  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
-  updateTimeChart(chart, newMin, newMax);
-});
-
-prevMonth.addEventListener("click", () => {
-  const chart = Chart.getChart("myChart");
-  const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
-  const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
-  updateTimeChart(chart, newMin, newMax);
-});
+document.addEventListener("DOMContentLoaded", function() {
+  nextMonth.addEventListener("click", () => {
+    const chart = Chart.getChart("myChart");
+    const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
+    const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
+    updateTimeChart(chart, newMin, newMax);
+  });
+  });
+  
+  document.addEventListener("DOMContentLoaded", function() {
+  prevMonth.addEventListener("click", () => {
+    const chart = Chart.getChart("myChart");
+    const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
+    const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
+    updateTimeChart(chart, newMin, newMax);
+  });
+  });
 //FORMAT DATE TO YYYY-MM-DD
 function formatDate(date) {
   const year = date.getFullYear().toString().padStart(4, "0");
@@ -80,6 +84,8 @@ function sortData(data) {
   });
   return data;
 }
+
+
 function makeTasksFromData(sortData) {
   const barColorsTask = [];
   const borderColorsTask = [];
@@ -250,3 +256,5 @@ const statusOfTask = {
     ctx.restore();
   },
 };
+
+module.exports.sortData = sortData;

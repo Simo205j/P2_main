@@ -1,19 +1,23 @@
-const getTasks = require("../Tested functions/Backlog_sorting");
+global.EventSource = jest.fn(() => ({
+  addEventListener: jest.fn(),
+}));
 
-describe("getTasks function", () => {
-  it("should sort tasks by end date and priority correctly", () => {
-    const tasks = [
-      { TaskAttributes: { EndDate: "2023-04-18", Priority: "high" } },
-      { TaskAttributes: { EndDate: "2023-04-16", Priority: "medium" } },
-      { TaskAttributes: { EndDate: "2023-04-17", Priority: "low" } },
-    ];
-    const expectedTasks = [
-      { TaskAttributes: { EndDate: "2023-04-16", Priority: "medium" } },
-      { TaskAttributes: { EndDate: "2023-04-17", Priority: "low" } },
-      { TaskAttributes: { EndDate: "2023-04-18", Priority: "high" } },
-    ];
+const { sortTasks } = require('../../scripts/backlog');
 
-    const sortedTasks = getTasks(tasks);
-    expect(sortedTasks).toEqual(expectedTasks);
+describe('sortTasks function', () => {
+  // Should sort tasks by end date and priority correctly
+  it('should sort tasks by end date and priority correctly', () => {
+    const tasks = [      
+      { TaskAttributes: { EndDate: '2023-04-18', Priority: 'high' } },
+      { TaskAttributes: { EndDate: '2023-04-16', Priority: 'medium' } },      
+      { TaskAttributes: { EndDate: '2023-04-17', Priority: 'low' } },  
+    ];
+    const expectedTasks = [      
+      { TaskAttributes: { EndDate: '2023-04-16', Priority: 'medium' } },      
+      { TaskAttributes: { EndDate: '2023-04-17', Priority: 'low' } },      
+      { TaskAttributes: { EndDate: '2023-04-18', Priority: 'high' } },    
+    ];
+    const undoneTasks = sortTasks(tasks);
+    expect(undoneTasks).toStrictEqual(expectedTasks);
   });
 });

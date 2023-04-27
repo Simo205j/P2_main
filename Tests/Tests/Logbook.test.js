@@ -1,4 +1,6 @@
-const { JSDOM } = require("jsdom");
+global.EventSource = jest.fn(() => ({
+  addEventListener: jest.fn(),
+}));
 
 // Import the functions to test
 const { makeLogbookList, makeDeleteBtnLogbookEntry, makeNewEdit } = require("../../scripts/logbook");

@@ -1,11 +1,14 @@
-const sortGANTT = require("../Tested functions/GANTT_sort");
+global.EventSource = jest.fn(() => ({
+  addEventListener: jest.fn(),
+}));
+const { sortData } = require('../../scripts/gantt');
 
-describe("sortGANTT", () => {
+describe("sortData", () => {
   const customStatusValues = {
-    Done: 1,
+    "Done": 1,
     "To-do": 2,
-    Doing: 3,
-    Overdue: 4,
+    "Doing": 3,
+    "Overdue": 4,
   };
   const tasks = [
     { TaskAttributes: { StartDate: "2023-04-18", Status: "Done" } },
@@ -15,7 +18,7 @@ describe("sortGANTT", () => {
   ];
 
   it("should sort tasks correctly based on start date and status", () => {
-    const sortedTasks = sortGANTT(tasks);
+    const sortedTasks = sortData(tasks);
     for (let i = 0; i < sortedTasks.length - 1; i++) {
       const startDateDiff =
         new Date(sortedTasks[i].TaskAttributes.StartDate).getTime() -

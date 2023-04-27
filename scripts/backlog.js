@@ -27,6 +27,7 @@ function sortTasks(tasks) {
   });
   return undoneTasks;
 }
+module.exports.sortTasks = sortTasks;
 
 function createTasks(tasks) {
   const table = makeTableHeader();
