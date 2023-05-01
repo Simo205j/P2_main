@@ -1,6 +1,9 @@
-global.EventSource = jest.fn(() => ({
+global.EventSource = jest.fn()
+const mockEventSource = {
   addEventListener: jest.fn(),
-}));
+  }
+global.EventSource.mockImplementation(() => mockEventSource);
+
 const { makeTasksFromData } = require('../../scripts/gantt');
 
 

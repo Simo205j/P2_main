@@ -4,7 +4,6 @@ const mockEventSource = {
   addEventListener: jest.fn(),
   }
 
-
 global.EventSource.mockImplementation(() => mockEventSource);
 
 const elementMock = { addEventListener: jest.fn() };

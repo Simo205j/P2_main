@@ -1,6 +1,8 @@
-global.EventSource = jest.fn(() => ({
-    addEventListener: jest.fn(),
-  }));
+global.EventSource = jest.fn()
+const mockEventSource = {
+  addEventListener: jest.fn(),
+  }
+global.EventSource.mockImplementation(() => mockEventSource);
   
   const { makeDescription } = require('../../scripts/board');
   
