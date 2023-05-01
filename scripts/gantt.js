@@ -118,6 +118,7 @@ function makeTasksFromData(sortData) {
     sortedTasks,
   });
 }
+
 function updateChart(sortedTasks, barColorsTask, borderColorsTask) {
   const chart = Chart.getChart("myChart");
   console.log(chart);
@@ -256,5 +257,5 @@ const statusOfTask = {
     ctx.restore();
   },
 };
-
 module.exports.sortData = sortData;
+module.exports.makeTasksFromData = makeTasksFromData;
