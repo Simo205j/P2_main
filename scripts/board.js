@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
         expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
       }
     });
-    const priorityValues = {
-      Low: 1,
-      Medium: 2,
-      High: 3,
-    };
-    
   });
+
+const priorityValues = {
+    Low: 1,
+    Medium: 2,
+    High: 3,
+};
 
 //HANDLES RECIVING DATA FROM SERVER
 source.addEventListener("message", function getTasks(event) {
@@ -57,7 +57,6 @@ function sortTasks(tasks) {
   });
   return tasks;
 }
-module.exports.sortTasks = sortTasks;
 
 //CREATES DOM LISTS FOR EACH LIST
 function createLists(tasks, newListsContainer) {
@@ -354,3 +353,5 @@ function makeEditButton(task, newTask) {
   });
   newTask.appendChild(editButton);
 }
+module.exports.sortTasks = sortTasks;
+module.exports.makeDescription = makeDescription;

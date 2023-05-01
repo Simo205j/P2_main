@@ -26,7 +26,6 @@ logbookSource.addEventListener("message", (event) => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
 submitLogbook.addEventListener("click", async (event) => {
   try {
     fetch("http://localhost:3000/Logbook/SendLogbook", {
@@ -39,7 +38,6 @@ submitLogbook.addEventListener("click", async (event) => {
   } catch (error) {
     console.error(error);
   }
-});
 });
 
 submitLogbookHAndPEntry.addEventListener("click", (event) => {
@@ -66,7 +64,8 @@ function createLogbookEntry(headerText, paragraphText) {
   const deleteBtn = createDeleteButton(div);
 
   tempBoxEventlistener(checkbox, div.id);
-  makeNewEdit(header, paragraph);
+  makeEditable(header);
+  makeEditable(paragraph)
 
   headerDiv.appendChild(checkbox);
   headerDiv.appendChild(header);
@@ -166,6 +165,8 @@ function makeLogbookList(logbookEntry) {
 
   logbookListDiv.appendChild(logbookEntryContainer);
 }
+
+
 
 function makeDeleteBtnLogbookEntry(logbookEntryContainer) {
   const logbookEntryDeleteBtn = document.createElement("input");
@@ -363,3 +364,7 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
   });
   tempDiv.appendChild(saveEntries);
 }
+
+module.exports = { makeLogbookList };
+module.exports.makeDeleteBtnLogbookEntry = makeDeleteBtnLogbookEntry;
+module.exports.makeEditAble = makeEditAble;

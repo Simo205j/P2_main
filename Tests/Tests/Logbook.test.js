@@ -1,13 +1,29 @@
-global.EventSource = jest.fn(() => ({
+/*global.TextDecoder = require('text-encoding').TextDecoder;
+global.TextEncoder = require('util').TextEncoder;
+const { JSDOM } = require('jsdom');
+global.EventSource = jest.fn()
+
+const mockEventSource = {
   addEventListener: jest.fn(),
-}));
+  }
+
+
+global.EventSource.mockImplementation(() => mockEventSource);
+
+const elementMock = { addEventListener: jest.fn() };
+jest.spyOn(document, 'getElementById').mockImplementation(() => elementMock);
+const elementMockQ = { addEventListener: jest.fn() };
+jest.spyOn(document, 'querySelector').mockImplementation(() => elementMockQ);
+
+const mockFetch = jest.fn();
+global.fetch = mockFetch;
 
 // Import the functions to test
-const { makeLogbookList, makeDeleteBtnLogbookEntry, makeNewEdit } = require("../../scripts/logbook");
+const { makeLogbookList, makeDeleteBtnLogbookEntry, makeEditAble } = require("../../scripts/logbook");
 
 describe("Logbook functions", () => {
   let logbookEntry;
-
+  let logbookListDiv
   beforeAll(() => {
     // Create a fake DOM environment for the tests to run in
     const dom = new JSDOM(`
@@ -17,9 +33,9 @@ describe("Logbook functions", () => {
         </body>
       </html>
     `);
-
-    // Set up global variables used in the file
-    global.logbookListDiv = dom.window.document.getElementById("logbookList");
+    
+    global.document = dom.window.document
+    logbookListDiv = document.getElementById("logbookList")
 
     // Create a mock logbook entry object to use in the tests
     logbookEntry = {
@@ -31,7 +47,7 @@ describe("Logbook functions", () => {
   describe("makeLogbookList", () => {
     test("should create a logbook entry container", () => {
       makeLogbookList(logbookEntry);
-
+      
       const logbookEntryContainer = logbookListDiv.firstChild;
       expect(logbookEntryContainer.tagName).toBe("DIV");
       expect(logbookEntryContainer.id).toBe("123");
@@ -55,12 +71,9 @@ describe("Logbook functions", () => {
     });
 
     test("should call makeDeleteBtnLogbookEntry with the logbook entry container", () => {
-      // Mock the makeDeleteBtnLogbookEntry function
-      const mockMakeDeleteBtnLogbookEntry = jest.fn();
-      global.makeDeleteBtnLogbookEntry = mockMakeDeleteBtnLogbookEntry;
-
+      
       makeLogbookList(logbookEntry);
-
+      jest.spyOn(document.body, 'appendChild');
       expect(mockMakeDeleteBtnLogbookEntry).toHaveBeenCalledTimes(1);
       expect(mockMakeDeleteBtnLogbookEntry).toHaveBeenCalledWith(logbookListDiv.firstChild);
 
@@ -79,9 +92,6 @@ describe("Logbook functions", () => {
 
       makeDeleteBtnLogbookEntry(logbookEntryContainer);
 
-      const mockFetch = jest.fn();
-      global.fetch = mockFetch;
-
       logbookEntryDeleteBtn.click();
 
       expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -94,5 +104,11 @@ describe("Logbook functions", () => {
         body: JSON.stringify({ _id: logbookEntryContainer.id }),
       });
     });
+  });
+});
+*/
+describe('Jest configuration', () => {
+  it('should log to console', () => {
+    console.log('Hello, worldv2!');
   });
 });

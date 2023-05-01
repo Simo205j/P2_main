@@ -1,4 +1,8 @@
-const makeTasks = require("../Tested functions/GANTTTEST"); // Import the function to be tested
+global.EventSource = jest.fn(() => ({
+  addEventListener: jest.fn(),
+}));
+const { makeTasksFromData } = require('../../scripts/gantt');
+
 
 const data = [
   {
@@ -23,9 +27,9 @@ const data = [
   },
 ];
 
-describe("makeTasks", () => {
+describe("makeTasksFromDat", () => {
   test("should return three arrays with valid RGBA color values and valid task attributes in sortedTasks array", () => {
-    const result = makeTasks(data);
+    const result = makeTasksFromData(data);
 
     expect(result).toHaveProperty("barColorsTask");
     expect(result).toHaveProperty("borderColorsTask");

@@ -27,7 +27,6 @@ function sortTasks(tasks) {
   });
   return undoneTasks;
 }
-module.exports.sortTasks = sortTasks;
 
 function createTasks(tasks) {
   const table = makeTableHeader();
@@ -112,3 +111,4 @@ function makeTableRow(table, tableIndex, task) {
   row.appendChild(priority);
   table.appendChild(row);
 }
+module.exports.sortTasks = sortTasks;
