@@ -107,9 +107,7 @@ router.post('/SendTask', (req, res) => {
       res.status(500).send({ error: err });
     } 
     else {
-      res.status(200).json({
-        TaskName: newTask.TaskName,
-      });
+      res.status(200).json({ TaskName: newTask.TaskName });
     }
   });
 })
