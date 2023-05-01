@@ -152,21 +152,19 @@ function createTextArea(element) {
   });
 }
 
-function makeLogbookList(logbookEntry) {
-  const logbookEntryContainer = document.createElement("div");
-  const logbookEntryDate = document.createElement("p");
+function makeLogbookList(logbookEntry){
+  const logbookEntryContainer = document.createElement("div")
+  const logbookEntryDate = document.createElement("p")
 
-  logbookEntryContainer.id = logbookEntry._id;
-  logbookEntryDate.textContent = "Logbook: " + logbookEntry.date;
+  logbookEntryContainer.id = logbookEntry._id
+  logbookEntryDate.textContent = "Logbook: " + logbookEntry.date
 
-  logbookEntryContainer.appendChild(logbookEntryDate);
-  makeDeleteBtnLogbookEntry(logbookEntryContainer);
-  makeLogbookEntryClickable(logbookEntryContainer);
-
-  logbookListDiv.appendChild(logbookEntryContainer);
+  logbookEntryContainer.appendChild(logbookEntryDate)
+  makeDeleteBtnLogbookEntry(logbookEntryContainer)
+  makeLogbookEntryClickable(logbookEntryContainer)
+  //MAKE EVENTLISTENER TO REQUEST INDIVIDUAL LOGBOOK DATA
+  logbookListDiv.appendChild(logbookEntryContainer)
 }
-
-
 
 function makeDeleteBtnLogbookEntry(logbookEntryContainer) {
   const logbookEntryDeleteBtn = document.createElement("input");
@@ -365,6 +363,6 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
   tempDiv.appendChild(saveEntries);
 }
 
-module.exports = { makeLogbookList };
+module.exports.createLogbookEntry = createLogbookEntry
 module.exports.makeDeleteBtnLogbookEntry = makeDeleteBtnLogbookEntry;
 module.exports.makeEditAble = makeEditAble;
