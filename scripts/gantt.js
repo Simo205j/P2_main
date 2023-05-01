@@ -33,8 +33,8 @@ const borderColors = {
 document.addEventListener("DOMContentLoaded", function() {
   nextMonth.addEventListener("click", () => {
     const chart = Chart.getChart("myChart");
-    const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
-    const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
+    const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
+    const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
     updateTimeChart(chart, newMin, newMax);
   });
   });
@@ -42,18 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("DOMContentLoaded", function() {
   prevMonth.addEventListener("click", () => {
     const chart = Chart.getChart("myChart");
-    const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
-    const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
+    const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
+    const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
     updateTimeChart(chart, newMin, newMax);
   });
   });
-//FORMAT DATE TO YYYY-MM-DD
-function formatDate(date) {
-  const year = date.getFullYear().toString().padStart(4, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return year + "-" + month + "-" + day;
-}
 //UPDATES X-AXIS ON PREV AND NEXTMONTH BUTTONS
 function updateTimeChart(chart, newMin, newMax) {
   chart.config.options.scales.x.min = new Date(newMin);
@@ -121,7 +114,7 @@ function makeTasksFromData(sortData) {
 
 function updateChart(sortedTasks, barColorsTask, borderColorsTask) {
   const chart = Chart.getChart("myChart");
-  console.log(chart);
+  console.log("REPLACE PENIS WITH CHART REMEMBER REMEMBER");
   //UPDATE THE CHART OBJECT
   chart.config.options.scales.x.min = minCurrentDate;
   chart.config.options.scales.x.max = maxCurrentDate;
@@ -257,5 +250,4 @@ const statusOfTask = {
     ctx.restore();
   },
 };
-module.exports.sortData = sortData;
-module.exports.makeTasksFromData = makeTasksFromData;
+module.exports = {sortData, makeTasksFromData, updateTimeChart, updateChart};

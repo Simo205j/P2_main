@@ -77,6 +77,8 @@ function createLists(tasks, newListsContainer) {
     newListsContainer.appendChild(newTaskList);
   });
 }
+
+
 //CREATES DOM TASKS FOR LISTS
 function createListTask(task, list, newTaskList) {
   if (
@@ -353,5 +355,4 @@ function makeEditButton(task, newTask) {
   });
   newTask.appendChild(editButton);
 }
-module.exports.sortTasks = sortTasks;
-module.exports.makeDescription = makeDescription;
+module.exports = {sortTasks, makeDescription};

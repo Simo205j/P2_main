@@ -10,7 +10,10 @@
     "devStart": "nodemon server.js"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   },
   "keywords": [
     "Time",
@@ -35,6 +38,7 @@
   "devDependencies": {
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
+    "jest-fetch-mock": "^3.0.3",
     "jsdom": "^21.1.1",
     "nodemon": "^2.0.21",
     "text-encoding": "^0.7.0"

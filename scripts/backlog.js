@@ -49,7 +49,9 @@ function createTasks(tasks) {
   divContainer.id = "divContainer";
 
   divContainer.appendChild(table);
-  backlogTable.appendChild(divContainer);
+  if(backlogTable){
+    backlogTable.appendChild(divContainer);
+  }
 }
 
 function makeTableHeader() {
@@ -111,4 +113,4 @@ function makeTableRow(table, tableIndex, task) {
   row.appendChild(priority);
   table.appendChild(row);
 }
-module.exports.sortTasks = sortTasks;
+module.exports = {sortTasks, makeTableHeader, makeTableRow, createTasks}

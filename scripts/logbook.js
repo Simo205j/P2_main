@@ -362,7 +362,4 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
   });
   tempDiv.appendChild(saveEntries);
 }
-
-module.exports.createLogbookEntry = createLogbookEntry
-module.exports.makeDeleteBtnLogbookEntry = makeDeleteBtnLogbookEntry;
-module.exports.makeEditAble = makeEditAble;
+module.exports = {createLogbookEntry, makeDeleteBtnLogbookEntry, makeEditAble, makeDeleteBtnLogbookEntry};
