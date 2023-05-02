@@ -26,7 +26,7 @@ describe('updateTimeChart', () => {
       };
     });
   
-    it('updates the chart with the new minimum and maximum dates', () => {
+    test('updates the chart with the new minimum and maximum dates', () => {
       const newMin = '2022-01-01';
       const newMax = '2022-12-31';
   
@@ -73,7 +73,7 @@ describe('updateTimeChart', () => {
       };
     });
   
-    it('updates the chart object with the provided data and options', () => { 
+    test('updates the chart object with the provided data and options', () => { 
     const mlSecondsInMonth = 2629743833;
     let minCurrentDate = new Date(Math.floor(Date.now() - mlSecondsInMonth / 3));
     let maxCurrentDate = new Date(Math.floor(Date.now() + mlSecondsInMonth));

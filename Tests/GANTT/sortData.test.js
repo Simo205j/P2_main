@@ -20,7 +20,7 @@ describe("sortData", () => {
     { TaskAttributes: { StartDate: "2023-04-19", Status: "Overdue" } },
   ];
 
-  it("should sort tasks correctly based on start date and status", () => {
+  test("should sort tasks correctly based on start date and status", () => {
     const sortedTasks = sortData(tasks);
     for (let i = 0; i < sortedTasks.length - 1; i++) {
       const startDateDiff =

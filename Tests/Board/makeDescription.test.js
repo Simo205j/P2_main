@@ -7,7 +7,7 @@ global.EventSource.mockImplementation(() => mockEventSource);
   const { makeDescription } = require('../../scripts/board');
   
   describe('makeDescription function', () => {
-    it("should toggle description upon click on task", () => {
+    test("should toggle description upon click on task", () => {
       const task = { 
         TaskAttributes: { 
           Description: "task description", 

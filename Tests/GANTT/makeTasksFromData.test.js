@@ -13,21 +13,21 @@ const data = [
     TaskAttributes: {
       StartDate: "2022-01-01",
       EndDate: "2022-01-10",
-      Assignee: "John",
+      Assignee: "Mertz",
       Status: "Doing",
-      Description: "This is Task 1",
-    },
+      Description: "Make GANTT test work"
+    }
   },
   {
     TaskName: "Task 2",
     TaskAttributes: {
       StartDate: "2022-01-05",
       EndDate: "2022-01-15",
-      Assignee: "Jane",
+      Assignee: "Tobias",
       Status: "To-do",
-      Description: "This is Task 2",
-    },
-  },
+      Description: "Make GANTT test look decent"
+    }
+  }
 ];
 
 describe("makeTasksFromDat", () => {

@@ -27,7 +27,7 @@ const task = {
 
 describe('createTasks', () => {
   // Create a sample task object
-  it('creates a table with correct headers and rows', () => {
+  test('creates a table with correct headers and rows', () => {
     // Create a mock table
     const table = makeTableHeader();
     const row = makeTableRow(table, 1, task);

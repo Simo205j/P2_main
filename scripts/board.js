@@ -174,16 +174,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const endDate = taskForm.endDate.value;
   const status = taskForm.status.value;
 
-  // Check if any of the form fields are empty
-  if (!taskName || !description || !assignee || !priority || !startDate || !endDate || !status) {
-    throw new Error("Please fill in all fields.");
-  }
-
-  // Check if endDate is before startDate
-  if (new Date(endDate) < new Date(startDate)) {
-    throw new Error("End date must be after start date.");
-  }
-
   const data = {
     TaskName: taskName,
     TaskAttributes: {
@@ -312,13 +302,6 @@ function makeEditButton(task, newTask) {
 
     const saveButton = dialog.querySelector("#saveEditButton");
     saveButton.addEventListener("click", async () => {
-      if (!taskName || !description || !assignee || !priority || !startDate || !endDate) {
-        throw new Error("Please fill in all fields.");
-      }
-      // Check if endDate is before startDate
-      if (new Date(endDate) < new Date(startDate)) {
-        throw new Error("End date must be after start date.");
-      }
       const updatedData = {
         TaskName: form.taskName.value,
         TaskAttributes: {

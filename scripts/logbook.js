@@ -312,6 +312,7 @@ function makeEditAble(tempHeader, tempParagraph, data, index) {
       logbookHeaderArray[index] = tempHeader.textContent;
     });
   });
+  
   tempParagraph.textContent = data[0].ParagraphArray[index];
   tempParagraph.addEventListener("click", () => {
     const tempParagraphInput = document.createElement("textarea");
@@ -362,4 +363,4 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
   });
   tempDiv.appendChild(saveEntries);
 }
-module.exports = {createLogbookEntry, makeDeleteBtnLogbookEntry, makeEditAble, makeDeleteBtnLogbookEntry};
+module.exports = {createLogbookEntry, makeDeleteBtnLogbookEntry, resetLogbookData, makeLogbookContainerDivContent, fixContainerIndexes};

@@ -7,7 +7,7 @@ global.EventSource.mockImplementation(() => mockEventSource);
 const { sortTasks } = require('../../scripts/board');
 
 describe("sortTasks function", () => {
-  it("should sort tasks by end date and priority correctly", () => {
+  test("should sort tasks by end date and priority correctly", () => {
     const tasks = [
       { TaskAttributes: { EndDate: "2023-04-18", Priority: "high" } },
       { TaskAttributes: { EndDate: "2023-04-16", Priority: "medium" } },
