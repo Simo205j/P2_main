@@ -1,10 +1,11 @@
 const assigneesSource = new EventSource("http://localhost:3000/Assignee/events");
-const assigneeForm = document.getElementById("assigneeForm");
+
 const assigneeFormButton = document.getElementById("assigneeButton");
 const assigneebox = document.getElementById("assignee");
 
 assigneeFormButton.addEventListener("click", addNewAssignee);
 async function addNewAssignee(event){
+  const assigneeForm = document.getElementById("assigneeForm");  
   event.preventDefault();
   const data = {
     assigneeName: assigneeForm.value,

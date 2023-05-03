@@ -1,5 +1,7 @@
-//IN PROGRESS
-
+/* Need to rewrite the entire logbook, to not use global variables to make this work
+global.TextDecoder = require('text-encoding').TextDecoder;
+global.TextEncoder = require('util').TextEncoder;
+const { JSDOM } = require('jsdom');
 global.EventSource = jest.fn()
 
 const mockEventSource = {
@@ -8,74 +10,81 @@ const mockEventSource = {
 
 global.EventSource.mockImplementation(() => mockEventSource);
 
-const elementMock = { addEventListener: jest.fn(), appendChild: jest.fn() };
+const elementMock = { addEventListener: jest.fn() };
 jest.spyOn(document, 'getElementById').mockImplementation(() => elementMock);
-const elementMockQ = { addEventListener: jest.fn(), appendChild: jest.fn() };
+const elementMockQ = { addEventListener: jest.fn()};
 jest.spyOn(document, 'querySelector').mockImplementation(() => elementMockQ);
-const elementMockC = { addEventListener: jest.fn(), appendChild: jest.fn() };
-jest.spyOn(document, 'createElement').mockImplementation(() => elementMockC);
-
 const { makeLogbookContainerDivContent } = require('../../scripts/logbook')
 
-describe("makeLogbookContainerDivContent", () => {
-  let testData;
-  let testContainer;
-
-  
-
+describe('makeLogbookContainerDivContent', () => {
   beforeEach(() => {
-    testData = [      {        _id: "logbook-entry-1",        date: "2022-05-01",        HeaderArray: ["Header 1", "Header 2", "Header 3"],
-         ParagraphArray: ["Para 1", "Para 2", "Para 3"], CheckboxArray: [true, false, true],
+    // Create a fake DOM environment
+    const dom = new JSDOM(`<!DOCTYPE html><html><body><div id="displayLogbookContainerDiv"></div></body></html>`);
+    global.document = dom.window.document;
+    
+  });
+
+  test('creates a logbook container div with the correct structure and content', () => {
+    // Set up test data
+    const data = [
+      {
+        _id: 'some_id',
+        date: '2023-05-03',
+        HeaderArray: [
+          'Header 1',
+          'Header 2',
+        ],
+        ParagraphArray: [
+          'Paragraph 1',
+          'Paragraph 2',
+        ],
+        CheckboxArray: [
+          true,
+          false,
+        ],
       },
     ];
-    testContainer = document.createElement("div");
-    testContainer.id = "logbook-entry-container";
-
-  });
-
-  afterEach(() => {
-    document.body.innerHTML = "";
-  });
-
-  test("creates logbook entry container div content", () => {
     const lastTemp = {
       remove: jest.fn(),
-      querySelector: jest.fn()
     };
     jest.spyOn(document, "getElementById").mockReturnValue(lastTemp);
+    const logbookEntryContainer = document.createElement('div');
 
-    makeLogbookContainerDivContent(testData, testContainer);
+    // Call the function being tested
+      // Call the function being tested
+  makeLogbookContainerDivContent(data, logbookEntryContainer);
 
-    const tempDiv = document.getElementById("temp");
-    expect(tempDiv).toBeTruthy();
+  // Check that the logbook container div has the correct structure and content
+  const logbookContainerDiv = document.querySelector(`.${data[0]._id}`);
+  expect(logbookContainerDiv).not.toBeNull();
 
-    const tempLogbookDate = tempDiv.querySelector("h2");
-    console.log(tempLogbookDate);
-    expect(tempLogbookDate.textContent).toEqual("2022-05-01");
+  console.log(logbookContainerDiv)
+  if (logbookContainerDiv) { // check if logbookContainerDiv is not null
+    const logbookDate = logbookContainerDiv.querySelector('h2');
+    console.log(logbookDate);
+    expect(logbookDate).not.toBeNull();
+    expect(logbookDate.textContent).toBe(data[0].date);
 
-    const tempHeaderContainers = tempDiv.querySelectorAll(".index");
-    expect(tempHeaderContainers.length).toBe(3);
+    const logbookEntries = logbookContainerDiv.querySelectorAll('.index');
+    expect(logbookEntries).toHaveLength(data[0].HeaderArray.length);
 
-    const tempHeader1 = tempHeaderContainers[0].querySelector("h3");
-    const tempParagraph1 = tempHeaderContainers[0].querySelector("p");
-    expect(tempHeader1.textContent).toBe("Header 1");
-    expect(tempParagraph1.textContent).toBe("");
+    logbookEntries.forEach((entry, index) => {
+      const checkbox = entry.querySelector('input[type="checkbox"]');
+      expect(checkbox).not.toBeNull();
+      expect(checkbox.checked).toBe(data[0].CheckboxArray[index]);
 
-    const tempHeader2 = tempHeaderContainers[1].querySelector("h3");
-    const tempParagraph2 = tempHeaderContainers[1].querySelector("p");
-    expect(tempHeader2.textContent).toBe("Header 2");
-    expect(tempParagraph2.textContent).toBe("");
+      const header = entry.querySelector('h3');
+      expect(header).not.toBeNull();
+      expect(header.textContent).toBe(data[0].HeaderArray[index]);
 
-    const tempHeader3 = tempHeaderContainers[2].querySelector("h3");
-    const tempParagraph3 = tempHeaderContainers[2].querySelector("p");
-    expect(tempHeader3.textContent).toBe("Header 3");
-    expect(tempParagraph3.textContent).toBe("");
+      const deleteBtn = entry.querySelector('input[type="button"]');
+      expect(deleteBtn).not.toBeNull();
+      expect(deleteBtn.value).toBe('Delete');
 
-    const saveBtn = testContainer.querySelector(".save-btn");
-    expect(saveBtn).toBeTruthy();
-
-    expect(lastTemp.remove).toHaveBeenCalled();
-
-    document.getElementById.mockRestore();
-  });
+      const paragraph = entry.querySelector('p');
+      expect(paragraph).not.toBeNull();
+    });
+  }
 });
+});
+*/

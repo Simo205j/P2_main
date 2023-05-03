@@ -315,7 +315,12 @@
 <a name='L250'></a><a href='#L250'>250</a>
 <a name='L251'></a><a href='#L251'>251</a>
 <a name='L252'></a><a href='#L252'>252</a>
-<a name='L253'></a><a href='#L253'>253</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -349,15 +354,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -600,22 +610,27 @@ const borderColors = {
 };
 //NEXT AND PREVIOUS MONTH BUTTONS
 document.addEventListener("DOMContentLoaded", <span class="fstat-no" title="function not covered" >fu</span>nction() {
-<span class="cstat-no" title="statement not covered" >  nextMonth.addEventListener("click", <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  nextMonth.addEventListener("click", handleNextMonthClick);</span>
+});
+&nbsp;
+document.addEventListener("DOMContentLoaded", <span class="fstat-no" title="function not covered" >fu</span>nction() {
+<span class="cstat-no" title="statement not covered" >  prevMonth.addEventListener("click", handlePrevMonthClick);</span>
+});
+&nbsp;
+function <span class="fstat-no" title="function not covered" >handleNextMonthClick(</span>) {
     const chart = <span class="cstat-no" title="statement not covered" >Chart.getChart("myChart");</span>
     const newMin = <span class="cstat-no" title="statement not covered" >new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));</span>
     const newMax = <span class="cstat-no" title="statement not covered" >new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));</span>
 <span class="cstat-no" title="statement not covered" >    updateTimeChart(chart, newMin, newMax);</span>
-  });
-  });
+  }
   
-  document.addEventListener("DOMContentLoaded", <span class="fstat-no" title="function not covered" >fu</span>nction() {
-<span class="cstat-no" title="statement not covered" >  prevMonth.addEventListener("click", <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+function <span class="fstat-no" title="function not covered" >handlePrevMonthClick(</span>) {
     const chart = <span class="cstat-no" title="statement not covered" >Chart.getChart("myChart");</span>
     const newMin = <span class="cstat-no" title="statement not covered" >new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));</span>
     const newMax = <span class="cstat-no" title="statement not covered" >new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));</span>
 <span class="cstat-no" title="statement not covered" >    updateTimeChart(chart, newMin, newMax);</span>
-  });
-  });
+  }
+&nbsp;
 //UPDATES X-AXIS ON PREV AND NEXTMONTH BUTTONS
 function updateTimeChart(chart, newMin, newMax) {
   chart.config.options.scales.x.min = new Date(newMin);
@@ -819,14 +834,14 @@ const statusOfTask = {
 <span class="cstat-no" title="statement not covered" >    ctx.restore();</span>
   },
 };
-module.exports = {sortData, makeTasksFromData, updateTimeChart, updateChart};</pre></td></tr></table></pre>
+module.exports = {sortData, makeTasksFromData, updateTimeChart, updateChart, handleNextMonthClick, handlePrevMonthClick};</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-02T09:07:02.010Z
+                at 2023-05-03T12:49:33.526Z
             </div>
         <script src="prettify.js"></script>
         <script>

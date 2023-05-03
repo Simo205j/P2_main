@@ -31,22 +31,27 @@ const borderColors = {
 };
 //NEXT AND PREVIOUS MONTH BUTTONS
 document.addEventListener("DOMContentLoaded", function() {
-  nextMonth.addEventListener("click", () => {
+  nextMonth.addEventListener("click", handleNextMonthClick);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  prevMonth.addEventListener("click", handlePrevMonthClick);
+});
+
+function handleNextMonthClick() {
     const chart = Chart.getChart("myChart");
     const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() + mlSecondsInMonth));
     const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() + mlSecondsInMonth));
     updateTimeChart(chart, newMin, newMax);
-  });
-  });
+  }
   
-  document.addEventListener("DOMContentLoaded", function() {
-  prevMonth.addEventListener("click", () => {
+function handlePrevMonthClick() {
     const chart = Chart.getChart("myChart");
     const newMin = new Date(Math.floor(chart.config.options.scales.x.min.getTime() - mlSecondsInMonth));
     const newMax = new Date(Math.floor(chart.config.options.scales.x.max.getTime() - mlSecondsInMonth));
     updateTimeChart(chart, newMin, newMax);
-  });
-  });
+  }
+
 //UPDATES X-AXIS ON PREV AND NEXTMONTH BUTTONS
 function updateTimeChart(chart, newMin, newMax) {
   chart.config.options.scales.x.min = new Date(newMin);
@@ -250,4 +255,4 @@ const statusOfTask = {
     ctx.restore();
   },
 };
-module.exports = {sortData, makeTasksFromData, updateTimeChart, updateChart};
+module.exports = {sortData, makeTasksFromData, updateTimeChart, updateChart, handleNextMonthClick, handlePrevMonthClick};

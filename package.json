@@ -28,6 +28,7 @@
   "author": "Andreas Mertz",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
     "chart.js": "^4.2.1",
     "cors": "^2.8.5",
     "eventsource": "^2.0.2",

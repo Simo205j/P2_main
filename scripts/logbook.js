@@ -287,7 +287,7 @@ function makeLogbookContainerDivContent(data, logbookEntryContainer) {
       tempDiv.appendChild(tempContainerDiv);
     });
   }
-  makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv);
+  makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv);
   displayLogbookContainerDiv.appendChild(tempDiv);
 }
 
@@ -333,7 +333,8 @@ function makeEditAble(tempHeader, tempParagraph, data, index) {
     });
   });
 }
-function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
+
+function makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv) {
   const saveEntries = document.createElement("input");
   saveEntries.type = "button";
   saveEntries.value = "Save logbook";
@@ -363,4 +364,6 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
   });
   tempDiv.appendChild(saveEntries);
 }
-module.exports = {createLogbookEntry, makeDeleteBtnLogbookEntry, resetLogbookData, makeLogbookContainerDivContent, fixContainerIndexes};
+module.exports = {createLogbookEntry, makeDeleteBtnLogbookEntry, resetLogbookData, 
+  makeLogbookContainerDivContent, fixContainerIndexes, makeEditable, makeLogbookContainerSaveBtn, createCheckbox,
+  createHeader, createParagraph, createDeleteButton, makeLogbookList};

@@ -90,4 +90,3 @@ describe('updateTimeChart', () => {
       expect(chart.update).toHaveBeenCalled();
     });
   });
-  
