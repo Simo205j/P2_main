@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1683118173553" clover="3.2.0">
-  <project timestamp="1683118173553" name="All files">
+<coverage generated="1683119254328" clover="3.2.0">
+  <project timestamp="1683119254328" name="All files">
     <metrics statements="622" coveredstatements="284" conditionals="76" coveredconditionals="19" methods="101" coveredmethods="34" elements="799" coveredelements="337" complexity="0" loc="622" ncloc="622" packages="1" files="5" classes="5"/>
     <file name="assignee.js" path="C:\Users\fiske\Documents\GitHub\P2_main\scripts\assignee.js">
       <metrics statements="52" coveredstatements="42" conditionals="10" coveredconditionals="2" methods="4" coveredmethods="3"/>
