@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Getting Started with Chart JS with www.chartjs3.com</title>
+      <link rel="stylesheet" href="/gantt.css">
+      <link rel="stylesheet" href="/navbar.css">
+    </head>
+    <header>
+      <div class="Navbar">
+          <ul class="links">
+              <li><a href="/board">Board</a></li>
+              <li><a href="/gantt">GANTT</a></li>
+              <li><a href="/backlog">Backlog</a></li>
+              <li><a href="/logbook">Logbook</a></li>
+          </ul>
+      </div>
+    </header>
+      <div class="chartCard">
+        <div class="chartBox">
+          <canvas id="myChart">
+          </canvas>
+          <div>
+            <input type="button" value="Previous Month" id="prevMonth">
+            <input type="button" value="Next Month" id="nextMonth">
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="/gantt.js"></script>
+  </body>
+</html>

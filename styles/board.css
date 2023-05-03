@@ -1,0 +1,248 @@
+#form {
+  margin: 0 auto;
+  max-width: fit-content;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(211, 210, 210, 0.8);
+}
+
+form {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  display: none;
+}
+.show {
+  display: grid; 
+}
+
+label {
+  margin-right: 0px;
+  font-weight: bold;
+  grid-column: 1; /* Set the label to first column */
+  grid-row: auto; /* Set the label to auto row height */
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  border-radius: 4px;
+  border: 2px solid rgba(211, 210, 210, 0.8);
+  grid-column: 2; /* Set the form value to second column */
+  grid-row: auto; /* Set the form value to auto row height */
+  width: 100%; /* Make the form value take up 100% width of the column */
+}
+#assigneeForm{
+  padding: 10px;
+  border-radius: 4px;
+  border: 2px solid rgba(211, 210, 210, 0.8);
+  grid-column: 2; /* Set the form value to second column */
+  grid-row: auto; /* Set the form value to auto row height */
+  width: 100%; /* Make the form value take up 100% width of the column */
+}
+
+
+input[type="button"],
+input[type="submit"]{
+  background-color: rgba(75, 133, 225, 1);
+  color: #fff;
+  font-weight: bolder;
+  font-size: 1rem;
+  padding: 8px 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%; /* Make the submit button take up 100% width of the column */
+}
+input[type="button"]{
+  margin-bottom: 10px
+}
+input[type="submit"]:hover {
+opacity: 80%;
+}
+
+.draggable{
+  cursor: move;
+}
+i[class="fa-regular fa-lock"]{
+  margin-left: 0.5rem;
+}
+#assigneeButton {
+  margin-top: 10px;
+  background-color: rgba(49, 201, 69, 0.8);
+  color: #fff;
+  padding: 8px 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%; /* Make the button take up 100% width of the parent div */
+}
+
+#assigneeButton:hover {
+  opacity: 80%;
+}
+
+#assigneLabel {
+  display: block;
+  width: 100%; /* Make the label take up 100% width of the parent div */
+  text-align: left;
+  padding: 5px;
+  font-size: 1rem; /* Adjust font size as needed */
+  font-weight: bold;
+  color: rgb(26, 26, 26);/* Text color */
+}
+
+label {
+  display: block;
+  width: 150px;
+  text-align: left;
+  padding: 5px 5px;
+  font-size: large;
+}
+input, select {
+  display: block;
+  width: 250px;
+}
+select {
+  margin-bottom: 1rem;
+}
+
+#lists {
+  flex-direction: column;
+  color: white;
+  margin: 1rem 2%;
+}
+
+
+#ListsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#TaskList {
+  flex: 1;
+  margin: 0 10px;
+  max-height: 80vh; 
+  overflow-y: auto;
+}
+
+#lists ol {
+  list-style-type: none;
+  border: 2px solid rgba(211, 210, 210, 0.6);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bolder;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  color: rgb(26, 26, 26);
+  min-height: 50vh;
+}
+#lists li {
+  border-radius: 10px;
+  list-style-type: none;
+  border: 3px solid rgba(211, 210, 210, 0.4);
+  padding: 15px 10px;
+  margin: 5px 0px;
+  display: list-item;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#lists li > div{
+  font-weight: normal;
+}
+#lists li:hover {
+  opacity: 80%;
+}
+#lists li:first-child{
+  margin-top: 1rem;
+}
+li button {
+
+  background-color: #458ca0;
+  color: white;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0px 5px;
+  margin-top: 0.5rem;
+  cursor:pointer;
+  font-size: large;
+}
+
+li button[value="Delete Task"]{
+  background-color: rgba(215, 45, 45, 1);
+}
+
+#editTaskModal {
+  position: fixed;
+  left: 40%;
+  top: 5%;
+}
+
+#editTaskForm {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  background-color: #ffffff;
+  width: 400px;
+  max-width: 90%;
+  margin: 10% auto;
+  border-radius: 5px;
+}
+
+/* CSS for the form elements */
+#editTaskForm h1 {
+  font-size: 24px;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+#editTaskForm label {
+  margin-bottom: 10px;
+}
+
+#editTaskForm input,
+#editTaskForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#editTaskForm button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#editTaskForm button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+.To-do > li{
+  background-color: rgba(75, 133, 225, 0.6);
+}
+.Doing > li{
+  background-color: rgba(246, 174, 7, 0.6);
+}
+.Overdue > li{
+  background-color: rgba(215, 45, 45, 0.8);
+}
+
+.Done > li{
+  background-color: rgba(11, 230, 41, 0.6);
+}
+.error {
+  border: 1px solid red; /* or any other visual cue like background color, text color, etc. */
+}

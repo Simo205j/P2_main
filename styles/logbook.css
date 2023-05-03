@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+.all{
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center;
+}
+.showLogbookEntry{
+    margin-top: 2rem;
+    min-width: 40%;
+    max-width: 70%;
+}
+h1 {
+    text-align: center;
+    color: white;
+    margin: 1rem;
+}
+
+input[type="button"],
+input[type="submit"]{
+  background-color: rgba(75, 133, 225, 1);
+  color: #fff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[value="Add Entry"], input[value="Save logbook"]{
+    background-color: rgba(49, 201, 69, 1);
+}
+input[value="Delete"] {
+    background-color: red;
+    text-align: center;
+}
+input[value="Delete"]:hover {
+    background-color: red;
+    text-align: center;
+}
+.logbookContainer{
+    margin: 5rem 10rem;
+}
+
+#LogbookEntryHAndP > div:nth-child(even){
+    background: rgba(234, 232, 232, 0.97);
+}
+.Container {
+    margin-bottom: 10vh;
+    width: fit-content;
+    max-width: 70%;
+    max-height: 90%;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Added property */
+}
+.formContainer{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(236, 236, 236, 0.2);  
+    border: 2px solid rgba(224, 224, 224, 0.8);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+#logbookForm{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: row;
+}
+#logbookForm label, input{
+    margin: 0.5rem;
+}
+
+#logbookList div{
+    padding: 0.5rem;
+    border: 2px solid rgba(224, 224, 224,0.8); 
+    border-bottom: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#logbookList div:first-child{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+#logbookList div:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 2px solid rgba(224, 224, 224,0.8); 
+}
+
+  
+.hAndpDiv p {
+    margin: 0rem 2rem;
+}
+h2 {
+    text-align: center;
+    margin-top: 1rem;
+  }
+#temp {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(236, 236, 236, 0.2);  
+    border: 2px solid rgba(224, 224, 224,0.8);
+    border-radius: 1rem;
+    min-height: 10rem;
+    min-width: 10rem;
+    max-height: 60vh; 
+    overflow-y: auto;
+}
+div.index {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 5px;
+    border-bottom: none;
+}
+div.index div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+#temp div textarea{
+    border-style: none; 
+    border-color: Transparent; 
+    overflow: auto;  
+}
+#hidden {
+    display: none;
+}
+#show {
+    display: flex;
+}

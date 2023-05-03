@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="logbook.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task List</title>
+  <link rel="stylesheet" href="/navbar.css">
+</head>
+<body>
+  <header>
+    <div class="Navbar">
+        <ul class="links">
+            <li><a href="/board">Board</a></li>
+            <li><a href="/gantt">GANTT</a></li>
+            <li><a href="/backlog">Backlog</a></li>
+            <li><a href="/logbook">Logbook</a></li>
+        </ul>
+    </div>
+  </header>
+  <div class="all">
+    <div class="logbookContainer Container">
+      <input type="button" name="newLogbook" id="newLogbookBtn" value="New Logbook">
+      <div id="logbookList"></div>
+    </div>
+    <div class="showLogbookEntry Container" id="hidden">
+      <div class="formContainer">
+        <input type="button" value="Close logbook" id="closeLogbookForm">
+        <form id="logbookForm">
+          <label for="formHeader">Header:</label>
+          <input type="text" name="formHeader" id="formHeader"><br>
+          <label for="formParagraph">Paragraph:</label>
+          <input type="text" name="formParagraph" id="formParagraph"><br>
+          <input type="Submit" value="Add Entry">
+        </form>
+      </div>
+      <div id="LogbookEntryHAndP"></div>
+    </div>
+  </div>
+  <script src="logbook.js"></script>
+</body>
+</html>

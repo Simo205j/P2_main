@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  .chartMenu {
+    width: 100vw;
+    height: 40px;
+    background: #1A1A1A;
+    color: rgba(54, 162, 235, 1);
+  }
+  .chartCard {
+    width: 100vw;
+    height: calc(100vh - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chartBox {
+    margin-bottom: 10vh;
+    margin-top: 18vh;
+    width: 80%;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.97);
+  }
+ input {
+    background-color: #458ca0;
+    font-size: large;
+    color: white;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0px 15px;
+}

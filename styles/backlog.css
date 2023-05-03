@@ -1,0 +1,82 @@
+* {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#backlog {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#BacklogTable{
+  max-width: 60%;
+}
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  display: block;
+  padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+}
+.To-do {
+  background-color: rgba(75, 133, 225, 0.8);
+}
+.Doing {
+  background-color: rgba(246, 174, 7, 0.8);
+}
+.Overdue {
+  background-color: rgba(215, 45, 45, 0.8);
+}
+
+.Done {
+  background-color: rgba(11, 230, 41, 0.8);
+}
+tr{
+  background-color: rgba(187, 187, 187, 1); 
+}
+th{
+  background-color: rgba(224, 224, 224, 1); 
+}
+th,
+td {
+  border: 2px solid black;
+  padding: 0.5em 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  color: black;
+}
+
+#backlog > div {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 30px;
+  margin-top: 5rem;
+}
+
+tr:hover{
+  opacity: 80%;
+} 
+
