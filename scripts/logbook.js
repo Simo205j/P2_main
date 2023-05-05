@@ -6,7 +6,6 @@ const closeLogbookBtn = document.getElementById("closeLogbookForm");
 const displayLogbookList = document.querySelector('div[class="logbookContainer Container"]');
 const displayLogbookContainerDiv = document.querySelector('div[class="showLogbookEntry Container"]');
 const submitLogbookHAndPEntry = document.querySelector('input[type="Submit"]');
-const logbookEntryHAndPDiv = document.querySelector('div[id="LogbookEntryHAndP"]');
 const formLogbookEntryHAndP = document.querySelector("form");
 
 logbookSource.addEventListener("message", (event) => {
@@ -65,7 +64,7 @@ function createLogbookEntry(headerText, paragraphText) {
 
   tempBoxEventlistener(checkbox, div.id);
   makeEditable(header);
-  makeEditable(paragraph)
+  makeEditable(paragraph);
 
   headerDiv.appendChild(checkbox);
   headerDiv.appendChild(header);
@@ -152,18 +151,18 @@ function createTextArea(element) {
   });
 }
 
-function makeLogbookList(logbookEntry){
-  const logbookEntryContainer = document.createElement("div")
-  const logbookEntryDate = document.createElement("p")
+function makeLogbookList(logbookEntry) {
+  const logbookEntryContainer = document.createElement("div");
+  const logbookEntryDate = document.createElement("p");
 
-  logbookEntryContainer.id = logbookEntry._id
-  logbookEntryDate.textContent = "Logbook: " + logbookEntry.date
+  logbookEntryContainer.id = logbookEntry._id;
+  logbookEntryDate.textContent = "Logbook: " + logbookEntry.date;
 
-  logbookEntryContainer.appendChild(logbookEntryDate)
-  makeDeleteBtnLogbookEntry(logbookEntryContainer)
-  makeLogbookEntryClickable(logbookEntryContainer)
+  logbookEntryContainer.appendChild(logbookEntryDate);
+  makeDeleteBtnLogbookEntry(logbookEntryContainer);
+  makeLogbookEntryClickable(logbookEntryContainer);
   //MAKE EVENTLISTENER TO REQUEST INDIVIDUAL LOGBOOK DATA
-  logbookListDiv.appendChild(logbookEntryContainer)
+  logbookListDiv.appendChild(logbookEntryContainer);
 }
 
 function makeDeleteBtnLogbookEntry(logbookEntryContainer) {
@@ -287,7 +286,7 @@ function makeLogbookContainerDivContent(data, logbookEntryContainer) {
       tempDiv.appendChild(tempContainerDiv);
     });
   }
-  makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv);
+  makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv);
   displayLogbookContainerDiv.appendChild(tempDiv);
 }
 
@@ -312,7 +311,7 @@ function makeEditAble(tempHeader, tempParagraph, data, index) {
       logbookHeaderArray[index] = tempHeader.textContent;
     });
   });
-  
+
   tempParagraph.textContent = data[0].ParagraphArray[index];
   tempParagraph.addEventListener("click", () => {
     const tempParagraphInput = document.createElement("textarea");
@@ -333,7 +332,7 @@ function makeEditAble(tempHeader, tempParagraph, data, index) {
     });
   });
 }
-function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
+function makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv) {
   const saveEntries = document.createElement("input");
   saveEntries.type = "button";
   saveEntries.value = "Save logbook";
@@ -363,4 +362,17 @@ function makeLogbookConainerSaveBtn(logbookEntryContainer, tempDiv) {
   });
   tempDiv.appendChild(saveEntries);
 }
-module.exports = {createLogbookEntry, makeDeleteBtnLogbookEntry, resetLogbookData, makeLogbookContainerDivContent, fixContainerIndexes};
+module.exports = {
+  createLogbookEntry,
+  makeDeleteBtnLogbookEntry,
+  resetLogbookData,
+  makeLogbookContainerDivContent,
+  fixContainerIndexes,
+  makeEditable,
+  makeLogbookContainerSaveBtn,
+  createCheckbox,
+  createHeader,
+  createParagraph,
+  createDeleteButton,
+  makeLogbookList,
+};

@@ -1,14 +1,15 @@
 const assigneesSource = new EventSource("http://localhost:3000/Assignee/events");
-const assigneeForm = document.getElementById("assigneeForm");
+
 const assigneeFormButton = document.getElementById("assigneeButton");
 const assigneebox = document.getElementById("assignee");
 
 assigneeFormButton.addEventListener("click", addNewAssignee);
-async function addNewAssignee(event){
+async function addNewAssignee(event) {
+  const assigneeForm = document.getElementById("assigneeForm");
   event.preventDefault();
   const data = {
     assigneeName: assigneeForm.value,
-  }
+  };
   try {
     const response = await fetch("http://localhost:3000/Assignee/SendAssignee", {
       method: "POST",
@@ -19,12 +20,10 @@ async function addNewAssignee(event){
     });
     const assigneeresponseData = await response.json();
     console.log(assigneeresponseData.status, assigneeresponseData);
-  } 
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
-};
-
+}
 
 let lastAssigneeMessage = null;
 assigneesSource.addEventListener("message", function getAssignees(event) {
@@ -33,13 +32,14 @@ assigneesSource.addEventListener("message", function getAssignees(event) {
     if (assignees === lastAssigneeMessage) {
       return;
     }
-    makeAssigneeSelect(assignees)
+    makeAssigneeSelect(assignees);
   }
 });
 
-function makeAssigneeSelect(assignees){
-  if(document.querySelector('select[id="assignee"]')) {
-    document.querySelector('select[id="assignee"]').remove()
+function makeAssigneeSelect(assignees) {
+  if (document.querySelector('select[id="assignee"]')) {
+    document.querySelector('select[id="assignee"]').remove();
+    document.querySelector('select[id="editAssignee"]').remove();
   }
   const insertAfterThisEdit = document.querySelector("label[for='editAssignee']");
   const insertAfterThis = document.querySelector("label[for='assignee']");
@@ -58,6 +58,7 @@ function makeAssigneeSelect(assignees){
 
   assignees.forEach((assign) => {
     checkAttribute = assign.hasOwnProperty("assigneeName");
+
     if (checkAttribute) {
       const optionEdit = document.createElement("option");
       const option = document.createElement("option");
@@ -67,8 +68,7 @@ function makeAssigneeSelect(assignees){
       option.value = assign.assigneeName;
       selectAssignee.appendChild(option);
       selectAssigneeEdit.appendChild(optionEdit);
-    } 
-    else {
+    } else {
       selectAssignee.remove();
       selectAssigneeLabel.remove();
       selectAssigneeEdit.remove();

@@ -17,12 +17,8 @@ form {
   display: grid; 
 }
 
-label {
-  margin-right: 0px;
-  font-weight: bold;
-  grid-column: 1; /* Set the label to first column */
-  grid-row: auto; /* Set the label to auto row height */
-}
+
+
 
 input[type="text"],
 input[type="date"],
@@ -85,6 +81,7 @@ i[class="fa-regular fa-lock"]{
   opacity: 80%;
 }
 
+
 #assigneLabel {
   display: block;
   width: 100%; /* Make the label take up 100% width of the parent div */
@@ -94,14 +91,25 @@ i[class="fa-regular fa-lock"]{
   font-weight: bold;
   color: rgb(26, 26, 26);/* Text color */
 }
-
 label {
-  display: block;
-  width: 150px;
-  text-align: left;
-  padding: 5px 5px;
-  font-size: large;
+  margin-right: 0px;
+  font-weight: bold;
+  grid-column: 1; /* Set the label to first column */
+  grid-row: auto; /* Set the label to auto row height */
 }
+div[class="task-details"] label {
+  width: 150px;
+  display: block;
+}
+
+div[class="labelAndAttribute"] {
+  display: flex;
+  flex-direction: row;
+  padding: 0.2rem;
+}
+
+
+
 input, select {
   display: block;
   width: 250px;
@@ -109,7 +117,7 @@ input, select {
 select {
   margin-bottom: 1rem;
 }
-
+  
 #lists {
   flex-direction: column;
   color: white;
@@ -119,13 +127,16 @@ select {
 
 #ListsContainer {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
-#TaskList {
+ol[class="To-do"], 
+ol[class="Doing"], 
+ol[class="Overdue"], 
+ol[class="Done"] {
   flex: 1;
   margin: 0 10px;
-  max-height: 80vh; 
+  max-height: 65vh; 
   overflow-y: auto;
 }
 
@@ -141,6 +152,7 @@ select {
   margin-bottom: 1rem;
   color: rgb(26, 26, 26);
   min-height: 50vh;
+  min-width: 22%;
 }
 #lists li {
   border-radius: 10px;
@@ -173,8 +185,7 @@ li button {
   cursor: pointer;
   margin: 0px 5px;
   margin-top: 0.5rem;
-  cursor:pointer;
-  font-size: large;
+  cursor:pointer; 
 }
 
 li button[value="Delete Task"]{

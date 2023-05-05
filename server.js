@@ -23,9 +23,6 @@ app.get("/", (req, res) => {
 app.get("/board", (req, res) => {
   res.sendFile(__dirname + "/views/board.html");
 });
-app.get("/newBoard", (req, res) => {
-  res.sendFile(__dirname + "/views/newBoard.html");
-});
 app.get("/gantt", (req, res) => {
   res.sendFile(__dirname + "/views/gantt.html");
 });

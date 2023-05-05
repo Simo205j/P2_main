@@ -1,7 +1,5 @@
-{"TaskName":"Task 4","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-22","Status":"To-do"},"_id":"E3JzPcWDQobtM9m9"}
-{"TaskName":"Task 2","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-20","Status":"To-do"},"_id":"HAFBSuUBJ3V61cid"}
-{"TaskName":"Task 1","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"To-do"},"_id":"NN2YbzdXomATgdQG"}
-{"TaskName":"Task 3","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-21","Status":"To-do"},"_id":"WOmvnZ2RNoGg1imW"}
-{"TaskName":"Task 5","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"High","StartDate":"2023-05-18","EndDate":"2023-05-20","Status":"To-do"},"_id":"j3xwmm73gUc10RJk"}
-{"TaskName":"Task 5","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-23","Status":"To-do"},"_id":"s1XDyqvWFAirfNjv"}
-{"TaskName":"Sut dig selv so","TaskAttributes":{"Description":"Hej med dig det her er en test for at se hvordan en boks med meget tekst vil se ud da jeg håber at det er flot","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-20","EndDate":"2023-05-20","Status":"To-do"},"_id":"1wWkvuVrb8wJDS3K"}
+{"TaskName":"JA","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Doing"},"_id":"1wWkvuVrb8wJDS3K"}
+{"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Done"},"_id":"HAFBSuUBJ3V61cid"}
+{"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Done"},"_id":"WOmvnZ2RNoGg1imW"}
+{"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwvgjhfcuhtgct","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Doing"},"_id":"j3xwmm73gUc10RJk"}
+{"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"To-do"},"_id":"s1XDyqvWFAirfNjv"}

@@ -1,52 +1,105 @@
-LISTS = ["To-do", "Doing", "Overdue", "Done"];
-
-const source = new EventSource("http://localhost:3000/Tasks/events");
-const listsTypeContainer = document.getElementById("lists");
-const form = document.getElementById("taskForm");
-const expandFormButton = document.getElementById("expandFormButton");
-
-document.addEventListener("DOMContentLoaded", () => {
-  const expandFormButton = document.getElementById("expandFormButton");
-
-  expandFormButton.addEventListener("click", () => {
-    form.classList.toggle("show");
-    if (expandFormButton.value === "Close form") {
-      expandFormButton.value = "Create task";
-      expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
-    } else {
-      expandFormButton.value = "Close form";
-      expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
-    }
-  });
-});
-
+const eventSource = new EventSource("http://localhost:3000/Tasks/events");
+const listDOMContainer = document.querySelector("#ListsContainer");
+const assigneeShow = document.getElementById("Assignees");
 const priorityValues = {
   Low: 1,
   Medium: 2,
   High: 3,
 };
 
-//HANDLES RECIVING DATA FROM SERVER
-source.addEventListener("message", function getTasks(event) {
-  const data = JSON.parse(event.data);
-  const tasks = sortTasks(data);
+eventSource.addEventListener("message", handleServerSentEvent);
+//HANDLES TASK SUBMITS AND ENSURE CORRECT DISPLAYMENT OF LISTS AND EXPANDED FORM
+document.addEventListener("DOMContentLoaded", handleExpand);
 
-  //DIV THAT HOUSES ALL TASK RELATED DOM ELEMENTS
-  const newListsContainer = document.createElement("div");
-  newListsContainer.id = "ListsContainer";
-  createLists(tasks, newListsContainer);
-  console.log(tasks);
+function handleExpand() {
+  const expandFormButton = document.getElementById("expandFormButton");
+  const taskForm = document.getElementById("taskForm");
+  taskForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  //REMOVES PREVIOUS CONTAINER UPON RECIEVING NEW DATA
-  const previousContainer = document.getElementById("ListsContainer");
-  if (previousContainer) {
-    previousContainer.parentNode.removeChild(previousContainer);
-  }
-  //UPDATES THE DOM WITH NEW CONTAINER
-  listsTypeContainer.appendChild(newListsContainer);
-  makeDraggable();
+    //TASKOBJECT FROM FORM VALUES
+    const formData = createFormData(taskForm);
+    try {
+      const response = await fetch("http://localhost:3000/Tasks/SendTask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+      // Clear form fields
+      taskForm.reset();
+      // Hide form and display task list
+      expandFormButton.value = "Create task";
+      expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
+      taskForm.classList.remove("show");
+      listDOMContainer.style.display = "flex"; // show list container
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  //HANDLES CORRECT DISPLAYMENT OF LISTS AND FORM
+  expandFormButton.addEventListener("click", () => {
+    taskForm.classList.toggle("show");
+    assigneeShow.classList.toggle("show");
+    if (expandFormButton.value === "Close form") {
+      expandFormButton.value = "Create task";
+      expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
+      listDOMContainer.style.display = "flex"; // show list container
+    } else {
+      expandFormButton.value = "Close form";
+      expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
+      listDOMContainer.style.display = "none"; // hide list containe
+    }
+  });
+}
+
+//HANDLE DRAG AND DROP FOR LISTS
+document.addEventListener("DOMContentLoaded", () => {
+  const containers = document.querySelectorAll("#ListsContainer ol");
+  containers.forEach((container) => {
+    container.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+    container.addEventListener("drop", (event) => handleDrop(event, container));
+  });
 });
 
+let haveRecievedBefore = false;
+function handleServerSentEvent(event) {
+  const tasks = JSON.parse(event.data);
+  //1. ASSIGN OVERDUE STATUS TO TASKS WITH A ENDDATE THAT IS OVERDUE
+  tasks.forEach((task) => {
+    if (task.TaskAttributes.EndDate < Date.now() && task.TaskAttributes.Status !== "Done") {
+      task.TaskAttributes.Status = "Overdue";
+    }
+  });
+  //2. SORTS RECIEVED TASKS
+  const sortedTasks = sortTasks(tasks);
+
+  //3. REMOVES PREVIOUS TASK ELEMENTS UPON NEW DATA
+  if (haveRecievedBefore == true) {
+    handleCleanUpLists();
+  }
+  haveRecievedBefore = true;
+  //4. CREATES NEW TASK ELEMENTS AND FINDS IT LIST
+  sortedTasks.forEach((task) => {
+    if ("Status" in task.TaskAttributes) {
+      const targetList = listDOMContainer.querySelector(`.${task.TaskAttributes.Status}`);
+      handleTaskCreation(task, targetList);
+    }
+  });
+}
+function handleTaskCreation(task, targetList) {
+  const newTaskContainer = createTaskContainer(task);
+  targetList.appendChild(newTaskContainer);
+  if (task.TaskAttributes.Status != "Overdue") {
+    makeTaskContainerDraggable(newTaskContainer);
+  }
+}
+//RETURNS SORTED TASKS BASED ON ENDDATE AND PRIORITY
 function sortTasks(tasks) {
   tasks.sort((a, b) => {
     if (new Date(a.TaskAttributes.EndDate) == new Date(b.TaskAttributes.EndDate)) {
@@ -57,89 +110,169 @@ function sortTasks(tasks) {
   });
   return tasks;
 }
-
-//CREATES DOM LISTS FOR EACH LIST
-function createLists(tasks, newListsContainer) {
-  LISTS.forEach((list, index) => {
-    const listType = document.createElement("div");
-    const newTaskList = document.createElement("ol");
-
-    listType.id = list;
-    newTaskList.id = "TaskList";
-    newTaskList.name = list;
-    newTaskList.textContent = list;
-    newTaskList.className = LISTS[index];
-
-    tasks.forEach((task) => {
-      createListTask(task, list, newTaskList);
-    });
-
-    newListsContainer.appendChild(newTaskList);
+//REMOVES DOM TASK ELEMNTS UPON RECIEVING NEW DATA
+function handleCleanUpLists() {
+  const currentDOMTasks = document.querySelectorAll(".taskContainer");
+  currentDOMTasks.forEach((task) => {
+    task.remove();
   });
 }
+//Creates and appends new task to its list
 
-//CREATES DOM TASKS FOR LISTS
-function createListTask(task, list, newTaskList) {
-  if (
-    task.TaskAttributes.Status == "Overdue" ||
-    (new Date(task.TaskAttributes.EndDate) < new Date() && task.TaskAttributes.Status !== "Done")
-  ) {
-    task.TaskAttributes.Status = LISTS[2];
+//CREATES AND RETURNS TASK DOM ELEMENT WITH DELETE EDIT AND DRAG&DROP CAPABILITIES
+function createTaskContainer(task) {
+  const listElement = document.createElement("li");
+  const taskName = document.createElement("h4");
+
+  taskName.textContent = task.TaskName;
+  listElement.className = "taskContainer";
+  listElement.id = task._id;
+  listElement.appendChild(taskName);
+
+  const descriptionDiv = createDescription(listElement, task);
+  const deleteButton = createDeleteButton(listElement, task);
+  const editButton = createEditButton();
+  createEditButtonEventListeners(editButton, listElement, task);
+
+  listElement.appendChild(descriptionDiv);
+  listElement.appendChild(deleteButton);
+  listElement.appendChild(editButton);
+
+  return listElement;
+}
+//CREATES AND RETURNS DELETE BUTTON WITH DELETE CAPABILITIES
+function createDeleteButton(taskContainer, task) {
+  const deleteButton = document.createElement("button");
+  deleteButton.value = "Delete Task";
+  deleteButton.textContent = "Delete";
+  deleteButton.style.display = "none";
+  deleteButton.className = "delete-button";
+
+  taskContainer.addEventListener("mouseover", () => {
+    deleteButton.style.display = "inline-block";
+  });
+  taskContainer.addEventListener("mouseout", () => {
+    deleteButton.style.display = "none";
+  });
+
+  deleteButton.addEventListener("click", (event) => {
+    deleteEntry(event, taskContainer, task);
+  });
+  return deleteButton;
+}
+async function deleteEntry(event, taskContainer, task) {
+  event.preventDefault();
+  event.stopPropagation();
+  taskContainer.remove();
+  const response = await fetch("http://localhost:3000/Tasks/Delete", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(task),
+  });
+  try {
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
   }
-  if (task.TaskAttributes.Status == list) {
-    const newTask = document.createElement("li");
+}
+//RETURNS EDIT BUTTON WHICH OPENS FORM FOR UPDATING TASKATTRIBUTES
+function createEditButton() {
+  const editButton = document.createElement("button");
 
-    newTask.textContent = task.TaskName;
-    newTask.name = task.TaskName;
-    newTask.id = task._id;
+  editButton.value = "Edit Task";
+  editButton.textContent = "Edit";
+  editButton.classList.add("edit-button");
+  editButton.style.display = "none";
+  return editButton;
+}
+function createEditButtonEventListeners(editButton, taskContainer, task) {
+  editButton.addEventListener("click", async (event) => {
+    const dialog = document.getElementById("editTaskModal");
+    const form = dialog.querySelector("form");
+    const saveButton = dialog.querySelector("#saveEditButton");
+    event.stopPropagation();
+    event.preventDefault();
+    dialog.showModal();
 
-    if (newTaskList.className == "Overdue") {
-      const iconElement = document.createElement("i");
-      iconElement.setAttribute("class", "fa-regular fa-lock");
-      newTask.appendChild(iconElement);
-    }
+    form.taskName.value = task.TaskName;
+    form.description.value = task.TaskAttributes.Description;
+    form.editAssignee.value = task.TaskAttributes.Assignee;
+    form.priority.value = task.TaskAttributes.Priority;
+    form.startDate.value = task.TaskAttributes.StartDate;
+    form.endDate.value = task.TaskAttributes.EndDate;
+    form.status.value = task.TaskAttributes.Status;
 
-    if (new Date(task.TaskAttributes.EndDate) < new Date() === false || task.TaskAttributes.Status == "Done") {
-      newTask.setAttribute("draggable", true);
-      newTask.className = "draggable";
-    }
-    newTaskList.appendChild(newTask);
-    makeDescription(newTask, task);
-    makeDeleteButton(task, newTask);
-    makeEditButton(task, newTask);
+    saveButton.addEventListener("click", () => {
+      saveData(form, taskContainer);
+    });
+  });
+  taskContainer.addEventListener("mouseover", () => {
+    editButton.style.display = "inline-block";
+  });
+  taskContainer.addEventListener("mouseout", () => {
+    editButton.style.display = "none";
+  });
+}
+async function saveData(form, taskContainer) {
+  const updatedData = createUpdatedData(form, taskContainer);
+  try {
+    const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+    const responseData = await response.json();
+    console.log(responseData.status, responseData);
+  } catch (error) {
+    console.error(error);
   }
 }
-function makeDraggable() {
-  const draggableElements = document.querySelectorAll("[draggable=true]");
-  const containers = document.querySelectorAll("#TaskList");
-  //MAKE TASKS WITH DRAGGABLE ATTRIBUTE DRAGGABLE
-  draggableElements.forEach((element) => {
-    element.addEventListener("dragstart", () => {
-      element.classList.add("dragging");
-    });
-    element.addEventListener("dragend", () => {
-      element.classList.remove("dragging");
-    });
+//CREATES AND RETURNS DESCRIPTION DIV FOR EACH TASK CREATED BASED ON TASK ATTRIBUTES
+function createDescription(taskContainer, task) {
+  const descriptionDiv = document.createElement("div");
+  descriptionDiv.className = "task-details";
+  descriptionDiv.style.display = "none";
+
+  //Creates label and paragraph for each task attribute and appends to it taskDescription
+  for (const attribute in task.TaskAttributes) {
+    const attributeContainer = document.createElement("div");
+    const label = document.createElement("label");
+    const value = document.createElement("p");
+    attributeContainer.className = "labelAndAttribute";
+    label.textContent = attribute + ": ";
+    value.textContent = task.TaskAttributes[attribute];
+    attributeContainer.appendChild(label);
+    attributeContainer.appendChild(value);
+    descriptionDiv.appendChild(attributeContainer);
+  }
+
+  taskContainer.addEventListener("click", () => {
+    if (descriptionDiv.style.display === "none") {
+      descriptionDiv.style.display = "block";
+    } else {
+      descriptionDiv.style.display = "none";
+    }
   });
-  //MAKE LIST CONTAINERS DROPABLE
-  containers.forEach((container) => {
-    container.addEventListener("dragover", (event) => {
-      event.preventDefault();
-    });
-    container.addEventListener("drop", (event) => handleDrop(event, container));
-  });
+  return descriptionDiv;
 }
 
+//UPDATES TASK STATUS UPON TASK BEING DROPPED ON CONTAINER
 const handleDrop = async (event, container) => {
   event.preventDefault();
   event.stopPropagation();
   const draggable = document.querySelector(".dragging");
-  if (event.target === container && event.target.className !== "Overdue") {
+  if (draggable !== null && event.target === container && event.target.className !== "Overdue") {
     container.appendChild(draggable);
     const updatedData = {
       id: draggable.id,
-      Status: container.name,
+      Status: container.className,
     };
+    console.log(updatedData);
     try {
       const response = await fetch("http://localhost:3000/Tasks/UpdateStatus", {
         method: "PATCH",
@@ -155,184 +288,65 @@ const handleDrop = async (event, container) => {
     }
   }
 };
-
-//Code is only executed after the DOM has finished loading
-document.addEventListener("DOMContentLoaded", function () {
-  const taskForm = document.getElementById("taskForm");
-  taskForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    // Get form input values
-    const taskName = taskForm.taskName.value;
-    const description = taskForm.description.value;
-    const assignee = taskForm.assignee.value;
-    const priority = taskForm.priority.value;
-    const startDate = taskForm.startDate.value;
-    const endDate = taskForm.endDate.value;
-    const status = taskForm.status.value;
-
-    const data = {
-      TaskName: taskName,
-      TaskAttributes: {
-        Description: description,
-        Assignee: assignee,
-        Priority: priority,
-        StartDate: startDate,
-        EndDate: endDate,
-        Status: status,
-      },
-    };
-
-    try {
-      const response = await fetch("http://localhost:3000/Tasks/SendTask", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const responseData = await response.json();
-      console.log(responseData.status, responseData);
-    } catch (error) {
-      console.error(error);
-    }
+//MAKES ALL TASKS EXCEPT OVERDUE DRAGGABLE
+function makeTaskContainerDraggable(newTaskContainer) {
+  newTaskContainer.setAttribute("draggable", true);
+  newTaskContainer.addEventListener("dragstart", () => {
+    newTaskContainer.classList.add("dragging");
   });
-});
-
-function makeDescription(newTask, task) {
-  const descriptionDiv = document.createElement("div");
-  const newTaskDescription = document.createElement("p");
-  const assignee = document.createElement("p");
-  const status = document.createElement("p");
-  const priority = document.createElement("p");
-  const startDate = document.createElement("p");
-  const endDate = document.createElement("p");
-
-  descriptionDiv.className = "task-details";
-  descriptionDiv.style.display = "none";
-
-  newTask.addEventListener("click", () => {
-    if (descriptionDiv.style.display === "none") {
-      descriptionDiv.style.display = "block";
-    } else {
-      descriptionDiv.style.display = "none";
-    }
+  newTaskContainer.addEventListener("dragend", () => {
+    newTaskContainer.classList.remove("dragging");
   });
-
-  newTaskDescription.textContent = task.TaskAttributes.Description;
-  assignee.textContent = "Assignee: " + task.TaskAttributes.Assignee;
-  status.textContent = "Status: " + task.TaskAttributes.Status;
-  priority.textContent = "Priority: " + task.TaskAttributes.Priority;
-  startDate.textContent = "Start Date: " + task.TaskAttributes.StartDate;
-  endDate.textContent = "End Date:  " + task.TaskAttributes.EndDate;
-
-  descriptionDiv.appendChild(newTaskDescription);
-  descriptionDiv.appendChild(assignee);
-  descriptionDiv.appendChild(status);
-  descriptionDiv.appendChild(priority);
-  descriptionDiv.appendChild(startDate);
-  descriptionDiv.appendChild(endDate);
-  newTask.appendChild(descriptionDiv);
 }
+//RETURNS FORM DATA IN ACCORDANCE TO THE TASK OBJECT
+function createFormData(taskForm) {
+  const taskName = taskForm.taskName.value;
+  const description = taskForm.description.value;
+  const assignee = taskForm.assignee.value;
+  const priority = taskForm.priority.value;
+  const startDate = taskForm.startDate.value;
+  const endDate = taskForm.endDate.value;
+  const status = taskForm.status.value;
 
-function makeDeleteButton(task, newTask) {
-  const deleteButton = document.createElement("button");
-  deleteButton.value = "Delete Task";
-  deleteButton.textContent = "Delete";
-  deleteButton.style.display = "none";
-
-  newTask.addEventListener("mouseover", () => {
-    deleteButton.style.display = "inline-block";
-  });
-  newTask.addEventListener("mouseout", () => {
-    deleteButton.style.display = "none";
-  });
-
-  deleteButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    newTask.remove();
-    const response = await fetch("http://localhost:3000/Tasks/Delete", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(task),
-    });
-    try {
-      const data = await response.json();
-      console.log(data.status, data);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-  newTask.appendChild(deleteButton);
+  const data = {
+    TaskName: taskName,
+    TaskAttributes: {
+      Description: description,
+      Assignee: assignee,
+      Priority: priority,
+      StartDate: startDate,
+      EndDate: endDate,
+      Status: status,
+    },
+  };
+  return data;
 }
-function makeEditButton(task, newTask) {
-  const editButton = document.createElement("button");
-  editButton.value = "Edit Task";
-  editButton.textContent = "Edit";
-  editButton.classList.add("edit-button"); // Add a CSS class for styling
-  editButton.style.display = "none";
-
-  newTask.addEventListener("mouseover", () => {
-    editButton.style.display = "inline-block";
-  });
-  newTask.addEventListener("mouseout", () => {
-    editButton.style.display = "none";
-  });
-  editButton.addEventListener("click", async (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    const dialog = document.getElementById("editTaskModal");
-    console.log(dialog);
-    dialog.showModal();
-    const form = dialog.querySelector("form");
-    form.taskName.value = task.TaskName;
-    form.description.value = task.TaskAttributes.Description;
-    form.editAssignee.value = task.TaskAttributes.Assignee;
-    form.priority.value = task.TaskAttributes.Priority;
-    form.startDate.value = task.TaskAttributes.StartDate;
-    form.endDate.value = task.TaskAttributes.EndDate;
-    form.status.value = task.TaskAttributes.Status || ""; // Set empty string if status is undefined
-
-    const saveButton = dialog.querySelector("#saveEditButton");
-    saveButton.addEventListener("click", async () => {
-      const updatedData = {
-        TaskName: form.taskName.value,
-        TaskAttributes: {
-          Description: form.description.value,
-          Assignee: form.editAssignee.value,
-          Priority: form.priority.value,
-          StartDate: form.startDate.value,
-          EndDate: form.endDate.value,
-          Status: form.status.value,
-        },
-        id: newTask.id,
-      };
-      try {
-        const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedData),
-        });
-        const responseData = await response.json();
-        console.log(responseData.status, responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-  });
-  editButton.style.visibility = "hidden";
-  newTask.addEventListener("mouseover", () => {
-    editButton.style.visibility = "visible";
-  });
-  newTask.addEventListener("mouseout", () => {
-    editButton.style.visibility = "hidden";
-  });
-  newTask.appendChild(editButton);
+function createUpdatedData(form, taskContainer) {
+  const updatedData = {
+    TaskName: form.taskName.value,
+    TaskAttributes: {
+      Description: form.description.value,
+      Assignee: form.editAssignee.value,
+      Priority: form.priority.value,
+      StartDate: form.startDate.value,
+      EndDate: form.endDate.value,
+      Status: form.status.value,
+    },
+    id: taskContainer.id,
+  };
+  console.log(updatedData);
+  return updatedData;
 }
-module.exports = { sortTasks, makeDescription };
+module.exports = {
+  sortTasks,
+  createFormData,
+  createUpdatedData,
+  createDescription,
+  makeTaskContainerDraggable,
+  createEditButton,
+  createDeleteButton,
+  createTaskContainer,
+  handleCleanUpLists,
+  handleTaskCreation,
+  handleDrop,
+};
