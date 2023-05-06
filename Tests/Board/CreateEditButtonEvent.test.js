@@ -1,4 +1,4 @@
-/*dial is not testable
+
 global.TextDecoder = require("text-encoding").TextDecoder;
 global.TextEncoder = require("util").TextEncoder;
 const { JSDOM } = require("jsdom");
@@ -92,4 +92,4 @@ describe("createEditButtonEventListeners", () => {
     expect(editButton.style.display).toBe("none");
   });
 });
-*/
+

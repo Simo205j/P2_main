@@ -343,6 +343,7 @@ module.exports = {
   createUpdatedData,
   createDescription,
   makeTaskContainerDraggable,
+  createEditButtonEventListeners,
   createEditButton,
   createDeleteButton,
   createTaskContainer,
