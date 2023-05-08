@@ -57,7 +57,7 @@ function makeAssigneeSelect(assignees) {
   selectAssigneeEdit.id = "editAssignee";
 
   assignees.forEach((assign) => {
-    checkAttribute = assign.hasOwnProperty("assigneeName");
+    const checkAttribute = assign.hasOwnProperty("assigneeName");
 
     if (checkAttribute) {
       const optionEdit = document.createElement("option");

@@ -1,4 +1,4 @@
-LISTS = ["To do", "Doing", "Overdue", "Done"];
+
 const source = new EventSource("http://localhost:3000/Tasks/events");
 const backlogTable = document.getElementById("backlog");
 const priority = {
@@ -42,7 +42,7 @@ function createTasks(tasks) {
 
   //REMOVE PREVIOUS TABLE
   if (document.getElementById("divContainer")) {
-    deleteTable = document.getElementById("divContainer");
+    const deleteTable = document.getElementById("divContainer");
     deleteTable.remove();
   }
   const divContainer = document.createElement("div");

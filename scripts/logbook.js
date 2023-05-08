@@ -241,8 +241,9 @@ function fixContainerIndexes() {
   });
 }
 function makeLogbookContainerDivContent(data, logbookEntryContainer) {
+
   if (document.getElementById("temp")) {
-    lastTemp = document.getElementById("temp");
+    const lastTemp = document.getElementById("temp");
     lastTemp.remove();
   }
 

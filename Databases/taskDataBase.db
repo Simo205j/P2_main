@@ -1,5 +1,6 @@
 {"TaskName":"Updated Task","TaskAttributes":{"Status":"Completed","Description":"An updated task"},"_id":"123"}
 {"TaskName":"JA","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Doing"},"_id":"1wWkvuVrb8wJDS3K"}
+{"TaskName":"New Task","TaskAttributes":{"Status":"Pending","Description":"A new task added to the database"},"_id":"2VdlUUmgkaAKNuwQ"}
 {"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Done"},"_id":"HAFBSuUBJ3V61cid"}
 {"TaskName":"New Task","TaskAttributes":{"Status":"Pending","Description":"A new task added to the database"},"_id":"NBBP7JCWvFEZRrQ2"}
 {"TaskName":"New Task","TaskAttributes":{"Status":"Pending","Description":"A new task added to the database"},"_id":"V3udO6jIYdCwc5tH"}
@@ -8,6 +9,3 @@
 {"TaskName":"New Task","TaskAttributes":{"Status":"Pending","Description":"A new task added to the database"},"_id":"hrry1sG5i03cQRiQ"}
 {"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwvgjhfcuhtgct","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"Doing"},"_id":"j3xwmm73gUc10RJk"}
 {"TaskName":"KUSSEEE","TaskAttributes":{"Description":"dwqdwq","Assignee":"Simon Skelkjær","Priority":"Low","StartDate":"2023-05-18","EndDate":"2023-05-19","Status":"To-do"},"_id":"s1XDyqvWFAirfNjv"}
-{"TaskName":"New Task","TaskAttributes":{"Status":"Pending","Description":"A new task added to the database"},"_id":"2VdlUUmgkaAKNuwQ"}
-{"TaskName":"Updated Task","TaskAttributes":{"Status":"In Progress","Description":"An updated task"},"_id":"123"}
-{"TaskName":"Updated Task","TaskAttributes":{"Status":"Completed","Description":"An updated task"},"_id":"123"}
