@@ -6,9 +6,9 @@
   }
 
 body{
-    height: 100vh;
+    height: 100vh;      
     background-color: #000;
-    background-image: url('https://img.freepik.com/free-vector/gradient-mountain-landscape_23-2149151140.jpg?w=1800&t=st=1680903555~exp=1680904155~hmac=6873e3753aa14805546a8541637efb9031ae059a6640f36066a02cf85ddc4974');
+    background-image: url('https://cdn.pixabay.com/photo/2016/06/02/02/35/mesh-1430107_1280.png');
     background-size: cover;
     background-position: center;
 }

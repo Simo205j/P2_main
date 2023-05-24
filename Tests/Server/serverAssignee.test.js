@@ -19,7 +19,8 @@ app.use('/', router);
 */
 describe('POST /SendAssignee', () => {
   test('should return a 200 status code and the new AssigneeName', async () => {
-    const newAssignee = { assigneeName: 'John' };
+    const newAssignee = { assigneeName: 'John',
+                          _id: "123" };
     const response = await request(app)
       .post('/SendAssignee')
       .send(newAssignee);

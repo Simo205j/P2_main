@@ -58,6 +58,19 @@ router.post("/SendAssignee", (req, res) => {
     });
   })
 
+router.delete("/Delete", (req, res) => {
+  const deletedAssignee = req.body
+  console.log(deletedAssignee)
+  assigneeDataBase.remove({ _id: deletedAssignee }, {}, function (err, removed) {
+    if (err) {
+      res.status(500).send({ error: err });
+    } else {
+      console.log("Removed: ", removed)
+      res.status(200).json(removed + " Deleted");
+    }
+  });
+})
+
 let lastSentDataAssignee = null;
 function sendAssigneeToAll() {
   assigneeDataBase.find({}, (err, data) => {

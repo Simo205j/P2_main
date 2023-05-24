@@ -16,7 +16,12 @@ form {
 .show {
   display: grid; 
 }
-
+.hide{
+  display: none
+}
+.reveal{
+  display: block;
+}
 
 
 
@@ -68,6 +73,17 @@ i[class="fa-regular fa-lock"]{
 #assigneeButton {
   margin-top: 10px;
   background-color: rgba(49, 201, 69, 0.8);
+  color: #fff;
+  padding: 8px 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%; /* Make the button take up 100% width of the parent div */
+}
+#deleteAssigneeButton {
+  margin-top: 10px;
+  background-color: rgba(215, 45, 45, 1);
   color: #fff;
   padding: 8px 5px;
   border: none;
@@ -253,7 +269,4 @@ li button[value="Delete Task"]{
 
 .Done > li{
   background-color: rgba(11, 230, 41, 0.6);
-}
-.error {
-  border: 1px solid red; /* or any other visual cue like background color, text color, etc. */
 }

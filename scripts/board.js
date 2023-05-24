@@ -1,6 +1,5 @@
 const eventSource = new EventSource("http://localhost:3000/Tasks/events");
 const listDOMContainer = document.querySelector("#ListsContainer");
-const assigneeShow = document.getElementById("Assignees");
 const priorityValues = {
   Low: 1,
   Medium: 2,
@@ -11,9 +10,29 @@ eventSource.addEventListener("message", handleServerSentEvent);
 //HANDLES TASK SUBMITS AND ENSURE CORRECT DISPLAYMENT OF LISTS AND EXPANDED FORM
 document.addEventListener("DOMContentLoaded", handleExpand);
 
+
 function handleExpand() {
   const expandFormButton = document.getElementById("expandFormButton");
   const taskForm = document.getElementById("taskForm");
+  const assigneeButton = document.getElementById("AssigneeFormButton")
+  const showAssigneeDiv = document.getElementById("AssigneesDiv")
+  const assigneeShow = document.getElementById("Assignees");
+
+  assigneeButton.addEventListener("click", () => {
+      if (assigneeButton.value === "Close") {
+        assigneeButton.value = "Edit Assignee";
+        assigneeButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
+        listDOMContainer.style.display = "flex"; // show list container
+        expandFormButton.style.display  = "block"
+        showAssigneeDiv.className = "hide"
+      } else {
+        assigneeButton.value = "Close";
+        assigneeButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
+        listDOMContainer.style.display = "none"; // hide list containe
+        expandFormButton.style.display = "none"
+        showAssigneeDiv.className = "reveal" 
+      }
+    });
   taskForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -48,10 +67,13 @@ function handleExpand() {
       expandFormButton.value = "Create task";
       expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
       listDOMContainer.style.display = "flex"; // show list container
+      assigneeButton.style.display  = "block"
+
     } else {
       expandFormButton.value = "Close form";
       expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
       listDOMContainer.style.display = "none"; // hide list containe
+      assigneeButton.style.display = "none"
     }
   
   });
@@ -205,10 +227,20 @@ function createEditButtonEventListeners(editButton, taskContainer, task) {
     form.startDate.value = task.TaskAttributes.StartDate;
     form.endDate.value = task.TaskAttributes.EndDate;
     form.status.value = task.TaskAttributes.Status;
-
+    
+    
     saveButton.addEventListener("click", () => {
       saveData(form, taskContainer);
     });
+
+    dialog.addEventListener('click', (event) => {
+      console.log(event.target)
+
+      //SOMEHOW THIS CONDITION IS CORRECT LOGICALLY IT SHOULD BE !== 
+      if (event.target.id == 'editTaskModal') {
+          dialog.close();
+      }
+    })
   });
   taskContainer.addEventListener("mouseover", () => {
     editButton.style.display = "inline-block";
@@ -218,6 +250,15 @@ function createEditButtonEventListeners(editButton, taskContainer, task) {
   });
 }
 async function saveData(form, taskContainer) {
+  if (
+    form.taskName.value &&
+    form.description.value &&
+    form.editAssignee.value &&
+    form.priority.value &&
+    form.startDate.value &&
+    form.endDate.value &&
+    form.status.value
+  ){
   const updatedData = createUpdatedData(form, taskContainer);
   try {
     const response = await fetch(`http://localhost:3000/Tasks/Edit`, {
@@ -232,6 +273,7 @@ async function saveData(form, taskContainer) {
   } catch (error) {
     console.error(error);
   }
+}
 }
 //CREATES AND RETURNS DESCRIPTION DIV FOR EACH TASK CREATED BASED ON TASK ATTRIBUTES
 function createDescription(taskContainer, task) {

@@ -78,12 +78,16 @@
         </select><br>
    <input type="submit" value="Add Task">
       </form>
-      <div id="Assignees" class="show">
-        <label id="assigneLabel" for="">Add Assignee</label>
-        <input type="text" name="" id="assigneeForm">
-        <input type="button" id="assigneeButton" value="+">
+      <div id="AssigneeDiv">
+        <input type="button" name="AssigneeForm" id="AssigneeFormButton" value="Edit Assignee">
+        <div id="AssigneesDiv" class="hide" >
+          <input type="text" name="" id="assigneeForm" required>
+          <input type="button" id="assigneeButton" value="Add Assignee">
+          <input type="button" id="deleteAssigneeButton" value="Delete Assignee">
+        </div>
       </div>
     </div>
+    
   </div>
   
   <dialog id="editTaskModal">
