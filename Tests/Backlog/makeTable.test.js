@@ -9,10 +9,7 @@ const { createTasks, makeTableHeader, makeTableRow } = require('../../scripts/ba
 
 
 // Mock the necessary DOM elements
-document.body.innerHTML = `
-  <div id="backlog">
-  </div>
-`;
+document.body.innerHTML = `<div id="backlog"></div>`;
 
 const task = {
     TaskName: "Example Task",

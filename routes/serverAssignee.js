@@ -61,7 +61,7 @@ router.post("/SendAssignee", (req, res) => {
 router.delete("/Delete", (req, res) => {
   const deletedAssignee = req.body
   console.log(deletedAssignee)
-  assigneeDataBase.remove({ _id: deletedAssignee }, {}, function (err, removed) {
+  assigneeDataBase.remove({assigneeName: req.body.name, _id: req.body._id }, {}, function (err, removed) {
     if (err) {
       res.status(500).send({ error: err });
     } else {

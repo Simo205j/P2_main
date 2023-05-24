@@ -27,9 +27,9 @@ async function addNewAssignee(event) {
 }
 
 assigneeDeleteButton.addEventListener("click", (event) => { 
-  const deleteThis = document.getElementById("deleteAssignee")
-  console.log(deleteThis.textContent)
-  
+  const findThis = document.getElementById("deleteAssignee")
+  const deleteThis = document.querySelector(`option[value="${findThis.value}"]`)
+  console.log(deleteThis)
   deleteAssignee(event, deleteThis)
 })
 
@@ -72,7 +72,8 @@ function makeAssigneeSelect(assignees) {
   if (document.querySelector('select[id="assignee"]')) {
     document.querySelector('select[id="assignee"]').remove();
     document.querySelector('select[id="editAssignee"]').remove();
-    document.getElementById("assigneeButton").remove();
+    document.querySelector('select[id="deleteAssignee"]').remove();
+    
   }
   const insertAfterThisEdit = document.querySelector("label[for='editAssignee']");
   const insertAfterThis = document.querySelector("label[for='assignee']");

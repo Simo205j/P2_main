@@ -28,4 +28,14 @@ describe('POST /SendAssignee', () => {
     expect(response.status).toBe(200);
     expect(response.body.AssigneeName).toBe('John');
   });
+
+  test('should delete assigne', async () => {
+    const response = await request(app).delete("/Delete").send({
+      assigneeName: 'John',
+      _id: "123"
+    });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toContain("Deleted");
+  })
 });
+

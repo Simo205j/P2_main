@@ -18,6 +18,20 @@ function handleExpand() {
   const showAssigneeDiv = document.getElementById("AssigneesDiv")
   const assigneeShow = document.getElementById("Assignees");
 
+  expandFormButton.addEventListener("click", () => {
+    taskForm.classList.toggle("show");
+    if (expandFormButton.value === "Close form") {
+      expandFormButton.value = "Create task";
+      expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
+      listDOMContainer.style.display = "flex"; // show list container
+      assigneeButton.style.display = "block"
+    } else {
+      expandFormButton.value = "Close form";
+      expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
+      listDOMContainer.style.display = "none"; // hide list containe
+      assigneeButton.style.display = "none"
+    }
+  }); 
   assigneeButton.addEventListener("click", () => {
       if (assigneeButton.value === "Close") {
         assigneeButton.value = "Edit Assignee";
@@ -33,6 +47,7 @@ function handleExpand() {
         showAssigneeDiv.className = "reveal" 
       }
     });
+    
   taskForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -60,23 +75,7 @@ function handleExpand() {
     }
   });
   //HANDLES CORRECT DISPLAYMENT OF LISTS AND FORM
-  expandFormButton.addEventListener("click", () => {
-    taskForm.classList.toggle("show");
-    assigneeShow.classList.toggle("show");
-    if (expandFormButton.value === "Close form") {
-      expandFormButton.value = "Create task";
-      expandFormButton.style.backgroundColor = "rgba(75, 133, 225, 1)";
-      listDOMContainer.style.display = "flex"; // show list container
-      assigneeButton.style.display  = "block"
-
-    } else {
-      expandFormButton.value = "Close form";
-      expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
-      listDOMContainer.style.display = "none"; // hide list containe
-      assigneeButton.style.display = "none"
-    }
   
-  });
 }
 
 //HANDLE DRAG AND DROP FOR LISTS
@@ -88,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     container.addEventListener("drop", (event) => handleDrop(event, container));
   });
+  
 });
 
 let haveRecievedBefore = false;

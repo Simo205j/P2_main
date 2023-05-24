@@ -48,7 +48,7 @@ describe("createTaskContainer", () => {
     const task = {
       _id: 1,
       TaskName: "Finish homework",
-      TaskDescription: "Complete all math and science problems",
+      TaskDescription: "Complete all math questions",
     };
 
     const taskContainer = createTaskContainer(task);

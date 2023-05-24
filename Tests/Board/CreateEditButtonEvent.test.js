@@ -23,14 +23,14 @@ describe("createEditButtonEventListeners", () => {
     editButton = document.createElement("button");
     taskContainer = document.createElement("div");
     task = {
-      TaskName: "Sample Task",
+      TaskName: "Task Test",
       TaskAttributes: {
-        Description: "Sample description",
-        Assignee: "John Doe",
+        Description: "Task description",
+        Assignee: "AssigneeName",
         Priority: "High",
         StartDate: "2023-05-01",
         EndDate: "2023-05-10",
-        Status: "Incomplete",
+        Status: "Doing",
       },
     };
     dialog = document.createElement("dialog");

@@ -8,6 +8,43 @@ const displayLogbookContainerDiv = document.querySelector('div[class="showLogboo
 const submitLogbookHAndPEntry = document.querySelector('input[type="Submit"]');
 const formLogbookEntryHAndP = document.querySelector("form");
 
+function makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv) {
+  const saveEntries = document.createElement("input");
+  saveEntries.type = "button";
+  saveEntries.value = "Save logbook";
+
+  saveEntries.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const logbookData = {
+      _id: logbookEntryContainer.id,
+      HeaderArray: logbookHeaderArray,
+      ParagraphArray: logbookParagraphArray,
+      CheckboxArray: logbookCheckboxArray,
+    };
+    console.log(logbookData);
+    const response = await fetch("http://localhost:3000/Logbook/SaveLogbookEntry", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(logbookData),
+    });
+    try {
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+    displayLogbookContainerDiv.id = "hidden";
+    displayLogbookList.id = "show";
+    //LUK LORTET OG VIS LOGBOOK LISTE
+  });
+  tempDiv.appendChild(saveEntries);
+}
+
+
+
+
 logbookSource.addEventListener("message", (event) => {
   const logbooks = JSON.parse(event.data);
   console.log(logbooks);
@@ -333,36 +370,7 @@ function makeEditAble(tempHeader, tempParagraph, data, index) {
     });
   });
 }
-function makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv) {
-  const saveEntries = document.createElement("input");
-  saveEntries.type = "button";
-  saveEntries.value = "Save logbook";
 
-  saveEntries.addEventListener("click", async (event) => {
-    event.preventDefault();
-    const logbookData = {
-      _id: logbookEntryContainer.id,
-      HeaderArray: logbookHeaderArray,
-      ParagraphArray: logbookParagraphArray,
-      CheckboxArray: logbookCheckboxArray,
-    };
-    console.log(logbookData);
-    const response = await fetch("http://localhost:3000/Logbook/SaveLogbookEntry", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(logbookData),
-    });
-    try {
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-  tempDiv.appendChild(saveEntries);
-}
 module.exports = {
   createLogbookEntry,
   makeDeleteBtnLogbookEntry,

@@ -24,7 +24,6 @@ form {
 }
 
 
-
 input[type="text"],
 input[type="date"],
 select {
@@ -43,6 +42,10 @@ select {
   width: 100%; /* Make the form value take up 100% width of the column */
 }
 
+#sumbitTaskButton{
+  background-color: rgba(49, 201, 69, 0.8);
+  margin-bottom: 1rem;
+}
 
 input[type="button"],
 input[type="submit"]{
