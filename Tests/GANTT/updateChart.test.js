@@ -16,8 +16,7 @@ describe('updateTimeChart', () => {
           options: {
             scales: {
               x: {
-                min: null,
-                max: null
+                C
               }
             }
           }

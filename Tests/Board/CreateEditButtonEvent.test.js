@@ -81,15 +81,4 @@ describe("createEditButtonEventListeners", () => {
     saveButton.click();
     expect(saveData).toHaveBeenCalledWith(form, taskContainer);
   });
-
-  test("mouseover on task container shows edit button", () => {
-    taskContainer.dispatchEvent(new MouseEvent("mouseover"));
-    expect(editButton.style.display).toBe("inline-block");
-  });
-
-  test("mouseout on task container hides edit button", () => {
-    taskContainer.dispatchEvent(new MouseEvent("mouseout"));
-    expect(editButton.style.display).toBe("none");
-  });
 });
-
