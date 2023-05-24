@@ -53,6 +53,7 @@ function handleExpand() {
       expandFormButton.style.backgroundColor = "rgba(215, 45, 45, 1)";
       listDOMContainer.style.display = "none"; // hide list containe
     }
+  
   });
 }
 
@@ -72,7 +73,7 @@ function handleServerSentEvent(event) {
   const tasks = JSON.parse(event.data);
   //1. ASSIGN OVERDUE STATUS TO TASKS WITH A ENDDATE THAT IS OVERDUE
   tasks.forEach((task) => {
-    if (task.TaskAttributes.EndDate < Date.now() && task.TaskAttributes.Status !== "Done") {
+    if (Date.parse(task.TaskAttributes.EndDate) < Date.now() && task.TaskAttributes.Status !== "Done") {
       task.TaskAttributes.Status = "Overdue";
     }
   });

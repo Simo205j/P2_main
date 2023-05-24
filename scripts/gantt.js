@@ -113,7 +113,7 @@ function makeTasksFromData(sortData) {
 
 function updateChart(sortedTasks, barColorsTask, borderColorsTask) {
   const chart = Chart.getChart("myChart");
-  console.log("REPLACE PENIS WITH CHART REMEMBER REMEMBER");
+  console.log(chart);
   //UPDATE THE CHART OBJECT
   chart.config.options.scales.x.min = minCurrentDate;
   chart.config.options.scales.x.max = maxCurrentDate;

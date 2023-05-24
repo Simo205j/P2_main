@@ -37,12 +37,12 @@
         <input required type="text" id="taskName" name="taskName"><br>
 
         <label for="description">Description:</label>
-        <input type="text" id="description" name="description"><br>
+        <input required type="text" id="description" name="description"><br>
 
         <label for="assignee">Assignee:</label>
 
         <label for="priority">Priority:</label>
-        <select id="priority" name="priority">
+        <select required id="priority" name="priority">
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
@@ -71,7 +71,7 @@
         </script>
 
         <label for="status">Status:</label>
-        <select id="status" name="status">
+        <select required id="status" name="status">
           <option value="To-do">To-Do</option>
           <option value="Doing">Doing</option>
           <option value="Done">Done</option>
@@ -90,26 +90,26 @@
     <form id="editTaskForm">
       <h1>Edit Task</h1>
       <label for="editTaskName">Task Name:</label>
-      <input required type="text" id="editTaskName" name="taskName"><br>
+      <input required type="text" id="editTaskName" name="taskName" required><br>
   
       <label for="editDescription">Description:</label>
-      <input type="text" id="editDescription" name="description"><br>
+      <input required type="text" id="editDescription" name="description" ><br>
   
-      <label for="editAssignee">Assignee:</label>
+      <label for="editAssignee" required>Assignee:</label>
       <br>
   
       <label for="editPriority">Priority:</label>
-      <select id="editPriority" name="priority">
+      <select required id="editPriority" name="priority">
         <option value="Low">Low</option>
         <option value="Medium">Medium</option>
         <option value="High">High</option>
       </select><br>
   
       <label for="editStartDate">Start Date:</label>
-      <input type="date" id="editStartDate" name="startDate" value="" max="" ><br>
+      <input required type="date" id="editStartDate" name="startDate" value="" max="" ><br>
   
       <label for="editEndDate">End Date:</label>
-      <input type="date" id="editEndDate" name="endDate" value="" min=""><br>
+      <input required type="date" id="editEndDate" name="endDate" value="" min=""><br>
   
       <script>
         const startDateInput2 = document.getElementById('editStartDate');
@@ -124,7 +124,7 @@
       </script>
 
       <label for="editStatus">Status:</label>
-      <select id="editStatus" name="status">
+      <select required id="editStatus" name="status">
         <option value="To-do">To-Do</option>
         <option value="Doing">Doing</option>
         <option value="Done">Done</option>
