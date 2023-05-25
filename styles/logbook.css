@@ -69,13 +69,15 @@ input[value="Delete"]:hover {
     border: 2px solid rgba(224, 224, 224, 0.8);
     padding: 1rem;
     border-radius: 1rem;
+    min-width: 100%;
 }
 #logbookForm{
     display: flex;
     justify-content: center; 
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
 }
+
 #logbookForm label, input{
     margin: 0.5rem;
 }
@@ -149,4 +151,9 @@ div.index div{
 }
 #show {
     display: flex;
+}
+textarea, #formParagraph{
+    width: 200%;
+    height: 3rem;
+    resize: none;
 }
