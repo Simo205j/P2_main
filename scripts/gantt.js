@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ticks: {
             font: {
               // Update to your desired font size
-              size: 20,
+              size: 12,
             },
           },
           position: "top",
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ticks: {
             font: {
               // Update to your desired font size
-              size: 20,
+              size: 14,
             },
           },
         },
@@ -240,7 +240,7 @@ const statusOfTask = {
       scales: { y },
     } = chart;
     ctx.save();
-    ctx.font = "bolder 20px sans-serif";
+    ctx.font = "bolder 14px sans-serif";
     ctx.fillstyle = "black";
     ctx.textBaseline = "middle";
     data.datasets[0].data.forEach((datapoint, index) => {
