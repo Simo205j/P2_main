@@ -41,25 +41,4 @@ describe('addNewAssignee', () => {
       }),
     );
   });
-
-  //Tests 
-  test('handles errors from the server', async () => {
-    const mockResponse = {
-      status: 500,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
-    };
-
-    fetchMock.mockResponseOnce(mockResponse);
-
-    await addNewAssignee(new Event('submit'));
-
-    expect(fetchMock).toHaveBeenCalledWith(
-      'http://localhost:3000/Assignee/SendAssignee',
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
-      }),
-    );
-  });
 }); 

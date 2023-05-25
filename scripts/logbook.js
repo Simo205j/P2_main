@@ -76,7 +76,7 @@ submitLogbook.addEventListener("click", async (event) => {
 
 submitLogbookHAndPEntry.addEventListener("click", (event) => {
   event.preventDefault();
-  if(formLogbookEntryHAndP.formHeader.value !== "" && formLogbookEntryHAndP.formParagraph.value !== ""){
+  if(formLogbookEntryHAndP.formHeader.value !== "" && formLogbookEntryHAndP.formParagraph.value !== "" && formLogbookEntryHAndP.formHeader.value !== "Please enter a Header" && formLogbookEntryHAndP.formParagraph.value !== "Please enter a Paragraph"){
     const logbookEntry = createLogbookEntry(
       formLogbookEntryHAndP.formHeader.value,
       formLogbookEntryHAndP.formParagraph.value
@@ -89,10 +89,13 @@ submitLogbookHAndPEntry.addEventListener("click", (event) => {
     fixContainerIndexes();
   }
   else{
-    formLogbookEntryHAndP.formHeader.value = "Please enter a Header"
-    formLogbookEntryHAndP.formParagraph.value = "Please enter a Paragraph"
+    if(formLogbookEntryHAndP.formHeader.value === "" ){
+      formLogbookEntryHAndP.formHeader.value = "Please enter a Header"
+    }
+    if(formLogbookEntryHAndP.formParagraph.value === ""){
+      formLogbookEntryHAndP.formParagraph.value = "Please enter a Paragraph"
+    }
   }
-  
 });
 
 function createLogbookEntry(headerText, paragraphText) {
