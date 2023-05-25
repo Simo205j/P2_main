@@ -5,13 +5,12 @@
   }
   .chartMenu {
     width: 100vw;
-    height: 40px;
     background: #1A1A1A;
     color: rgba(54, 162, 235, 1);
   }
   .chartCard {
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: 35rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,7 +18,7 @@
   .chartBox {
     margin-bottom: 10vh;
     margin-top: 18vh;
-    width: 80%;
+    width: 75%;
     padding: 20px;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.97);

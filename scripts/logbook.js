@@ -37,13 +37,11 @@ function makeLogbookContainerSaveBtn(logbookEntryContainer, tempDiv) {
     }
     displayLogbookContainerDiv.id = "hidden";
     displayLogbookList.id = "show";
-    //LUK LORTET OG VIS LOGBOOK LISTE
+    formLogbookEntryHAndP.formHeader.value = ""
+    formLogbookEntryHAndP.formParagraph.value = ""
   });
   tempDiv.appendChild(saveEntries);
 }
-
-
-
 
 logbookSource.addEventListener("message", (event) => {
   const logbooks = JSON.parse(event.data);
@@ -78,15 +76,23 @@ submitLogbook.addEventListener("click", async (event) => {
 
 submitLogbookHAndPEntry.addEventListener("click", (event) => {
   event.preventDefault();
-
-  const logbookEntry = createLogbookEntry(
-    formLogbookEntryHAndP.formHeader.value,
-    formLogbookEntryHAndP.formParagraph.value
-  );
-  const tempContainer = document.querySelector('div[id="temp"]');
-  const insertBeforeThis = tempContainer.querySelector('input[value="Save logbook"]');
-  tempContainer.insertBefore(logbookEntry, insertBeforeThis);
-  fixContainerIndexes();
+  if(formLogbookEntryHAndP.formHeader.value !== "" && formLogbookEntryHAndP.formParagraph.value !== ""){
+    const logbookEntry = createLogbookEntry(
+      formLogbookEntryHAndP.formHeader.value,
+      formLogbookEntryHAndP.formParagraph.value
+    );
+    formLogbookEntryHAndP.formHeader.value = ""
+    formLogbookEntryHAndP.formParagraph.value = ""
+    const tempContainer = document.querySelector('div[id="temp"]');
+    const insertBeforeThis = tempContainer.querySelector('input[value="Save logbook"]');
+    tempContainer.insertBefore(logbookEntry, insertBeforeThis);
+    fixContainerIndexes();
+  }
+  else{
+    formLogbookEntryHAndP.formHeader.value = "Please enter a Header"
+    formLogbookEntryHAndP.formParagraph.value = "Please enter a Paragraph"
+  }
+  
 });
 
 function createLogbookEntry(headerText, paragraphText) {
@@ -252,6 +258,8 @@ function makeLogbookEntryClickable(logbookEntryContainer) {
       closeLogbookBtn.addEventListener("click", () => {
         displayLogbookContainerDiv.id = "hidden";
         displayLogbookList.id = "show";
+        formLogbookEntryHAndP.formHeader.value = ""
+        formLogbookEntryHAndP.formParagraph.value = ""
       });
     } catch (error) {
       console.error(error);

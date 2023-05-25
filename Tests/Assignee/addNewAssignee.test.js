@@ -12,17 +12,17 @@ jest.spyOn(document, 'querySelector').mockImplementation(() => elementMockQ);
 const fetchMock = require('jest-fetch-mock');
 fetchMock.enableMocks();
 
-// Import the function to test
 const { addNewAssignee } = require('../../scripts/assignee');
 
 describe('addNewAssignee', () => {
+  //After each test clear all mocks, and reset the fetchMock, so the next test can utilise it. (resetting the testing environment)
   afterEach(() => {
-    // Clear all mocks after each test
     jest.clearAllMocks();
     fetchMock.resetMocks();
   });
 
-  test('handles successful assignment creation', async () => {
+  //Tests if the creation of assignee handled correctly correctly when being posted.
+  test('handles successful assignee creation', async () => {
     const mockResponse = {
       status: 200,
       body: JSON.stringify({ status: 'success' }),
@@ -42,6 +42,7 @@ describe('addNewAssignee', () => {
     );
   });
 
+  //Tests 
   test('handles errors from the server', async () => {
     const mockResponse = {
       status: 500,

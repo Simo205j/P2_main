@@ -2,27 +2,43 @@ const assigneesSource = new EventSource("http://localhost:3000/Assignee/events")
 const assigneeDeleteButton = document.getElementById("deleteAssigneeButton")
 const assigneeFormButton = document.getElementById("assigneeButton");
 const assigneebox = document.getElementById("assignee");
+const assigneeForm = document.getElementById("assigneeForm");
 
 
+assigneeForm.addEventListener("click", () => {
+  assigneeForm.value = ""
+})
+assigneeForm.addEventListener("keypress", (event) => {
+  if(event.key === "Enter") {
+    addNewAssignee(event)
+  }
+
+})
 assigneeFormButton.addEventListener("click", addNewAssignee);
 async function addNewAssignee(event) {
-  const assigneeForm = document.getElementById("assigneeForm");
+
   event.preventDefault();
   const data = {
     assigneeName: assigneeForm.value,
   };
-  try {
-    const response = await fetch("http://localhost:3000/Assignee/SendAssignee", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    const assigneeresponseData = await response.json();
-    console.log(assigneeresponseData.status, assigneeresponseData);
-  } catch (error) {
-    console.error(error);
+  if(assigneeForm.value != "" && assigneeForm.value != "Please Enter Some Name"){
+    assigneeForm.value = ""
+    try {
+      const response = await fetch("http://localhost:3000/Assignee/SendAssignee", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const assigneeresponseData = await response.json();
+      console.log(assigneeresponseData.status, assigneeresponseData);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  else {
+    assigneeForm.value = "Please Enter Some Name"
   }
 }
 

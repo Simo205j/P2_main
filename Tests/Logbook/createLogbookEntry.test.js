@@ -14,14 +14,10 @@ jest.spyOn(document, 'querySelector').mockImplementation(() => elementMockQ);
 const { createLogbookEntry } = require('../../scripts/logbook')
 describe('createLogbookEntry', () => {
   test('returns a div element with the correct structure and content', () => {
-    // Set up test data
     const headerText = 'Example header';
     const paragraphText = 'Example paragraph';
-
-    // Call the function being tested
     const result = createLogbookEntry(headerText, paragraphText);
-
-    // Check that the returned element has the correct structure and content
+    
     expect(result.tagName).toBe('DIV');
     expect(result.classList).toContain('index');
     expect(result.children).toHaveLength(2);

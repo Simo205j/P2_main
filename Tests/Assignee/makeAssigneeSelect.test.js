@@ -17,15 +17,11 @@ describe('makeAssigneeSelect', () => {
     test('should create and insert a select element for each assignee with correct options', () => {
         // Define sample input data
         const assignees = [    { assigneeName: 'Mertz' },    { assigneeName: 'Simon' },    { assigneeName: 'Bacon' },  ];
-      
         // Create a mock DOM element for testing
         const selectElement = document.createElement('select');
         selectElement.id = 'assignee';
-      
-        // Create a spy for the 'insertAdjacentElement' method
         const spy = jest.spyOn(selectElement, 'insertAdjacentElement');
       
-        // Call the function with the sample data
         makeAssigneeSelect(assignees);
       
         // Expect that the select element was created and inserted correctly

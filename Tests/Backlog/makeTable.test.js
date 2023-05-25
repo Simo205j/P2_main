@@ -14,10 +14,10 @@ document.body.innerHTML = `<div id="backlog"></div>`;
 const task = {
     TaskName: "Example Task",
     TaskAttributes: {
-      Assignee: "AssigneeName",
+      Assignee: "NameTest",
       StartDate: "2023-05-01",
-      EndDate: "2023-05-15",
-      Status: "In Progress",
+      EndDate: "2027-05-15",
+      Status: "Done",
       Priority: "High"
     }
   };
@@ -67,12 +67,12 @@ describe("makeTableHeader", () => {
       const columns = rows[0].querySelectorAll("td");
       expect(columns[0].textContent).toBe("1");
       expect(columns[1].textContent).toBe("Example Task");
-      expect(columns[2].textContent).toBe("AssigneeName");
+      expect(columns[2].textContent).toBe("NameTest");
       expect(columns[3].textContent).toBe("2023-05-01");
-      expect(columns[4].textContent).toBe("2023-05-15");
-      expect(columns[5].textContent).toBe("In Progress");
+      expect(columns[4].textContent).toBe("2027-05-15");
+      expect(columns[5].textContent).toBe("Done");
       expect(columns[6].textContent).toBe("High");
-      expect(rows[0].className).toBe("In Progress");
+      expect(rows[0].className).toBe("Done");
     });
   });
   

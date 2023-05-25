@@ -8,22 +8,23 @@ const mockEventSource = {
   }
 
 global.EventSource.mockImplementation(() => mockEventSource);
-
-const elementMock = { addEventListener: jest.fn(), querySelector: jest.fn(), appendChild: jest.fn() };
-jest.spyOn(document, 'getElementById').mockImplementation(() => elementMock);
 const elementMockQ = { addEventListener: jest.fn(), querySelector: jest.fn(), appendChild: jest.fn() };
+const elementMock = { addEventListener: jest.fn(), querySelector: jest.fn(), appendChild: jest.fn() };
+
+jest.spyOn(document, 'getElementById').mockImplementation(() => elementMock);
 jest.spyOn(document, 'querySelector').mockImplementation(() => elementMockQ);
 
 const { makeEditable } = require('../../scripts/logbook')
 
 describe('makeEditable', () => {
-  it('should replace the element with a textarea element when clicked', () => {
+  it('should replace the element with a textarea', () => {
     document.body.innerHTML = `
       <div>
         <h3 id="editableHeader">Editable Header</h3>
       </div>
     `;
     const header = document.getElementById('editableHeader');
+    //CLICK HAS BEEN MOCKED 
     makeEditable(header);
     const textarea = document.querySelector('textarea');
     expect(textarea).toBeTruthy();
